@@ -114,9 +114,10 @@ function createJSONResponse(data) {
  */
 function getFullData() {
   try {
-    const kpi = getKPI();
-    const quickWins = getQuickWins();
+    // 先讀取風險資料，避免在 getKPI 中重複讀取
     const risks = getRisks();
+    const kpi = getKPI(risks);
+    const quickWins = getQuickWins();
     const projects = getProjects();
     const resources = getResources();
     const metrics = getMetrics();
@@ -146,8 +147,10 @@ function getFullData() {
 /**
  * getKPI - 從 KPI_Metrics 工作表讀取 KPI 資料
  * 返回 Layer 1 所需的 KPI 資料
+ * 
+ * @param {Array} cachedRisks - 可選的快取風險資料，避免重複讀取
  */
-function getKPI() {
+function getKPI(cachedRisks) {
   try {
     const sheet = getSheet(SHEET_NAMES.KPI);
     if (!sheet) {
@@ -167,8 +170,8 @@ function getKPI() {
       return index >= 0 ? (row[index] || defaultValue) : defaultValue;
     };
     
-    // 計算高風險數量
-    const risks = getRisks();
+    // 計算高風險數量 - 使用快取的風險資料或重新讀取
+    const risks = cachedRisks || getRisks();
     const highRisks = risks.filter(r => 
       r.probability === 'high' && r.impact === 'high'
     ).length;
@@ -228,9 +231,14 @@ function getRisks() {
       // 轉換格式：High -> high, Medium -> med, Low -> low
       const convertLevel = (value) => {
         if (!value) return 'low';
-        const val = value.toString().toLowerCase();
-        if (val.includes('high')) return 'high';
-        if (val.includes('med')) return 'med';
+        const val = value.toString().trim().toLowerCase();
+        // 使用精確匹配避免誤判
+        if (val === 'high') return 'high';
+        if (val === 'medium' || val === 'med') return 'med';
+        if (val === 'low') return 'low';
+        // 降級處理：如果不是標準值，使用包含匹配
+        if (val.indexOf('high') === 0) return 'high';
+        if (val.indexOf('med') === 0 || val.indexOf('medium') === 0) return 'med';
         return 'low';
       };
       
@@ -268,17 +276,24 @@ function getProjects() {
     const data = sheet.getDataRange().getValues();
     const headers = data[0];
     
+    // 輔助函數：查找欄位索引，支援備選欄位名稱
+    const findColumnIndex = (primaryName, fallbackName) => {
+      const primaryIndex = headers.indexOf(primaryName);
+      if (primaryIndex >= 0) return primaryIndex;
+      return fallbackName ? headers.indexOf(fallbackName) : -1;
+    };
+    
     // 建立欄位索引對照
     const indices = {
-      project_id: headers.indexOf('project_id'),
-      name: headers.indexOf('name') >= 0 ? headers.indexOf('name') : headers.indexOf('project_name'),
-      department: headers.indexOf('department'),
-      status: headers.indexOf('status'),
-      progress: headers.indexOf('progress'),
-      budget: headers.indexOf('budget'),
-      timeline: headers.indexOf('timeline'),
-      priority: headers.indexOf('priority'),
-      quick_win: headers.indexOf('quick_win')
+      project_id: findColumnIndex('project_id'),
+      name: findColumnIndex('name', 'project_name'),
+      department: findColumnIndex('department'),
+      status: findColumnIndex('status'),
+      progress: findColumnIndex('progress'),
+      budget: findColumnIndex('budget'),
+      timeline: findColumnIndex('timeline'),
+      priority: findColumnIndex('priority'),
+      quick_win: findColumnIndex('quick_win')
     };
     
     const projects = [];
@@ -375,13 +390,20 @@ function getQuickWinsFromProjects() {
   const data = sheet.getDataRange().getValues();
   const headers = data[0];
   
+  // 輔助函數：查找欄位索引，支援備選欄位名稱
+  const findColumnIndex = (primaryName, fallbackName) => {
+    const primaryIndex = headers.indexOf(primaryName);
+    if (primaryIndex >= 0) return primaryIndex;
+    return fallbackName ? headers.indexOf(fallbackName) : -1;
+  };
+  
   const indices = {
-    project_id: headers.indexOf('project_id'),
-    name: headers.indexOf('name') >= 0 ? headers.indexOf('name') : headers.indexOf('project_name'),
-    owner: headers.indexOf('owner') >= 0 ? headers.indexOf('owner') : headers.indexOf('department'),
-    deadline: headers.indexOf('deadline') >= 0 ? headers.indexOf('deadline') : headers.indexOf('due_date'),
-    progress: headers.indexOf('progress'),
-    quick_win: headers.indexOf('quick_win')
+    project_id: findColumnIndex('project_id'),
+    name: findColumnIndex('name', 'project_name'),
+    owner: findColumnIndex('owner', 'department'),
+    deadline: findColumnIndex('deadline', 'due_date'),
+    progress: findColumnIndex('progress'),
+    quick_win: findColumnIndex('quick_win')
   };
   
   const quickWins = [];
@@ -393,9 +415,18 @@ function getQuickWinsFromProjects() {
     const isQuickWin = row[indices.quick_win];
     if (!isQuickWin) continue;
     
-    const quickWinValue = isQuickWin.toString().toLowerCase();
-    if (quickWinValue === 'true' || quickWinValue === 'yes' || quickWinValue === '1') {
+    // 處理布林值和字串
+    let isQuickWinFlag = false;
+    if (typeof isQuickWin === 'boolean') {
+      isQuickWinFlag = isQuickWin;
+    } else {
+      const quickWinValue = isQuickWin.toString().trim().toLowerCase();
+      isQuickWinFlag = (quickWinValue === 'true' || quickWinValue === 'yes' || quickWinValue === '1');
+    }
+    
+    if (isQuickWinFlag) {
       quickWins.push({
+        id: row[indices.project_id] || `qw-${i}`,
         title: row[indices.name] || '',
         owner: row[indices.owner] || '',
         deadline: formatDate(row[indices.deadline]),
@@ -421,10 +452,17 @@ function getCapability() {
     const data = sheet.getDataRange().getValues();
     const headers = data[0];
     
+    // 輔助函數：查找欄位索引，支援備選欄位名稱
+    const findColumnIndex = (primaryName, fallbackName) => {
+      const primaryIndex = headers.indexOf(primaryName);
+      if (primaryIndex >= 0) return primaryIndex;
+      return fallbackName ? headers.indexOf(fallbackName) : -1;
+    };
+    
     const indices = {
-      dimension: headers.indexOf('dimension') >= 0 ? headers.indexOf('dimension') : headers.indexOf('capability'),
-      current: headers.indexOf('current') >= 0 ? headers.indexOf('current') : headers.indexOf('current_level'),
-      target: headers.indexOf('target') >= 0 ? headers.indexOf('target') : headers.indexOf('target_level')
+      dimension: findColumnIndex('dimension', 'capability'),
+      current: findColumnIndex('current', 'current_level'),
+      target: findColumnIndex('target', 'target_level')
     };
     
     const capabilities = [];
@@ -655,6 +693,9 @@ function formatDate(date) {
 
 /**
  * 記錄 API 請求到 Audit Log
+ * 
+ * 注意：在 Web App 模式下，Session.getActiveUser().getEmail() 
+ * 可能因隱私限制無法取得外部請求者的 email，將記錄為 'anonymous'
  */
 function logRequest(endpoint) {
   try {
@@ -662,7 +703,14 @@ function logRequest(endpoint) {
     if (!sheet) return;
     
     const timestamp = new Date();
-    const user = Session.getActiveUser().getEmail() || 'anonymous';
+    // 在 Web App 中，getActiveUser() 可能無法取得外部用戶資訊
+    let user = 'anonymous';
+    try {
+      const email = Session.getActiveUser().getEmail();
+      if (email) user = email;
+    } catch (e) {
+      // 隱私限制，使用預設值
+    }
     
     sheet.appendRow([
       timestamp,
