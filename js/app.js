@@ -104,7 +104,8 @@ class DashboardApp {
         console.log('[App] 嘗試載入離線備用資料...');
         
         try {
-            const response = await fetch('/data/fallback.json');
+            const fallbackPath = CONFIG?.api?.fallbackDataPath || 'data/fallback.json';
+            const response = await fetch(fallbackPath);
             const data = await response.json();
             
             this.state.setData(data);

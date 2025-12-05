@@ -64,13 +64,13 @@ class ChartManager {
                     ticks: {
                         stepSize: 20,
                         font: {
-                            family: this.config.fontFamily
+                            family: this.config.fontFamily || "'Segoe UI', sans-serif"
                         }
                     },
                     pointLabels: {
                         font: {
                             size: 12,
-                            family: this.config.fontFamily
+                            family: this.config.fontFamily || "'Segoe UI', sans-serif"
                         }
                     }
                 }

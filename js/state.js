@@ -186,6 +186,11 @@ class StateManager {
      */
     loadPreferences() {
         try {
+            if (!CONFIG?.storage?.prefix || !CONFIG?.storage?.keys?.preferences) {
+                console.warn('[State] CONFIG.storage 設定不完整，使用預設值');
+                return this.getDefaultPreferences();
+            }
+            
             const key = CONFIG.storage.prefix + CONFIG.storage.keys.preferences;
             const stored = localStorage.getItem(key);
             
@@ -198,12 +203,18 @@ class StateManager {
             console.error('[State] 載入偏好設定失敗:', error);
         }
         
-        // 預設偏好設定
+        return this.getDefaultPreferences();
+    }
+    
+    /**
+     * 取得預設偏好設定
+     */
+    getDefaultPreferences() {
         return {
-            theme: CONFIG.ui.theme,
-            language: CONFIG.ui.language,
-            autoRefresh: CONFIG.refresh.enabled,
-            notifications: CONFIG.refresh.showNotification
+            theme: CONFIG?.ui?.theme || 'light',
+            language: CONFIG?.ui?.language || 'zh-TW',
+            autoRefresh: CONFIG?.refresh?.enabled !== false,
+            notifications: CONFIG?.refresh?.showNotification !== false
         };
     }
     

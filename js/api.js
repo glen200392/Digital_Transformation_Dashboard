@@ -81,17 +81,21 @@ class DashboardAPI {
      * 建立完整 URL
      */
     buildUrl(endpoint, params) {
-        const url = new URL(this.baseUrl);
-        
-        if (endpoint) {
-            url.searchParams.append('action', endpoint);
+        try {
+            const url = new URL(this.baseUrl);
+            
+            if (endpoint) {
+                url.searchParams.append('action', endpoint);
+            }
+            
+            Object.keys(params).forEach(key => {
+                url.searchParams.append(key, params[key]);
+            });
+            
+            return url.toString();
+        } catch (error) {
+            throw new Error(`Invalid base URL: ${this.baseUrl}`);
         }
-        
-        Object.keys(params).forEach(key => {
-            url.searchParams.append(key, params[key]);
-        });
-        
-        return url.toString();
     }
     
     /**

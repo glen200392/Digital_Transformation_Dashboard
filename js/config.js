@@ -14,7 +14,8 @@ const CONFIG = {
         timeout: 30000,           // 30 秒超時
         retryAttempts: 3,         // 重試次數
         retryDelay: 1000,         // 重試延遲（毫秒）
-        cacheExpiry: 60000        // 快取有效期（1 分鐘）
+        cacheExpiry: 60000,       // 快取有效期（1 分鐘）
+        fallbackDataPath: 'data/fallback.json'  // 離線備用資料路徑
     },
     
     // ==================== 自動刷新設定 ====================

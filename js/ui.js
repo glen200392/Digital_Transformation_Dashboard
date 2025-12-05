@@ -38,6 +38,15 @@ class UIManager {
     }
     
     /**
+     * 格式化 KPI 值
+     */
+    formatKPIValue(id, value) {
+        if (typeof value !== 'number') return value;
+        const needsPercentage = id.includes('roi') || id.includes('progress') || id.includes('engagement');
+        return needsPercentage ? value + '%' : value;
+    }
+    
+    /**
      * 更新單一 KPI 卡片
      */
     updateKPICard(id, value, threshold, inverse = false) {
@@ -45,8 +54,7 @@ class UIManager {
         const statusElement = document.getElementById(id + '-status');
         
         if (valueElement) {
-            valueElement.textContent = typeof value === 'number' ? 
-                (id.includes('roi') || id.includes('progress') || id.includes('engagement') ? value + '%' : value) : value;
+            valueElement.textContent = this.formatKPIValue(id, value);
         }
         
         if (statusElement) {
@@ -273,7 +281,7 @@ class UIManager {
      * 顯示通知
      */
     showNotification(message, type = 'info', duration = 3000) {
-        if (!this.config.features.enableNotifications) return;
+        if (!this.config?.features?.enableNotifications) return;
         
         const toast = document.createElement('div');
         toast.className = `toast ${type}`;
