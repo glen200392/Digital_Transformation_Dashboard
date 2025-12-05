@@ -406,13 +406,13 @@ class UIManager {
         // 更新標題
         const titleEl = document.querySelector('header h1');
         if (titleEl && settings.title) {
-            titleEl.textContent = '🚀 ' + this.escapeHtml(settings.title);
+            titleEl.textContent = '🚀 ' + settings.title;
         }
         
         // 更新團隊名稱
         const teamEl = document.querySelector('.meta span:last-of-type');
         if (teamEl && settings.teamName) {
-            teamEl.textContent = '👤 ' + this.escapeHtml(settings.teamName);
+            teamEl.textContent = '👤 ' + settings.teamName;
         }
         
         console.log('[UI] Settings 已更新');
@@ -445,7 +445,7 @@ class UIManager {
         };
         
         const config = statusConfig[source] || statusConfig['error'];
-        statusEl.innerHTML = `${config.icon} ${config.text}`;
+        statusEl.textContent = `${config.icon} ${config.text}`;
         statusEl.className = 'sync-status ' + config.class;
     }
 }
