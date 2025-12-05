@@ -125,6 +125,7 @@ class DashboardApp {
                 await this.loadFallbackData();
             } else {
                 this.state.setError(error);
+                this.ui.updateSyncStatus('error');
                 this.ui.showNotification('無法載入資料', 'error');
             }
             
@@ -157,6 +158,7 @@ class DashboardApp {
         } catch (error) {
             console.error('[App] 離線資料載入失敗:', error);
             this.state.setError('無法連接伺服器且沒有可用的離線資料');
+            this.ui.updateSyncStatus('error');
             this.ui.showNotification('無法載入資料', 'error');
         }
     }
