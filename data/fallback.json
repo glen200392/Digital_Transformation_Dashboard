@@ -148,7 +148,7 @@
     }
   },
   "metadata": {
-    "version": "2.0.0",
+    "version": "2.1.1",
     "lastUpdate": "2025-12-05T00:00:00Z",
     "source": "fallback",
     "note": "這是離線備用資料，僅供無法連接 API 時使用"

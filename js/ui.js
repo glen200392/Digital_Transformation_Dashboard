@@ -1,7 +1,7 @@
 /**
  * ============================================================
  * 數位轉型儀表板 - UI 更新模組
- * 版本: 2.0.0
+ * 版本: 2.1.1
  * 
  * 負責更新所有 UI 元素
  * ============================================================
@@ -412,7 +412,7 @@ class UIManager {
         // 更新團隊名稱
         const teamEl = document.querySelector('.meta span:last-of-type');
         if (teamEl && settings.teamName) {
-            teamEl.innerHTML = '👤 ' + this.escapeHtml(settings.teamName);
+            teamEl.textContent = '👤 ' + this.escapeHtml(settings.teamName);
         }
         
         console.log('[UI] Settings 已更新');
