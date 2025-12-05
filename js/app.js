@@ -159,6 +159,16 @@ class DashboardApp {
      * 更新 UI
      */
     updateUI(data) {
+        // 更新設定（標題、團隊名稱）
+        if (data.settings) {
+            this.ui.updateSettings(data.settings);
+        }
+        
+        // 更新元資料（同步狀態）
+        if (data.metadata) {
+            this.ui.updateMetadata(data.metadata);
+        }
+        
         const currentLayer = this.state.get('currentLayer');
         
         // 更新對應的 Layer

@@ -5,6 +5,37 @@ All notable changes to the Digital Transformation Dashboard project will be docu
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2025-12-05
+
+### Added
+- **Google Apps Script 完整文件** (`docs/GOOGLE_APPS_SCRIPT.md`)
+  - 完整的 Apps Script 程式碼
+  - 所有 API 端點實作
+  - 詳細的部署說明
+  
+- **Google Sheet 結構文件** (`docs/GOOGLE_SHEET_TEMPLATE.md`)
+  - 11 個工作表結構定義
+  - 欄位說明和範例資料
+  - 設定指南
+  
+- **整合測試清單** (`docs/INTEGRATION_TEST.md`)
+  - 完整的測試項目
+  - 驗證步驟
+  
+- **同步狀態顯示功能**
+  - Header 顯示即時同步狀態
+  - 🟢 Google Sheet (即時)
+  - 🟡 快取資料
+  - 🟠 離線資料
+  - 🔴 無法連接
+
+### Changed
+- 更新 `js/ui.js` 新增 updateSettings、updateMetadata、updateSyncStatus 方法
+- 更新 `js/app.js` 整合設定和元資料更新
+- 更新 `index.html` Header 新增同步狀態指示器
+- 更新 `css/styles.css` 新增同步狀態樣式
+- 更新 `data/fallback.json` 新增 settings 區塊
+
 ## [2.1.0] - 2025-12-05
 
 ### Added

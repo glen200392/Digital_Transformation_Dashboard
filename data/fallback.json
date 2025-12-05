@@ -1,4 +1,10 @@
 {
+  "settings": {
+    "title": "數位轉型儀表板",
+    "teamName": "管理團隊",
+    "reportDate": "2025-12-05",
+    "refreshInterval": 300000
+  },
   "kpi": {
     "healthScore": 76,
     "healthTrend": "up",
