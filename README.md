@@ -6,17 +6,25 @@
 Digital_Transformation_Dashboard/
 ├── index.html                    # 主入口頁面
 ├── digital_transformation_dashboard.html  # 原始檔案（備份）
+├── CHANGELOG.md                  # 版本變更記錄
 ├── css/
 │   └── styles.css               # 所有樣式（已完成）
 ├── js/
 │   ├── config.js                # 全域設定檔
+│   ├── security.js              # 安全性模組 (NEW in v2.1.0)
+│   ├── auditLog.js              # 審計日誌模組 (NEW in v2.1.0)
+│   ├── dataProtection.js        # 資料保護模組 (NEW in v2.1.0)
 │   ├── api.js                   # API 呼叫模組
 │   ├── state.js                 # 狀態管理器
 │   ├── charts.js                # 圖表初始化模組
 │   ├── ui.js                    # UI 更新模組
 │   └── app.js                   # 主程式入口
-└── data/
-    └── fallback.json            # 離線備用資料
+├── data/
+│   └── fallback.json            # 離線備用資料
+└── docs/
+    ├── MAINTENANCE.md           # 維護指南 (NEW in v2.1.0)
+    ├── DATA_SCHEMA.md           # 資料結構定義 (NEW in v2.1.0)
+    └── SECURITY.md              # 安全性文件 (NEW in v2.1.0)
 ```
 
 ## 🚀 使用方式
@@ -326,10 +334,69 @@ features: {
 
 ## 🔒 安全性
 
-- 所有設定物件皆已凍結（`Object.freeze()`）
-- API 請求包含超時保護
-- 輸入驗證
-- XSS 防護（使用 textContent 而非 innerHTML）
+### 安全功能 (v2.1.0 新增)
+
+本系統實作了多層安全防護機制：
+
+#### 1. XSS 防護
+- ✅ 所有動態內容使用 `escapeHtml()` 處理
+- ✅ 自動轉義 HTML 特殊字元
+- ✅ 防止腳本注入攻擊
+
+#### 2. Content Security Policy (CSP)
+- ✅ 限制可信任的資源來源
+- ✅ 防止未授權的腳本執行
+- ✅ 保護免受 XSS 和資料注入攻擊
+
+#### 3. 速率限制
+- ✅ API 請求限制：60 次/分鐘
+- ✅ 防止 API 濫用
+- ✅ 可自訂限制參數
+
+#### 4. 資料保護
+- ✅ 自動資料備份（最多 5 個版本）
+- ✅ Checksum 驗證確保資料完整性
+- ✅ 敏感操作二次確認
+- ✅ 資料格式驗證
+
+#### 5. 審計日誌
+- ✅ 記錄所有使用者操作
+- ✅ 30 天日誌保留期
+- ✅ 支援匯出 (JSON/CSV)
+- ✅ 敏感資訊自動遮罩
+
+#### 6. 其他安全措施
+- ✅ Subresource Integrity (SRI) 驗證
+- ✅ 輸入驗證和清理
+- ✅ URL 格式驗證
+- ✅ 所有設定物件皆已凍結（`Object.freeze()`）
+- ✅ API 請求包含超時保護
+
+### 安全設定
+
+在 `js/config.js` 中配置安全選項：
+
+```javascript
+security: {
+    enableXSSProtection: true,         // XSS 防護
+    enableRateLimiting: true,          // 速率限制
+    maxRequestsPerMinute: 60,          // 每分鐘最大請求數
+    enableAuditLog: true,              // 審計日誌
+    auditLogRetentionDays: 30          // 日誌保留天數
+},
+dataProtection: {
+    enableAutoBackup: true,            // 自動備份
+    maxBackupVersions: 5,              // 最大備份版本數
+    confirmBeforeDelete: true,         // 刪除前確認
+    enableDataValidation: true         // 資料驗證
+}
+```
+
+### 安全文件
+
+詳細的安全性資訊請參考：
+- [SECURITY.md](docs/SECURITY.md) - 完整的安全性文件
+- [MAINTENANCE.md](docs/MAINTENANCE.md) - 維護和故障排除指南
 
 ## 📱 響應式設計
 
@@ -367,10 +434,16 @@ node test_dashboard_simple.js
 
 ## 📞 支援
 
-如有問題，請查看瀏覽器 Console 的錯誤訊息。
+如有問題，請查看：
+- 瀏覽器 Console 的錯誤訊息
+- [維護指南](docs/MAINTENANCE.md) - 故障排除和 FAQ
+- [資料結構定義](docs/DATA_SCHEMA.md) - API 資料格式
+- [安全性文件](docs/SECURITY.md) - 安全性資訊
+- [CHANGELOG.md](CHANGELOG.md) - 版本變更記錄
 
 ---
 
-**版本:** 2.0.0  
+**版本:** 2.1.0  
 **建立日期:** 2025-12-05  
+**最後更新:** 2025-12-05  
 **維護者:** Digital Transformation Team

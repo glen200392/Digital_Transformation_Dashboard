@@ -10,6 +10,9 @@
 class DashboardApp {
     constructor() {
         // 初始化所有模組
+        this.security = new Security();
+        this.auditLogger = new AuditLogger();
+        this.dataProtection = new DataProtection();
         this.api = new DashboardAPI();
         this.state = new StateManager();
         this.charts = new ChartManager();
@@ -57,6 +60,12 @@ class DashboardApp {
     async loadData(useCache = true) {
         console.log('[App] 開始載入資料...');
         
+        // 記錄操作
+        this.auditLogger.log(this.auditLogger.ActionTypes.DATA_LOAD, {
+            useCache: useCache,
+            timestamp: new Date().toISOString()
+        });
+        
         this.state.setLoading(true);
         this.ui.showLoading('正在從伺服器載入資料...');
         
@@ -64,10 +73,29 @@ class DashboardApp {
             // 如果不使用快取，先清除
             if (!useCache) {
                 this.api.clearCache();
+                this.auditLogger.log(this.auditLogger.ActionTypes.DATA_REFRESH, {
+                    manual: true
+                });
             }
             
             // 載入完整資料
             const data = await this.api.getFullData();
+            
+            // 驗證資料
+            if (this.dataProtection.config.enableDataValidation) {
+                const isValid = this.dataProtection.validateData(data);
+                if (!isValid) {
+                    throw new Error('資料驗證失敗');
+                }
+            }
+            
+            // 自動備份資料
+            if (this.dataProtection.config.enableAutoBackup) {
+                this.dataProtection.createBackup(data, '自動備份');
+                this.auditLogger.log(this.auditLogger.ActionTypes.BACKUP_CREATE, {
+                    auto: true
+                });
+            }
             
             // 更新狀態
             this.state.setData(data);
@@ -82,6 +110,12 @@ class DashboardApp {
             
         } catch (error) {
             console.error('[App] 資料載入失敗:', error);
+            
+            // 記錄錯誤
+            this.auditLogger.log(this.auditLogger.ActionTypes.ERROR, {
+                error: error.message,
+                context: 'loadData'
+            });
             
             // 嘗試載入離線資料
             if (CONFIG.features.enableOfflineMode) {
@@ -249,6 +283,12 @@ class DashboardApp {
     switchLayer(layer) {
         console.log(`[App] 切換到 Layer ${layer}`);
         
+        // 記錄操作
+        this.auditLogger.log(this.auditLogger.ActionTypes.LAYER_SWITCH, {
+            fromLayer: this.state.get('currentLayer'),
+            toLayer: layer
+        });
+        
         // 更新狀態
         this.state.setCurrentLayer(layer);
         
@@ -289,6 +329,12 @@ class DashboardApp {
      */
     switchDetailTab(tabName) {
         console.log(`[App] 切換到 Tab: ${tabName}`);
+        
+        // 記錄操作
+        this.auditLogger.log(this.auditLogger.ActionTypes.TAB_SWITCH, {
+            fromTab: this.state.get('currentDetailTab'),
+            toTab: tabName
+        });
         
         // 更新狀態
         this.state.setCurrentDetailTab(tabName);
