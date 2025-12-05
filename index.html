@@ -5,13 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="數位轉型儀表板 - 追蹤企業數位轉型進度與 KPI">
     <meta name="author" content="Digital Transformation Team">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://script.google.com;">
     <title>數位轉型儀表板 | Digital Transformation Dashboard</title>
     
     <!-- Chart.js CDN with SRI -->
+    <script>
+        function handleChartJSError() {
+            console.error('Failed to load Chart.js from CDN');
+            window.addEventListener('DOMContentLoaded', function() {
+                if (document.body) {
+                    document.body.insertAdjacentHTML('afterbegin', '<div style="background:#fee2e2;color:#dc2626;padding:1rem;text-align:center;font-weight:bold;">⚠️ 無法載入圖表庫，部分功能可能無法使用</div>');
+                }
+            });
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" 
-            integrity="sha384-JGSJzkTktv2L8QN0RGl8RrqXNEQJBhE3UhJRvB5W9Zz8LyvqJUhJj7WbFqP9kp5+" 
+            integrity="sha384-OLBgp1GsljhM2TJ+sbHjaiH9txEUvgdDTAzHv2P24donTt6/529l+9Ua0vFImLlb" 
             crossorigin="anonymous"
-            onerror="console.error('Failed to load Chart.js from CDN')"></script>
+            onerror="handleChartJSError()"></script>
     
     <!-- 自訂樣式 -->
     <link rel="stylesheet" href="css/styles.css">
@@ -22,7 +33,7 @@
         <header class="header">
             <h1>🚀 數位轉型儀表板</h1>
             <div class="meta">
-                <span>📅 <span id="current-date">2025-12-05</span></span>
+                <span>📅 <span id="current-date">--</span></span>
                 <span>🕒 最後更新: <span id="last-refresh">--:--:--</span></span>
                 <span>👤 管理團隊</span>
                 <button id="refresh-btn" class="btn-refresh">🔄 重新整理</button>
@@ -291,6 +302,9 @@
 
     <!-- JavaScript Modules (按順序載入) -->
     <script src="js/config.js"></script>
+    <script src="js/security.js"></script>
+    <script src="js/auditLog.js"></script>
+    <script src="js/dataProtection.js"></script>
     <script src="js/api.js"></script>
     <script src="js/state.js"></script>
     <script src="js/charts.js"></script>

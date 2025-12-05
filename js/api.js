@@ -17,6 +17,9 @@ class DashboardAPI {
         this.cacheExpiry = config.cacheExpiry;
         this.cache = new Map();
         
+        // 初始化 Security 模組（如果可用）
+        this.security = window.Security ? new window.Security() : null;
+        
         console.log('[API] DashboardAPI 已初始化');
     }
     
@@ -24,7 +27,18 @@ class DashboardAPI {
      * 發送 HTTP 請求（含重試機制）
      */
     async request(endpoint = '', params = {}, attempt = 1) {
+        // 速率限制檢查
+        if (this.security && !this.security.checkRateLimit('api')) {
+            throw new Error('請求頻率過高，請稍後再試');
+        }
+        
         const url = this.buildUrl(endpoint, params);
+        
+        // URL 驗證
+        if (this.security && !this.security.validateUrl(url)) {
+            throw new Error('無效的 URL');
+        }
+        
         const cacheKey = url;
         
         // 檢查快取

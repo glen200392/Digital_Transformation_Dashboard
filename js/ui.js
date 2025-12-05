@@ -10,7 +10,23 @@
 class UIManager {
     constructor(config = CONFIG) {
         this.config = config;
+        // 初始化 Security 模組用於 XSS 防護
+        this.security = window.Security ? new window.Security() : null;
         console.log('[UI] UIManager 已初始化');
+    }
+    
+    /**
+     * 安全地轉義 HTML（XSS 防護）
+     */
+    escapeHtml(str) {
+        if (this.security) {
+            return this.security.escapeHtml(str);
+        }
+        // 降級方案
+        if (typeof str !== 'string') return str;
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
     }
     
     /**
@@ -124,14 +140,14 @@ class UIManager {
                     ${this.getProgressIcon(item.progress)}
                 </div>
                 <div class="info">
-                    <div class="title">${item.title}</div>
-                    <div class="subtitle">${item.owner} • ${item.deadline}</div>
+                    <div class="title">${this.escapeHtml(item.title)}</div>
+                    <div class="subtitle">${this.escapeHtml(item.owner)} • ${this.escapeHtml(item.deadline)}</div>
                 </div>
                 <div class="progress">
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${item.progress}%"></div>
+                        <div class="progress-fill" style="width: ${parseInt(item.progress)}%"></div>
                     </div>
-                    <div class="progress-text">${item.progress}% 完成</div>
+                    <div class="progress-text">${parseInt(item.progress)}% 完成</div>
                 </div>
             `;
             container.appendChild(div);
@@ -205,22 +221,22 @@ class UIManager {
         projects.forEach(project => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td>${project.name}</td>
-                <td>${project.department}</td>
+                <td>${this.escapeHtml(project.name)}</td>
+                <td>${this.escapeHtml(project.department)}</td>
                 <td>
                     <div class="project-status">
                         <span class="status-dot ${this.getStatus(project.progress, this.config.thresholds.progress)}"></span>
-                        ${project.status}
+                        ${this.escapeHtml(project.status)}
                     </div>
                 </td>
                 <td>
                     <div class="progress-bar">
-                        <div class="progress-fill" style="width: ${project.progress}%"></div>
+                        <div class="progress-fill" style="width: ${parseInt(project.progress)}%"></div>
                     </div>
-                    <div class="progress-text">${project.progress}%</div>
+                    <div class="progress-text">${parseInt(project.progress)}%</div>
                 </td>
-                <td>${project.budget}</td>
-                <td>${project.timeline}</td>
+                <td>${this.escapeHtml(project.budget)}</td>
+                <td>${this.escapeHtml(project.timeline)}</td>
             `;
             tbody.appendChild(tr);
         });
@@ -287,7 +303,7 @@ class UIManager {
         toast.className = `toast ${type}`;
         toast.innerHTML = `
             <span>${this.getNotificationIcon(type)}</span>
-            <span>${message}</span>
+            <span>${this.escapeHtml(message)}</span>
         `;
         
         let container = document.querySelector('.toast-container');

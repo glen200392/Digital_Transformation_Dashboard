@@ -132,9 +132,26 @@ const CONFIG = {
         }
     },
     
+    // ==================== 安全性設定 ====================
+    security: {
+        enableXSSProtection: true,         // XSS 防護
+        enableRateLimiting: true,          // 速率限制
+        maxRequestsPerMinute: 60,          // 每分鐘最大請求數
+        enableAuditLog: true,              // 審計日誌
+        auditLogRetentionDays: 30          // 日誌保留天數
+    },
+    
+    // ==================== 資料保護設定 ====================
+    dataProtection: {
+        enableAutoBackup: true,            // 自動備份
+        maxBackupVersions: 5,              // 最大備份版本數
+        confirmBeforeDelete: true,         // 刪除前確認
+        enableDataValidation: true         // 資料驗證
+    },
+    
     // ==================== 版本資訊 ====================
     version: {
-        app: '2.0.0',
+        app: '2.1.0',
         api: 'v2',
         buildDate: '2025-12-05',
         changelog: 'https://github.com/glen200392/Digital_Transformation_Dashboard/releases'
@@ -152,6 +169,8 @@ Object.freeze(CONFIG.thresholds);
 Object.freeze(CONFIG.statusColors);
 Object.freeze(CONFIG.features);
 Object.freeze(CONFIG.storage);
+Object.freeze(CONFIG.security);
+Object.freeze(CONFIG.dataProtection);
 Object.freeze(CONFIG.version);
 
 // 匯出給其他模組使用
