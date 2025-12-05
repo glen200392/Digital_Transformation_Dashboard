@@ -22,6 +22,9 @@
 // Google Sheet ID - 請替換為您的 Sheet ID
 const SHEET_ID = '1yyjwY2tDcV1_6mF8KjdkkEPz4jYGWWnIZIiWrbpNpfk';
 
+// API 版本
+const API_VERSION = '2.2.0';
+
 // 工作表名稱對照（對應用戶現有的工作表）
 const SHEET_NAMES = {
   CONFIG: 'Config',              // 設定工作表
@@ -138,7 +141,7 @@ function getFullData() {
       metrics: metrics,
       charts: charts,
       metadata: {
-        version: '2.0.0',
+        version: API_VERSION,
         lastUpdate: new Date().toISOString(),
         source: 'google_sheets',
         sheetId: SHEET_ID
@@ -905,7 +908,7 @@ function getHealthCheck() {
   return {
     status: allAvailable ? 'healthy' : 'degraded',
     timestamp: new Date().toISOString(),
-    version: '2.2.0',
+    version: API_VERSION,
     sheetId: SHEET_ID,
     sheets: status
   };
