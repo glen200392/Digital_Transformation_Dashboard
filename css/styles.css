@@ -851,6 +851,65 @@ body {
     }
 }
 
+/* ==================== Sync Status Indicator ==================== */
+.sync-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+}
+
+.sync-connecting {
+    background: #e0e7ff;
+    color: #4338ca;
+}
+
+.sync-live {
+    background: var(--success-bg);
+    color: var(--success-text);
+}
+
+.sync-cache {
+    background: var(--warning-bg);
+    color: var(--warning-text);
+}
+
+.sync-offline {
+    background: #ffedd5;
+    color: #ea580c;
+}
+
+.sync-error {
+    background: var(--danger-bg);
+    color: var(--danger-text);
+}
+
+/* ==================== Skeleton Loading Animation ==================== */
+.skeleton {
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: var(--radius-sm);
+}
+
+@keyframes skeleton-loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+.skeleton-text {
+    height: 1em;
+    margin: 0.25em 0;
+}
+
+.skeleton-box {
+    height: 100px;
+    width: 100%;
+}
+
 /* ==================== Utility Classes ==================== */
 .text-center { text-align: center; }
 .text-left { text-align: left; }
