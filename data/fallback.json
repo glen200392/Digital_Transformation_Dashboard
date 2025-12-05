@@ -1,0 +1,150 @@
+{
+  "kpi": {
+    "healthScore": 76,
+    "healthTrend": "up",
+    "roi": 145,
+    "progress": 73,
+    "engagement": 68,
+    "highRisks": 0
+  },
+  "quickWins": [
+    {
+      "title": "自動化報表系統",
+      "owner": "IT 部門",
+      "deadline": "2025-12-15",
+      "progress": 85
+    },
+    {
+      "title": "線上協作平台導入",
+      "owner": "人資部",
+      "deadline": "2025-12-20",
+      "progress": 72
+    },
+    {
+      "title": "客戶自助服務入口",
+      "owner": "客服部",
+      "deadline": "2025-12-25",
+      "progress": 58
+    },
+    {
+      "title": "數據視覺化儀表板",
+      "owner": "數據分析組",
+      "deadline": "2025-12-30",
+      "progress": 45
+    }
+  ],
+  "risks": [
+    {
+      "id": 1,
+      "title": "預算超支風險",
+      "probability": "low",
+      "impact": "med",
+      "status": "監控中"
+    },
+    {
+      "id": 2,
+      "title": "人才流失",
+      "probability": "med",
+      "impact": "high",
+      "status": "已緩解"
+    },
+    {
+      "id": 3,
+      "title": "技術債務累積",
+      "probability": "med",
+      "impact": "med",
+      "status": "處理中"
+    },
+    {
+      "id": 4,
+      "title": "數據安全問題",
+      "probability": "low",
+      "impact": "high",
+      "status": "已緩解"
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "name": "核心系統現代化",
+      "department": "IT",
+      "status": "進行中",
+      "progress": 65,
+      "budget": "$500K",
+      "timeline": "Q1-Q4 2025"
+    },
+    {
+      "id": 2,
+      "name": "客戶體驗優化",
+      "department": "業務",
+      "status": "進行中",
+      "progress": 78,
+      "budget": "$300K",
+      "timeline": "Q2-Q3 2025"
+    },
+    {
+      "id": 3,
+      "name": "數據分析平台",
+      "department": "數據",
+      "status": "進行中",
+      "progress": 52,
+      "budget": "$450K",
+      "timeline": "Q1-Q3 2025"
+    },
+    {
+      "id": 4,
+      "name": "雲端遷移計畫",
+      "department": "IT",
+      "status": "規劃中",
+      "progress": 35,
+      "budget": "$800K",
+      "timeline": "Q3 2025-Q1 2026"
+    },
+    {
+      "id": 5,
+      "name": "AI 客服機器人",
+      "department": "客服",
+      "status": "進行中",
+      "progress": 88,
+      "budget": "$200K",
+      "timeline": "Q1-Q2 2025"
+    }
+  ],
+  "resources": {
+    "totalBudget": "$2.5M",
+    "usedBudget": "$1.8M (72%)",
+    "totalHeadcount": 45,
+    "allocatedHeadcount": "38 (84%)"
+  },
+  "metrics": {
+    "adoption": "67%",
+    "satisfaction": "4.2/5",
+    "efficiency": "+28%"
+  },
+  "charts": {
+    "radar": {
+      "labels": ["策略規劃", "流程優化", "技術能力", "人才發展", "數據治理", "創新文化"],
+      "current": [75, 82, 68, 71, 79, 85],
+      "target": [85, 90, 85, 85, 90, 90]
+    },
+    "burndown": {
+      "labels": ["Week 1", "Week 2", "Week 3", "Week 4", "Week 5", "Week 6"],
+      "ideal": [100, 83, 66, 49, 32, 15],
+      "actual": [100, 85, 68, 52, 35, 18]
+    },
+    "funnel": {
+      "labels": ["認知階段", "學習階段", "實作階段", "精通階段", "教學階段"],
+      "values": [450, 320, 180, 95, 42]
+    },
+    "adoption": {
+      "labels": ["創新者", "早期採用者", "早期大眾", "晚期大眾", "落後者"],
+      "values": [2.5, 13.5, 34, 34, 16]
+    }
+  },
+  "metadata": {
+    "version": "2.0.0",
+    "lastUpdate": "2025-12-05T00:00:00Z",
+    "source": "fallback",
+    "note": "這是離線備用資料，僅供無法連接 API 時使用"
+  }
+}

@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="數位轉型儀表板 - 追蹤企業數位轉型進度與 KPI">
+    <meta name="author" content="Digital Transformation Team">
+    <title>數位轉型儀表板 | Digital Transformation Dashboard</title>
+    
+    <!-- Chart.js CDN with SRI -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" 
+            integrity="sha384-JGSJzkTktv2L8QN0RGl8RrqXNEQJBhE3UhJRvB5W9Zz8LyvqJUhJj7WbFqP9kp5+" 
+            crossorigin="anonymous"
+            onerror="console.error('Failed to load Chart.js from CDN')"></script>
+    
+    <!-- 自訂樣式 -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- ==================== Header ==================== -->
+        <header class="header">
+            <h1>🚀 數位轉型儀表板</h1>
+            <div class="meta">
+                <span>📅 <span id="current-date">2025-12-05</span></span>
+                <span>🕒 最後更新: <span id="last-refresh">--:--:--</span></span>
+                <span>👤 管理團隊</span>
+                <button id="refresh-btn" class="btn-refresh">🔄 重新整理</button>
+            </div>
+        </header>
+
+        <!-- ==================== Layer Navigation ==================== -->
+        <nav class="layer-nav">
+            <button class="layer-btn active" data-layer="1">
+                Layer 1: Executive Summary
+                <small>高階主管摘要</small>
+            </button>
+            <button class="layer-btn" data-layer="2">
+                Layer 2: Operational Dashboard
+                <small>營運儀表板</small>
+            </button>
+            <button class="layer-btn" data-layer="3">
+                Layer 3: Detailed Analysis
+                <small>詳細分析</small>
+            </button>
+        </nav>
+
+        <!-- ==================== Layer 1: Executive Summary ==================== -->
+        <section class="layer-section active" data-layer="1">
+            <div class="executive-summary">
+                <!-- Hero Score -->
+                <div class="hero-score">
+                    <h2>轉型健康度總分</h2>
+                    <div class="score" id="health-score">76</div>
+                    <div class="trend" id="health-trend">📈 +3</div>
+                    <div class="formula">
+                        計算公式: (進度×0.3 + ROI×0.25 + 參與度×0.25 + 風險控制×0.2)
+                    </div>
+                </div>
+
+                <!-- KPI Grid -->
+                <div class="kpi-grid">
+                    <div class="kpi-card green">
+                        <div class="label">投資報酬率 (ROI)</div>
+                        <div class="value" id="kpi-roi">145%</div>
+                        <span class="status green" id="kpi-roi-status">優秀</span>
+                    </div>
+                    
+                    <div class="kpi-card yellow">
+                        <div class="label">整體進度</div>
+                        <div class="value" id="kpi-progress">73%</div>
+                        <span class="status yellow" id="kpi-progress-status">正常</span>
+                    </div>
+                    
+                    <div class="kpi-card yellow">
+                        <div class="label">員工參與度</div>
+                        <div class="value" id="kpi-engagement">68%</div>
+                        <span class="status yellow" id="kpi-engagement-status">正常</span>
+                    </div>
+                    
+                    <div class="kpi-card green">
+                        <div class="label">高風險項目</div>
+                        <div class="value" id="kpi-risks">0</div>
+                        <span class="status green" id="kpi-risks-status">優秀</span>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="show-risk-details">
+                        🎯 查看風險詳情
+                    </button>
+                    <button class="btn btn-secondary" id="show-weekly-focus">
+                        📋 本週重點項目
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== Layer 2: Operational Dashboard ==================== -->
+        <section class="layer-section" data-layer="2">
+            <div class="operational-dashboard">
+                <!-- Quick Wins Module -->
+                <div class="dashboard-module" id="quick-wins">
+                    <div class="module-header">
+                        <h3>⚡ Quick Wins 進度追蹤</h3>
+                    </div>
+                    <div class="quick-wins" id="quick-wins-list">
+                        <!-- Quick wins will be populated by JavaScript -->
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="burndown-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Maturity Radar -->
+                <div class="dashboard-module">
+                    <div class="module-header">
+                        <h3>🎯 轉型成熟度分析</h3>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="radar-chart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Risk Heatmap -->
+                <div class="dashboard-module" id="risk-heatmap">
+                    <div class="module-header">
+                        <h3>🔥 風險熱力圖</h3>
+                        <div class="filter">
+                            <button class="filter-btn active" data-filter="all">全部</button>
+                            <button class="filter-btn" data-filter="high">高風險</button>
+                            <button class="filter-btn" data-filter="active">進行中</button>
+                        </div>
+                    </div>
+                    <div class="risk-grid">
+                        <div class="risk-cell high-high" id="risk-high-high">
+                            <div class="risk-label">高/高</div>
+                            <div class="risk-count">0</div>
+                        </div>
+                        <div class="risk-cell high-med" id="risk-high-med">
+                            <div class="risk-label">高/中</div>
+                            <div class="risk-count">0</div>
+                        </div>
+                        <div class="risk-cell high-low" id="risk-high-low">
+                            <div class="risk-label">高/低</div>
+                            <div class="risk-count">0</div>
+                        </div>
+                        <div class="risk-cell med-high" id="risk-med-high">
+                            <div class="risk-label">中/高</div>
+                            <div class="risk-count">0</div>
+                        </div>
+                        <div class="risk-cell med-med" id="risk-med-med">
+                            <div class="risk-label">中/中</div>
+                            <div class="risk-count">0</div>
+                        </div>
+                        <div class="risk-cell med-low" id="risk-med-low">
+                            <div class="risk-label">中/低</div>
+                            <div class="risk-count">0</div>
+                        </div>
+                        <div class="risk-cell low-high" id="risk-low-high">
+                            <div class="risk-label">低/高</div>
+                            <div class="risk-count">0</div>
+                        </div>
+                        <div class="risk-cell low-med" id="risk-low-med">
+                            <div class="risk-label">低/中</div>
+                            <div class="risk-count">0</div>
+                        </div>
+                        <div class="risk-cell low-low" id="risk-low-low">
+                            <div class="risk-label">低/低</div>
+                            <div class="risk-count">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== Layer 3: Detailed Analysis ==================== -->
+        <section class="layer-section" data-layer="3">
+            <div class="detailed-analysis">
+                <!-- Detail Tabs -->
+                <div class="detail-tabs">
+                    <button class="detail-tab active" data-tab="projects">專案列表</button>
+                    <button class="detail-tab" data-tab="resources">資源配置</button>
+                    <button class="detail-tab" data-tab="capability">能力建設</button>
+                    <button class="detail-tab" data-tab="metrics">關鍵指標</button>
+                </div>
+
+                <!-- Detail Content -->
+                <div class="detail-content">
+                    <!-- Projects Tab -->
+                    <div class="detail-tab-content active" data-tab="projects">
+                        <h3>📊 專案執行狀態</h3>
+                        <table class="project-table" id="project-table">
+                            <thead>
+                                <tr>
+                                    <th>專案名稱</th>
+                                    <th>部門</th>
+                                    <th>狀態</th>
+                                    <th>進度</th>
+                                    <th>預算</th>
+                                    <th>時程</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Projects will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Resources Tab -->
+                    <div class="detail-tab-content" data-tab="resources">
+                        <h3>💰 資源配置概況</h3>
+                        <div class="resource-grid">
+                            <div class="resource-card">
+                                <div class="label">總預算</div>
+                                <div class="value" id="total-budget">$2.5M</div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="label">已使用預算</div>
+                                <div class="value" id="used-budget">$1.8M</div>
+                                <div class="subtext">72%</div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="label">總人力</div>
+                                <div class="value" id="total-headcount">45</div>
+                            </div>
+                            <div class="resource-card">
+                                <div class="label">已配置人力</div>
+                                <div class="value" id="allocated-headcount">38</div>
+                                <div class="subtext">84%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Capability Tab -->
+                    <div class="detail-tab-content" data-tab="capability">
+                        <h3>🎓 能力建設進展</h3>
+                        <div class="chart-container">
+                            <canvas id="funnel-chart"></canvas>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="adoption-chart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Metrics Tab -->
+                    <div class="detail-tab-content" data-tab="metrics">
+                        <h3>📈 關鍵成功指標</h3>
+                        <div class="metric-grid">
+                            <div class="metric-card">
+                                <div class="label">技術採用率</div>
+                                <div class="value" id="metric-adoption">67%</div>
+                                <div class="target">目標: 75%</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="label">用戶滿意度</div>
+                                <div class="value" id="metric-satisfaction">4.2</div>
+                                <div class="target">目標: 4.5/5</div>
+                            </div>
+                            <div class="metric-card">
+                                <div class="label">效率提升</div>
+                                <div class="value" id="metric-efficiency">+28%</div>
+                                <div class="target">目標: +30%</div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert-box warning">
+                            <h4>⚠️ 需要關注的領域</h4>
+                            <ul>
+                                <li>員工參與度略低於目標，需加強溝通與培訓</li>
+                                <li>部分專案進度落後，建議重新評估資源配置</li>
+                                <li>技術採用率成長趨緩，需要新的推廣策略</li>
+                            </ul>
+                        </div>
+
+                        <div class="alert-box info">
+                            <h4>💡 改進建議</h4>
+                            <ul>
+                                <li>增加跨部門協作機會，促進知識分享</li>
+                                <li>建立內部教練制度，加速能力建設</li>
+                                <li>定期舉辦成功案例分享會，提升參與熱情</li>
+                                <li>優化工具和流程，降低使用門檻</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- JavaScript Modules (按順序載入) -->
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- Initialize current date -->
+    <script>
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('zh-TW');
+    </script>
+</body>
+</html>
