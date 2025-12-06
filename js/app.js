@@ -69,6 +69,9 @@ class DashboardApp {
         this.state.setLoading(true);
         this.ui.showLoading('正在從伺服器載入資料...');
         
+        // 顯示連接中狀態
+        this.ui.updateSyncStatus('connecting');
+        
         try {
             // 如果不使用快取，先清除
             if (!useCache) {
@@ -122,6 +125,7 @@ class DashboardApp {
                 await this.loadFallbackData();
             } else {
                 this.state.setError(error);
+                this.ui.updateSyncStatus('error');
                 this.ui.showNotification('無法載入資料', 'error');
             }
             
@@ -145,12 +149,16 @@ class DashboardApp {
             this.state.setData(data);
             this.updateUI(data);
             
+            // 更新為離線狀態
+            this.ui.updateSyncStatus('fallback');
+            
             this.ui.showNotification('已載入離線備用資料', 'warning');
             console.log('[App] 離線資料載入成功');
             
         } catch (error) {
             console.error('[App] 離線資料載入失敗:', error);
             this.state.setError('無法連接伺服器且沒有可用的離線資料');
+            this.ui.updateSyncStatus('error');
             this.ui.showNotification('無法載入資料', 'error');
         }
     }
@@ -159,6 +167,16 @@ class DashboardApp {
      * 更新 UI
      */
     updateUI(data) {
+        // 更新設定（標題、團隊名稱）
+        if (data.settings) {
+            this.ui.updateSettings(data.settings);
+        }
+        
+        // 更新元資料（同步狀態）
+        if (data.metadata) {
+            this.ui.updateMetadata(data.metadata);
+        }
+        
         const currentLayer = this.state.get('currentLayer');
         
         // 更新對應的 Layer

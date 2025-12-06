@@ -396,6 +396,66 @@ class UIManager {
         };
         return icons[type] || icons.info;
     }
+    
+    /**
+     * 更新同步狀態顯示
+     * @param {string} source - 資料來源: 'google_sheets', 'cache', 'fallback', 'error', 'connecting'
+     */
+    updateSyncStatus(source) {
+        const statusEl = document.getElementById('sync-status');
+        if (!statusEl) return;
+        
+        const statusConfig = {
+            'google_sheets': { icon: '🟢', text: 'Google Sheet (即時)', class: 'sync-live' },
+            'cache': { icon: '🟡', text: '快取資料', class: 'sync-cache' },
+            'fallback': { icon: '🟠', text: '離線資料', class: 'sync-offline' },
+            'error': { icon: '🔴', text: '無法連接', class: 'sync-error' },
+            'connecting': { icon: '⏳', text: '連接中...', class: 'sync-connecting' }
+        };
+        
+        const config = statusConfig[source] || statusConfig['error'];
+        statusEl.textContent = `${config.icon} ${config.text}`;
+        statusEl.className = 'sync-status ' + config.class;
+        
+        console.log(`[UI] 同步狀態已更新: ${source}`);
+    }
+    
+    /**
+     * 更新設定資訊（標題、團隊名稱）
+     * @param {object} settings - 設定物件
+     */
+    updateSettings(settings) {
+        if (!settings) return;
+        
+        // 更新標題
+        const titleEl = document.querySelector('header h1');
+        if (titleEl && settings.title) {
+            titleEl.textContent = '🚀 ' + this.escapeHtml(settings.title);
+        }
+        
+        // 更新團隊名稱
+        const teamEl = document.getElementById('team-name');
+        if (teamEl && settings.teamName) {
+            teamEl.textContent = '👤 ' + this.escapeHtml(settings.teamName);
+        }
+        
+        console.log('[UI] Settings 已更新');
+    }
+    
+    /**
+     * 更新元資料（資料來源狀態）
+     * @param {object} metadata - 元資料物件
+     */
+    updateMetadata(metadata) {
+        if (!metadata) return;
+        
+        // 更新同步狀態
+        if (metadata.source) {
+            this.updateSyncStatus(metadata.source);
+        }
+        
+        console.log('[UI] Metadata 已更新');
+    }
 }
 
 // 匯出供其他模組使用

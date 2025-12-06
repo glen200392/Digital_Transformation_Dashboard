@@ -22,6 +22,9 @@
 // Google Sheet ID - 請替換為您的 Sheet ID
 const SHEET_ID = '1yyjwY2tDcV1_6mF8KjdkkEPz4jYGWWnIZIiWrbpNpfk';
 
+// API 版本
+const API_VERSION = '2.2.0';
+
 // 工作表名稱對照（對應用戶現有的工作表）
 const SHEET_NAMES = {
   CONFIG: 'Config',              // 設定工作表
@@ -79,6 +82,12 @@ function doGet(e) {
       case 'charts':
         result = getChartData();
         break;
+      case 'health':
+        result = getHealthCheck();
+        break;
+      case 'validate':
+        result = validateDataQuality();
+        break;
       default:
         result = { error: '未知的 endpoint: ' + endpoint };
     }
@@ -132,7 +141,7 @@ function getFullData() {
       metrics: metrics,
       charts: charts,
       metadata: {
-        version: '2.0.0',
+        version: API_VERSION,
         lastUpdate: new Date().toISOString(),
         source: 'google_sheets',
         sheetId: SHEET_ID
@@ -776,6 +785,185 @@ function getDefaultChartData() {
       values: [2.5, 13.5, 34, 34, 16]
     }
   };
+}
+
+// ==================== 資料品質驗證 ====================
+
+/**
+ * 驗證資料品質
+ * 可設定為定時觸發器執行每日檢查
+ */
+function validateDataQuality() {
+  const issues = [];
+  
+  try {
+    // 1. 檢查 KPI 資料合理性
+    const kpi = getKPI();
+    if (kpi.healthScore < 0 || kpi.healthScore > 100) {
+      issues.push('KPI: healthScore 超出範圍 (0-100)，當前值: ' + kpi.healthScore);
+    }
+    if (!['up', 'down', 'stable'].includes(kpi.healthTrend)) {
+      issues.push('KPI: healthTrend 值無效，當前值: ' + kpi.healthTrend);
+    }
+    if (kpi.progress < 0 || kpi.progress > 100) {
+      issues.push('KPI: progress 超出範圍 (0-100)，當前值: ' + kpi.progress);
+    }
+    
+    // 2. 檢查專案進度
+    const projects = getProjects();
+    projects.forEach(p => {
+      if (p.progress < 0 || p.progress > 100) {
+        issues.push(`專案 "${p.name}": 進度超出範圍 (0-100)，當前值: ${p.progress}`);
+      }
+    });
+    
+    // 3. 檢查風險資料
+    const risks = getRisks();
+    risks.forEach(r => {
+      if (!['high', 'med', 'low'].includes(r.impact)) {
+        issues.push(`風險 "${r.title}": impact 值無效，當前值: ${r.impact}`);
+      }
+      if (!['high', 'med', 'low'].includes(r.probability)) {
+        issues.push(`風險 "${r.title}": probability 值無效，當前值: ${r.probability}`);
+      }
+    });
+    
+    // 4. 發送報告（如有問題）
+    if (issues.length > 0) {
+      sendQualityReport(issues);
+    }
+    
+    return { 
+      valid: issues.length === 0, 
+      issues: issues,
+      timestamp: new Date().toISOString()
+    };
+    
+  } catch (error) {
+    console.error('validateDataQuality 錯誤:', error);
+    return {
+      valid: false,
+      issues: ['驗證過程發生錯誤: ' + error.message],
+      timestamp: new Date().toISOString()
+    };
+  }
+}
+
+/**
+ * 發送品質報告郵件
+ */
+function sendQualityReport(issues) {
+  try {
+    const email = Session.getActiveUser().getEmail();
+    if (!email) {
+      console.warn('無法取得使用者 email，跳過發送報告');
+      return;
+    }
+    
+    const subject = '⚠️ 數位轉型儀表板 - 資料品質警告';
+    const body = `發現以下資料品質問題：
+
+${issues.map((issue, i) => `${i + 1}. ${issue}`).join('\n')}
+
+請登入 Google Sheet 修正上述問題。
+
+---
+此郵件由系統自動發送
+時間：${new Date().toLocaleString('zh-TW')}
+`;
+    
+    MailApp.sendEmail(email, subject, body);
+    console.log('品質報告已發送至:', email);
+    
+  } catch (error) {
+    console.error('sendQualityReport 錯誤:', error);
+  }
+}
+
+// ==================== 健康檢查端點 ====================
+
+/**
+ * 健康檢查 - 回傳系統狀態
+ */
+function getHealthCheck() {
+  const sheets = [
+    { name: SHEET_NAMES.KPI, label: 'KPI_Metrics' },
+    { name: SHEET_NAMES.PROJECTS, label: 'Projects' },
+    { name: SHEET_NAMES.RISKS, label: 'Risk_Register' },
+    { name: SHEET_NAMES.CAPABILITY, label: 'Capability' },
+    { name: SHEET_NAMES.CONFIG, label: 'Config' }
+  ];
+  
+  const status = sheets.map(s => {
+    const sheet = getSheet(s.name);
+    return {
+      name: s.label,
+      available: sheet !== null,
+      rowCount: sheet ? sheet.getLastRow() : 0
+    };
+  });
+  
+  const allAvailable = status.every(s => s.available);
+  
+  return {
+    status: allAvailable ? 'healthy' : 'degraded',
+    timestamp: new Date().toISOString(),
+    version: API_VERSION,
+    sheetId: SHEET_ID,
+    sheets: status
+  };
+}
+
+/**
+ * 設定每日健康檢查觸發器
+ * 執行此函數一次來建立定時任務
+ */
+function setupDailyHealthCheck() {
+  // 移除舊的觸發器
+  const triggers = ScriptApp.getProjectTriggers();
+  triggers.forEach(trigger => {
+    if (trigger.getHandlerFunction() === 'runDailyHealthCheck') {
+      ScriptApp.deleteTrigger(trigger);
+    }
+  });
+  
+  // 建立新的每日觸發器（每天早上 9 點執行）
+  ScriptApp.newTrigger('runDailyHealthCheck')
+    .timeBased()
+    .everyDays(1)
+    .atHour(9)
+    .create();
+    
+  console.log('每日健康檢查觸發器已設定');
+}
+
+/**
+ * 每日健康檢查執行函數
+ */
+function runDailyHealthCheck() {
+  console.log('執行每日健康檢查...');
+  
+  const health = getHealthCheck();
+  const validation = validateDataQuality();
+  
+  console.log('健康檢查結果:', JSON.stringify(health, null, 2));
+  console.log('資料驗證結果:', JSON.stringify(validation, null, 2));
+  
+  // 如果有問題，發送報告
+  if (!validation.valid || health.status !== 'healthy') {
+    const allIssues = validation.issues || [];
+    
+    if (health.status !== 'healthy') {
+      const unavailableSheets = health.sheets
+        .filter(s => !s.available)
+        .map(s => s.name);
+      allIssues.push(`工作表不可用: ${unavailableSheets.join(', ')}`);
+    }
+    
+    if (allIssues.length > 0) {
+      sendQualityReport(allIssues);
+    }
+  }
 }
 
 // ==================== 測試函數 ====================

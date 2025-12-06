@@ -1,4 +1,15 @@
 {
+  "settings": {
+    "title": "數位轉型儀表板",
+    "teamName": "管理團隊",
+    "reportDate": "2025-12-05",
+    "refreshInterval": 300000
+  },
+  "metadata": {
+    "version": "2.2.0",
+    "lastUpdate": "2025-12-05T00:00:00.000Z",
+    "source": "fallback"
+  },
   "kpi": {
     "healthScore": 76,
     "healthTrend": "up",
@@ -140,11 +151,5 @@
       "labels": ["創新者", "早期採用者", "早期大眾", "晚期大眾", "落後者"],
       "values": [2.5, 13.5, 34, 34, 16]
     }
-  },
-  "metadata": {
-    "version": "2.0.0",
-    "lastUpdate": "2025-12-05T00:00:00Z",
-    "source": "fallback",
-    "note": "這是離線備用資料，僅供無法連接 API 時使用"
   }
 }
