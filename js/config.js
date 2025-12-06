@@ -149,11 +149,52 @@ const CONFIG = {
         enableDataValidation: true         // 資料驗證
     },
     
+    // ==================== 資料導入設定 ====================
+    dataImport: {
+        allowedFileTypes: ['.xlsx', '.xls', '.csv'],
+        maxFileSize: 5 * 1024 * 1024,  // 5MB
+        maxRowsPerImport: 1000,
+        importMode: 'append',           // 'append' | 'replace'
+        validateOnUpload: true,
+        showPreview: true,
+        supportedDataTypes: ['kpi', 'projects', 'quickwins', 'risks']
+    },
+    
+    // ==================== AI 服務設定（預留接口）====================
+    ai: {
+        // 語音辨識 (ASR)
+        speech: {
+            enabled: false,
+            provider: 'whisper',        // 'whisper' | 'azure' | 'google'
+            endpoint: '',               // 本地或雲端 API 端點
+            apiKey: '',                 // 從環境變數或安全儲存讀取
+            language: 'zh-TW',
+            model: 'large-v3'
+        },
+        // LLM 文字理解
+        llm: {
+            enabled: false,
+            provider: 'local',          // 'local' | 'openai' | 'claude' | 'gemini'
+            endpoint: '',               // 本地 LLM 端點 (如 Ollama)
+            apiKey: '',
+            model: '',
+            systemPrompt: '你是數位轉型專案助理，協助分析和整理專案資料。請將非結構化資料轉換為結構化格式。'
+        },
+        // OCR/視覺辨識
+        vision: {
+            enabled: false,
+            provider: 'paddleocr',      // 'paddleocr' | 'llava' | 'qwen-vl'
+            endpoint: '',
+            apiKey: '',
+            supportedFormats: ['jpg', 'png', 'pdf']
+        }
+    },
+    
     // ==================== 版本資訊 ====================
     version: {
-        app: '2.1.0',
+        app: '2.2.0',
         api: 'v2',
-        buildDate: '2025-12-05',
+        buildDate: '2025-12-06',
         changelog: 'https://github.com/glen200392/Digital_Transformation_Dashboard/releases'
     }
 };
@@ -171,6 +212,11 @@ Object.freeze(CONFIG.features);
 Object.freeze(CONFIG.storage);
 Object.freeze(CONFIG.security);
 Object.freeze(CONFIG.dataProtection);
+Object.freeze(CONFIG.dataImport);
+Object.freeze(CONFIG.ai);
+Object.freeze(CONFIG.ai.speech);
+Object.freeze(CONFIG.ai.llm);
+Object.freeze(CONFIG.ai.vision);
 Object.freeze(CONFIG.version);
 
 // 匯出給其他模組使用

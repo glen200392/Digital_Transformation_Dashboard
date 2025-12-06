@@ -37,6 +37,7 @@
                 <span>📅 <span id="current-date">--</span></span>
                 <span>🕒 最後更新: <span id="last-refresh">--:--:--</span></span>
                 <span id="team-name">👤 管理團隊</span>
+                <button id="data-input-btn" class="btn-primary">📥 資料管理</button>
                 <button id="refresh-btn" class="btn-refresh">🔄 重新整理</button>
             </div>
         </header>
@@ -301,6 +302,134 @@
         </section>
     </div>
 
+    <!-- ==================== 資料管理側邊面板 ==================== -->
+    <div id="panel-overlay" class="panel-overlay"></div>
+    <div id="data-input-panel" class="data-input-panel">
+        <div class="panel-header">
+            <h2>📥 資料管理</h2>
+            <button id="close-panel" class="close-panel">✕</button>
+        </div>
+        
+        <div class="panel-tabs">
+            <button class="input-tab-btn active" data-tab="file">📄 檔案導入</button>
+            <button class="input-tab-btn" data-tab="form">📝 表單輸入</button>
+            <button class="input-tab-btn" data-tab="ai">🤖 AI 輔助</button>
+        </div>
+        
+        <div class="panel-content">
+            <!-- 檔案導入 Tab -->
+            <div class="input-tab-content active" data-tab="file">
+                <div class="section-title">上傳 Excel/CSV 檔案</div>
+                
+                <div class="form-group">
+                    <label for="import-data-type">資料類型</label>
+                    <select id="import-data-type" class="form-control">
+                        <option value="projects">專案 (Projects)</option>
+                        <option value="risks">風險 (Risks)</option>
+                        <option value="quickwins">Quick Wins</option>
+                        <option value="kpi">KPI 指標</option>
+                    </select>
+                </div>
+                
+                <div id="file-drop-zone" class="file-drop-zone">
+                    <div class="drop-icon">📁</div>
+                    <p>拖放檔案到此處或點擊選擇</p>
+                    <small>支援 .xlsx, .xls, .csv 格式（最大 5MB）</small>
+                    <input type="file" id="file-input" accept=".xlsx,.xls,.csv" style="display:none;">
+                </div>
+                
+                <div class="template-download">
+                    <p><strong>📥 下載範本:</strong></p>
+                    <div class="template-buttons">
+                        <button class="btn btn-sm btn-outline download-template-btn" data-template="projects">專案範本</button>
+                        <button class="btn btn-sm btn-outline download-template-btn" data-template="risks">風險範本</button>
+                        <button class="btn btn-sm btn-outline download-template-btn" data-template="quickwins">Quick Win 範本</button>
+                        <button class="btn btn-sm btn-outline download-template-btn" data-template="kpi">KPI 範本</button>
+                    </div>
+                </div>
+                
+                <div id="file-preview" class="file-preview"></div>
+                
+                <div class="import-actions">
+                    <button id="confirm-import-btn" class="btn btn-primary" disabled>確認導入</button>
+                </div>
+            </div>
+            
+            <!-- 表單輸入 Tab -->
+            <div class="input-tab-content" data-tab="form">
+                <div class="section-title">選擇資料類型</div>
+                
+                <div class="form-type-grid">
+                    <button class="form-type-btn" data-type="project">
+                        <div class="icon">📊</div>
+                        <div class="label">新增專案</div>
+                    </button>
+                    <button class="form-type-btn" data-type="risk">
+                        <div class="icon">⚠️</div>
+                        <div class="label">新增風險</div>
+                    </button>
+                    <button class="form-type-btn" data-type="quickwin">
+                        <div class="icon">⚡</div>
+                        <div class="label">新增 Quick Win</div>
+                    </button>
+                    <button class="form-type-btn" data-type="kpi">
+                        <div class="icon">📈</div>
+                        <div class="label">更新 KPI</div>
+                    </button>
+                </div>
+                
+                <div id="form-container" class="form-container"></div>
+            </div>
+            
+            <!-- AI 輔助 Tab (預留) -->
+            <div class="input-tab-content" data-tab="ai">
+                <div class="section-title">🤖 AI 輔助功能（即將推出）</div>
+                
+                <div class="ai-feature-list">
+                    <div class="ai-feature disabled">
+                        <div class="feature-icon">🎤</div>
+                        <div class="feature-info">
+                            <h4>語音輸入</h4>
+                            <p>使用語音描述專案或風險，自動轉換為結構化資料</p>
+                            <small class="status">Phase 2 開發中</small>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-feature disabled">
+                        <div class="feature-icon">📝</div>
+                        <div class="feature-info">
+                            <h4>會議記錄分析</h4>
+                            <p>上傳會議記錄，自動提取專案、風險和行動項目</p>
+                            <small class="status">Phase 2 開發中</small>
+                        </div>
+                    </div>
+                    
+                    <div class="ai-feature disabled">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-info">
+                            <h4>文件辨識</h4>
+                            <p>上傳圖片或 PDF，自動辨識並提取資料</p>
+                            <small class="status">Phase 2 開發中</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-config-info">
+                    <h4>💡 如何啟用 AI 功能？</h4>
+                    <ol>
+                        <li>在 <code>js/config.js</code> 中設定 AI 服務參數</li>
+                        <li>配置對應的 API endpoint 和 API key</li>
+                        <li>將 <code>enabled</code> 設為 <code>true</code></li>
+                    </ol>
+                    <p>詳細說明請參考 <code>docs/AI_INTEGRATION.md</code></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SheetJS Library for Excel/CSV parsing -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
     <!-- JavaScript Modules (按順序載入) -->
     <script src="js/config.js"></script>
     <script src="js/security.js"></script>
@@ -310,6 +439,14 @@
     <script src="js/state.js"></script>
     <script src="js/charts.js"></script>
     <script src="js/ui.js"></script>
+    
+    <!-- Data Input Modules (新增) -->
+    <script src="js/inputValidator.js"></script>
+    <script src="js/fileImport.js"></script>
+    <script src="js/formManager.js"></script>
+    <script src="js/aiConnector.js"></script>
+    <script src="js/dataInput.js"></script>
+    
     <script src="js/app.js"></script>
 
     <!-- Initialize current date -->
