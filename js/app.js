@@ -18,6 +18,14 @@ class DashboardApp {
         this.charts = new ChartManager();
         this.ui = new UIManager();
         
+        // 初始化資料輸入模組（新增）
+        this.inputValidator = new InputValidator();
+        this.dataInputManager = new DataInputManager(this.api, this.inputValidator);
+        
+        // 將 formManager 設為全域變數供 HTML 內聯事件使用
+        window.formManager = this.dataInputManager.formManager;
+        window.uiManager = this.ui;
+        
         // 自動刷新計時器
         this.refreshTimer = null;
         
@@ -36,6 +44,9 @@ class DashboardApp {
             
             // 訂閱狀態變化
             this.subscribeToState();
+            
+            // 初始化資料輸入功能（新增）
+            this.dataInputManager.init();
             
             // 載入初始資料
             await this.loadData();

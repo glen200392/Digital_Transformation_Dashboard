@@ -154,6 +154,68 @@ class DashboardAPI {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
     
+    /**
+     * 發送 POST 請求
+     */
+    async post(endpoint = '', data = {}, attempt = 1) {
+        // 速率限制檢查
+        if (this.security && !this.security.checkRateLimit('api')) {
+            throw new Error('請求頻率過高，請稍後再試');
+        }
+        
+        // 資料清理（XSS 防護）
+        if (this.security) {
+            data = this.security.sanitizeData(data);
+        }
+        
+        const url = this.buildUrl(endpoint);
+        
+        // URL 驗證
+        if (this.security && !this.security.validateUrl(url)) {
+            throw new Error('無效的 URL');
+        }
+        
+        try {
+            console.log(`[API] POST 請求 (嘗試 ${attempt}/${this.retryAttempts}):`, url);
+            
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                signal: controller.signal,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            
+            clearTimeout(timeoutId);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const result = await response.json();
+            
+            console.log('[API] POST 請求成功');
+            return result;
+            
+        } catch (error) {
+            console.error(`[API] POST 請求失敗 (嘗試 ${attempt}):`, error.message);
+            
+            // 如果還有重試次數，則重試
+            if (attempt < this.retryAttempts) {
+                console.log(`[API] ${this.retryDelay}ms 後重試...`);
+                await this.delay(this.retryDelay);
+                return this.post(endpoint, data, attempt + 1);
+            }
+            
+            // 所有重試都失敗，拋出錯誤
+            throw new Error(`API POST 請求失敗: ${error.message}`);
+        }
+    }
+    
     // ==================== API 端點方法 ====================
     
     /**
@@ -237,6 +299,73 @@ class DashboardAPI {
             return await this.request('getAuditLog', { days });
         } catch (error) {
             console.error('[API] 取得審計日誌失敗:', error);
+            throw error;
+        }
+    }
+    
+    // ==================== 資料輸入 API 端點 ====================
+    
+    /**
+     * 新增專案
+     */
+    async addProject(projectData) {
+        try {
+            console.log('[API] 新增專案:', projectData);
+            return await this.post('addProject', projectData);
+        } catch (error) {
+            console.error('[API] 新增專案失敗:', error);
+            throw error;
+        }
+    }
+    
+    /**
+     * 新增風險
+     */
+    async addRisk(riskData) {
+        try {
+            console.log('[API] 新增風險:', riskData);
+            return await this.post('addRisk', riskData);
+        } catch (error) {
+            console.error('[API] 新增風險失敗:', error);
+            throw error;
+        }
+    }
+    
+    /**
+     * 新增 Quick Win
+     */
+    async addQuickWin(quickWinData) {
+        try {
+            console.log('[API] 新增 Quick Win:', quickWinData);
+            return await this.post('addQuickWin', quickWinData);
+        } catch (error) {
+            console.error('[API] 新增 Quick Win 失敗:', error);
+            throw error;
+        }
+    }
+    
+    /**
+     * 更新 KPI
+     */
+    async updateKPI(kpiData) {
+        try {
+            console.log('[API] 更新 KPI:', kpiData);
+            return await this.post('updateKPI', kpiData);
+        } catch (error) {
+            console.error('[API] 更新 KPI 失敗:', error);
+            throw error;
+        }
+    }
+    
+    /**
+     * 批次導入資料
+     */
+    async bulkImport(importData) {
+        try {
+            console.log('[API] 批次導入資料:', importData.type, '筆數:', importData.data.length);
+            return await this.post('bulkImport', importData);
+        } catch (error) {
+            console.error('[API] 批次導入失敗:', error);
             throw error;
         }
     }
