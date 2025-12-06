@@ -9,16 +9,38 @@
  * - 批次資料導入 (bulkImport)
  * - 資料驗證
  * - 錯誤處理
+ * 
+ * 部署說明：
+ * 1. 複製此腳本到您的 Google Apps Script 專案
+ * 2. 修改下方的 SHEET_ID 為您的 Google Sheet ID
+ * 3. 部署為 Web App
  * ============================================================
  */
 
-// ==================== 工作表名稱設定 ====================
+// ==================== 設定區 ====================
+
+// Google Sheet ID - ⚠️ 請替換為您的 Sheet ID
+const SHEET_ID = '1yyjwY2tDcV1_6mF8KjdkkEPz4jYGWWnIZIiWrbpNpfk';
+
+// 工作表名稱設定
 const SHEET_NAMES = {
   PROJECTS: 'Projects',
   RISKS: 'Risk_Register',
   QUICK_WINS: 'QuickWins',
   KPI: 'KPI_Metrics',
   AUDIT_LOG: '_AuditLog'
+};
+
+// 欄位索引對照（方便維護）
+const COLUMN_INDEX = {
+  KPI: {
+    TIMESTAMP: 0,
+    METRIC: 1,    // metric 名稱在第2欄（索引 1）
+    VALUE: 2,
+    TARGET: 3,
+    UNIT: 4,
+    CATEGORY: 5
+  }
 };
 
 /**
@@ -199,7 +221,7 @@ function updateKPI(data) {
   let rowIndex = -1;
   
   for (let i = 1; i < values.length; i++) {
-    if (values[i][1] === data.metric) {  // 假設第2欄是 metric 名稱
+    if (values[i][COLUMN_INDEX.KPI.METRIC] === data.metric) {
       rowIndex = i + 1;
       break;
     }

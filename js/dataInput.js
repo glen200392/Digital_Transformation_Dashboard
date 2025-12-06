@@ -296,10 +296,15 @@ class DataInputManager {
         });
         
         if (validData.length === 0) {
-            alert('沒有有效的資料可以導入');
+            if (window.uiManager) {
+                window.uiManager.showNotification('沒有有效的資料可以導入', 'error');
+            } else {
+                alert('沒有有效的資料可以導入');
+            }
             return;
         }
         
+        // 使用 UI manager 確認對話框（如果可用），否則使用原生 confirm
         const confirmed = confirm(`即將導入 ${validData.length} 筆資料，是否繼續？`);
         if (!confirmed) return;
         
@@ -319,7 +324,11 @@ class DataInputManager {
             const result = await this.api.bulkImport(importData);
             
             if (result && result.success) {
-                alert(`✅ 成功導入 ${validData.length} 筆資料`);
+                if (window.uiManager) {
+                    window.uiManager.showNotification(`成功導入 ${validData.length} 筆資料`, 'success');
+                } else {
+                    alert(`✅ 成功導入 ${validData.length} 筆資料`);
+                }
                 
                 // 清除預覽
                 this.fileImport.clearParsedData();
@@ -340,7 +349,11 @@ class DataInputManager {
             
         } catch (error) {
             console.error('[DataInputManager] 導入失敗:', error);
-            alert(`❌ 導入失敗: ${error.message}`);
+            if (window.uiManager) {
+                window.uiManager.showNotification(`導入失敗: ${error.message}`, 'error');
+            } else {
+                alert(`❌ 導入失敗: ${error.message}`);
+            }
             
             // 恢復預覽
             const previewContainer = document.getElementById('file-preview');
