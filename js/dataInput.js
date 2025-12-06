@@ -105,7 +105,9 @@ class DataInputManager {
         const buttons = document.querySelectorAll('.form-type-btn');
         buttons.forEach(btn => {
             btn.addEventListener('click', (e) => {
-                const formType = e.target.dataset.type;
+                // 確保取得 button 元素的 data-type
+                const button = e.currentTarget;
+                const formType = button.dataset.type;
                 this.showForm(formType);
             });
         });
