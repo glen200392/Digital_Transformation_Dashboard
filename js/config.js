@@ -33,7 +33,13 @@ const CONFIG = {
         animationEnabled: true,
         animationDuration: 300,
         defaultLayer: 1,
-        defaultDetailTab: 'projects'
+        defaultDetailTab: 'projects',
+        // 時間顯示設定
+        timeDisplay: {
+            showDate: true,           // 顯示日期
+            showRelative: false,      // 使用相對時間
+            showSheetUpdateTime: true // 顯示 Google Sheets 更新時間
+        }
     },
     
     // ==================== 圖表設定 ====================
@@ -204,6 +210,7 @@ Object.freeze(CONFIG);
 Object.freeze(CONFIG.api);
 Object.freeze(CONFIG.refresh);
 Object.freeze(CONFIG.ui);
+Object.freeze(CONFIG.ui.timeDisplay);
 Object.freeze(CONFIG.charts);
 Object.freeze(CONFIG.charts.colors);
 Object.freeze(CONFIG.thresholds);

@@ -9,6 +9,9 @@
 
 class DashboardApp {
     constructor() {
+        // 儲存配置參考
+        this.config = CONFIG;
+        
         // 初始化所有模組
         this.security = new Security();
         this.auditLogger = new AuditLogger();
@@ -117,8 +120,12 @@ class DashboardApp {
             // 更新 UI
             this.updateUI(data);
             
-            // 更新最後刷新時間
-            this.ui.updateLastRefreshTime(new Date());
+            // 更新最後刷新時間（使用配置選項）
+            const timeConfig = this.config.ui.timeDisplay;
+            this.ui.updateLastRefreshTime(new Date(), {
+                showDate: timeConfig.showDate,
+                showRelative: timeConfig.showRelative
+            });
             
             console.log('[App] 資料載入成功');
             
