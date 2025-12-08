@@ -324,14 +324,32 @@ class UIManager {
     }
     
     /**
-     * 更新最後刷新時間
+     * 更新最後刷新時間（增強版）
+     * @param {Date|string} timestamp - 時間戳記
+     * @param {object} options - 顯示選項
      */
-    updateLastRefreshTime(timestamp) {
+    updateLastRefreshTime(timestamp, options = {}) {
         const element = document.getElementById('last-refresh');
-        if (element) {
-            const time = timestamp ? new Date(timestamp) : new Date();
-            element.textContent = this.formatTime(time);
+        if (!element) return;
+        
+        const time = timestamp ? new Date(timestamp) : new Date();
+        
+        // 根據選項決定顯示格式
+        const showDate = options.showDate !== false;  // 預設顯示日期
+        const showRelative = options.showRelative || false;
+        
+        let displayText = '';
+        
+        if (showRelative) {
+            displayText = this.formatRelativeTime(time);
+        } else if (showDate) {
+            displayText = this.formatDateTime(time);
+        } else {
+            displayText = this.formatTime(time);
         }
+        
+        element.textContent = displayText;
+        element.setAttribute('data-timestamp', time.toISOString());
     }
     
     /**
@@ -342,6 +360,30 @@ class UIManager {
         const minutes = String(date.getMinutes()).padStart(2, '0');
         const seconds = String(date.getSeconds()).padStart(2, '0');
         return `${hours}:${minutes}:${seconds}`;
+    }
+    
+    /**
+     * 格式化日期+時間
+     */
+    formatDateTime(date) {
+        const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        const timeStr = this.formatTime(date);
+        return `${dateStr} ${timeStr}`;
+    }
+    
+    /**
+     * 格式化相對時間（X分鐘前）
+     */
+    formatRelativeTime(date) {
+        const now = new Date();
+        const diffMs = now - date;
+        const diffMins = Math.floor(diffMs / 60000);
+        const diffHours = Math.floor(diffMs / 3600000);
+        
+        if (diffMins < 1) return '剛剛';
+        if (diffMins < 60) return `${diffMins} 分鐘前`;
+        if (diffHours < 24) return `${diffHours} 小時前`;
+        return this.formatDateTime(date);
     }
     
     /**
@@ -443,7 +485,7 @@ class UIManager {
     }
     
     /**
-     * 更新元資料（資料來源狀態）
+     * 更新元資料（增強版）
      * @param {object} metadata - 元資料物件
      */
     updateMetadata(metadata) {
@@ -452,6 +494,17 @@ class UIManager {
         // 更新同步狀態
         if (metadata.source) {
             this.updateSyncStatus(metadata.source);
+        }
+        
+        // 顯示 Google Sheets 資料更新時間
+        if (metadata.lastUpdate) {
+            const sheetUpdateEl = document.getElementById('sheet-update-time');
+            const sheetUpdateInfo = document.getElementById('sheet-update-info');
+            if (sheetUpdateEl && sheetUpdateInfo) {
+                const updateTime = new Date(metadata.lastUpdate);
+                sheetUpdateEl.textContent = this.formatTime(updateTime);
+                sheetUpdateInfo.style.display = '';  // 顯示區塊
+            }
         }
         
         console.log('[UI] Metadata 已更新');
