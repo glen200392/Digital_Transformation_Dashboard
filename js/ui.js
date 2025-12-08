@@ -377,6 +377,10 @@ class UIManager {
     formatRelativeTime(date) {
         const now = new Date();
         const diffMs = now - date;
+        
+        // 處理未來時間
+        if (diffMs < 0) return this.formatDateTime(date);
+        
         const diffMins = Math.floor(diffMs / 60000);
         const diffHours = Math.floor(diffMs / 3600000);
         
@@ -498,11 +502,20 @@ class UIManager {
         
         // 顯示 Google Sheets 資料更新時間
         if (metadata.lastUpdate) {
+            // 驗證日期是否有效
+            const updateDate = new Date(metadata.lastUpdate);
+            if (isNaN(updateDate.getTime())) {
+                console.warn('[UI] Invalid lastUpdate date:', metadata.lastUpdate);
+                return;
+            }
+            
             const sheetUpdateEl = document.getElementById('sheet-update-time');
             const sheetUpdateInfo = document.getElementById('sheet-update-info');
             if (sheetUpdateEl && sheetUpdateInfo) {
-                const updateTime = new Date(metadata.lastUpdate);
-                sheetUpdateEl.textContent = this.formatTime(updateTime);
+                // 使用配置選項決定顯示格式
+                const showDate = this.config?.ui?.timeDisplay?.showDate;
+                const timeText = showDate ? this.formatDateTime(updateDate) : this.formatTime(updateDate);
+                sheetUpdateEl.textContent = timeText;
                 sheetUpdateInfo.style.display = '';  // 顯示區塊
             }
         }

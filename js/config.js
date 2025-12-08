@@ -210,6 +210,7 @@ Object.freeze(CONFIG);
 Object.freeze(CONFIG.api);
 Object.freeze(CONFIG.refresh);
 Object.freeze(CONFIG.ui);
+Object.freeze(CONFIG.ui.timeDisplay);
 Object.freeze(CONFIG.charts);
 Object.freeze(CONFIG.charts.colors);
 Object.freeze(CONFIG.thresholds);

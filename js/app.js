@@ -120,10 +120,11 @@ class DashboardApp {
             // 更新 UI
             this.updateUI(data);
             
-            // 更新最後刷新時間（使用增強選項）
+            // 更新最後刷新時間（使用配置選項）
+            const timeConfig = this.config.ui.timeDisplay;
             this.ui.updateLastRefreshTime(new Date(), {
-                showDate: this.config?.ui?.timeDisplay?.showDate !== false,
-                showRelative: this.config?.ui?.timeDisplay?.showRelative || false
+                showDate: timeConfig.showDate,
+                showRelative: timeConfig.showRelative
             });
             
             console.log('[App] 資料載入成功');
