@@ -90,14 +90,25 @@
 
 **實作範例:**
 ```javascript
+/**
+ * 內嵌編輯管理器
+ * 負責處理表格和卡片的內嵌編輯功能
+ */
 class InlineEditManager {
+  /**
+   * @param {DashboardAPI} api - API 實例
+   * @param {InputValidator} validator - 驗證器實例
+   */
   constructor(api, validator) {
     this.api = api;
     this.validator = validator;
   }
   
+  /**
+   * 為指定元素啟用內嵌編輯
+   * @param {string} selector - CSS 選擇器
+   */
   enableInlineEdit(selector) {
-    // 為指定元素啟用內嵌編輯
     document.querySelectorAll(selector).forEach(cell => {
       cell.addEventListener('dblclick', (e) => {
         this.startEdit(cell);
@@ -105,16 +116,23 @@ class InlineEditManager {
     });
   }
   
+  /**
+   * 開始編輯元素
+   * @param {HTMLElement} element - 要編輯的元素
+   */
   startEdit(element) {
-    // 將元素轉為可編輯狀態
     const originalValue = element.textContent;
     const input = document.createElement('input');
     input.value = originalValue;
     // ... 處理編輯邏輯
   }
   
+  /**
+   * 儲存編輯內容
+   * @param {HTMLElement} element - 編輯的元素
+   * @param {string} newValue - 新值
+   */
   async saveEdit(element, newValue) {
-    // 驗證並儲存
     if (this.validator.validate(newValue)) {
       await this.api.updateData(/* ... */);
       element.textContent = newValue;
@@ -822,15 +840,19 @@ class SyncManager {
 
 ### 整體進度儀表板
 
+**注意:** 以下進度條需手動更新，建議每週更新一次
+
 ```
-Phase 1: 核心功能優化        ████████░░ 80%  (8/10 天)
+Phase 1: 核心功能優化        ░░░░░░░░░░  0%  (0/10 天)
 Phase 2: 進階資料管理        ░░░░░░░░░░  0%  (0/15 天)
 Phase 3: 即時協作與同步      ░░░░░░░░░░  0%  (0/20 天)
 Phase 4: 使用者體驗優化      ░░░░░░░░░░  0%  (0/15 天)
 Phase 5: 行動裝置與 PWA     ░░░░░░░░░░  0%  (0/15 天)
 Phase 6: 進階分析與 AI       ░░░░░░░░░░  0%  (0/35 天)
 
-總進度: ██░░░░░░░░░░░░░░░░░░ 7%
+總進度: ░░░░░░░░░░░░░░░░░░░░ 0%
+
+更新方式: 每完成 10% 增加一個 █ 符號
 ```
 
 ### 里程碑
