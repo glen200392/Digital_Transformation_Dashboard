@@ -1,1124 +1,996 @@
-# Implementation Roadmap: Digital Transformation Dashboard
+# 數位轉型儀表板 - 實施路線圖
 
-**Document Type:** 10-Day MVP Implementation Plan  
-**Version:** 2.1.0  
-**Date:** December 9, 2025  
-**Project Status:** Ready for Deployment  
-**Timeline:** 10 Working Days to Production
+**版本:** 3.0  
+**規劃日期:** 2025-12-09  
+**預計完成:** 2026-03-31
 
 ---
 
-## 📋 Executive Summary
+## 🎯 專案目標
 
-This roadmap outlines a **10-day implementation plan** to deploy the Digital Transformation Dashboard from current codebase to production environment. The plan is designed for **rapid value delivery** with phased rollout, comprehensive testing, and minimal risk.
+打造一個**高效、直覺、即時**的專案管理儀表板，讓使用者能夠：
 
-### Key Milestones
-
-| Phase | Duration | Deliverable | Completion Criteria |
-|-------|----------|-------------|---------------------|
-| **Phase 1: Foundation** | Days 1-2 | Backend setup | Google Sheets configured, API tested |
-| **Phase 2: Integration** | Days 3-5 | Dashboard deployed | All layers functional, data flowing |
-| **Phase 3: Validation** | Days 6-7 | Testing complete | All tests pass, no critical bugs |
-| **Phase 4: Launch** | Days 8-10 | Production live | Users trained, monitoring active |
-
-### Resource Requirements
-
-- **1 Technical Lead** (10 days, full-time)
-- **1 Frontend Developer** (5 days, part-time for customization)
-- **1 DevOps Engineer** (3 days for deployment)
-- **1 Business Analyst** (5 days for data migration and training)
-- **1 QA Tester** (3 days for validation)
-
-**Total Effort:** ~26 person-days  
-**Calendar Duration:** 10 working days  
-**Budget:** $15,000-25,000 (internal resources)
+1. ✅ **輕鬆管理** - 快速輸入和更新專案資料
+2. ✅ **即時報告** - 一鍵生成專業報表給主管
+3. ✅ **洞察數據** - 透過視覺化圖表發現問題和趨勢
+4. ✅ **安全可靠** - 資料保護、審計追蹤、版本控制
 
 ---
 
-## 🎯 Implementation Goals
+## 📅 階段規劃
 
-### Primary Objectives
+### Phase 0: 架構評估與準備 ✅
+**時間:** 2025-12-09 (完成)  
+**狀態:** ✅ 已完成
 
-1. ✅ Deploy production-ready dashboard accessible to all stakeholders
-2. ✅ Integrate with Google Sheets as primary data backend
-3. ✅ Train 20+ users across executive and operational roles
-4. ✅ Establish monitoring and support processes
-5. ✅ Achieve 80% user adoption within first month
-
-### Success Criteria
-
-**Technical:**
-- ✅ <3 second load time on standard network
-- ✅ 99%+ uptime during business hours
-- ✅ Zero critical security vulnerabilities
-- ✅ All three layers functional and tested
-
-**Business:**
-- ✅ 15+ active users within first week
-- ✅ 90% positive feedback on usability
-- ✅ 50% reduction in manual reporting time
-- ✅ Executive dashboard viewed daily
-
-**Operational:**
-- ✅ Data refreshes every 5 minutes automatically
-- ✅ Support response within 4 hours
-- ✅ Backup and recovery procedures documented
-- ✅ Change management process established
+**交付成果:**
+- [x] 架構審查報告 (`ARCHITECTURE_REVIEW.md`)
+- [x] 實施路線圖 (本文件)
+- [x] 評估現有程式碼結構
+- [x] 確認保留與擴充項目
 
 ---
 
-## 📅 Detailed Day-by-Day Plan
+### Phase 1: 核心功能優化 🚀
+**時間:** 2025-12-10 ~ 2025-12-20 (10 天)  
+**優先級:** P0 (最高)
 
-## Phase 1: Foundation (Days 1-2)
+#### 目標
+讓使用者能夠**更快速、更直覺**地管理資料
 
-### Day 1: Backend Setup & Configuration
+#### 具體任務
 
-**Owner:** Technical Lead + DevOps Engineer  
-**Duration:** 8 hours
+##### 1.1 快速更新面板 (3 天)
+**負責模組:** `js/ui/quickUpdate.js` (新增)
 
-#### Morning (Hours 1-4)
-
-**Task 1.1: Google Sheets Setup** (2 hours)
-- [ ] Create new Google Sheet for dashboard data
-- [ ] Set up tabs: KPI, Projects, Risks, Resources, Metrics, Charts
-- [ ] Apply data validation rules
-- [ ] Configure sharing permissions (view/edit access)
-- [ ] Document sheet structure
-
-**Deliverables:**
-- Google Sheet with all required tabs
-- Permission matrix (who can view/edit)
-- Sheet URL for API configuration
-
-**Task 1.2: Google Apps Script Deployment** (2 hours)
-- [ ] Create new Google Apps Script project
-- [ ] Copy script from `docs/google-apps-script-v2.js`
-- [ ] Configure CORS settings
-- [ ] Deploy as web app
-- [ ] Test API endpoints (GET/POST)
-- [ ] Note deployment URL
-
-**Deliverables:**
-- Published Google Apps Script web app
-- API endpoint URL
-- Test results confirming data access
-
----
-
-#### Afternoon (Hours 5-8)
-
-**Task 1.3: Sample Data Migration** (2 hours)
-- [ ] Export current transformation data
-- [ ] Transform to dashboard schema
-- [ ] Import into Google Sheets
-- [ ] Validate data integrity
-- [ ] Create 3-month historical data
-
-**Deliverables:**
-- Populated Google Sheets with real data
-- Data validation report
-- Historical trend data
-
-**Task 1.4: API Testing** (2 hours)
-- [ ] Test `/doGet` endpoint
-- [ ] Test data retrieval for each tab
-- [ ] Verify CORS configuration
-- [ ] Test error handling
-- [ ] Document API response format
-- [ ] Performance test (latency measurement)
-
-**Deliverables:**
-- API test report
-- Performance baseline metrics
-- Known issues log
-
-**Day 1 Checkpoint:**
-- ✅ Google Sheets operational with real data
-- ✅ Google Apps Script API responding correctly
-- ✅ API latency <2 seconds
-- ✅ Documentation updated with endpoints
-
----
-
-### Day 2: Dashboard Configuration & Deployment
-
-**Owner:** Technical Lead + Frontend Developer  
-**Duration:** 8 hours
-
-#### Morning (Hours 1-4)
-
-**Task 2.1: Environment Configuration** (1.5 hours)
-- [ ] Clone repository to deployment environment
-- [ ] Update `js/config.js` with production API URL
-- [ ] Configure feature flags for production
-- [ ] Set up SSL/HTTPS certificate
-- [ ] Configure CDN for Chart.js
-- [ ] Test SRI hashes for security
-
-**Deliverables:**
-- Production-ready configuration
-- SSL certificate installed
-- Config file documented
-
-**Task 2.2: Visual Customization** (2.5 hours)
-- [ ] Update branding (logo, colors) in `css/styles.css`
-- [ ] Customize KPI thresholds in `js/config.js`
-- [ ] Adjust chart color schemes
-- [ ] Update text/labels for organization
-- [ ] Test responsive design on multiple devices
-- [ ] Screenshot all three layers
-
-**Deliverables:**
-- Branded dashboard
-- Mobile/tablet/desktop screenshots
-- Style guide documentation
-
----
-
-#### Afternoon (Hours 5-8)
-
-**Task 2.3: Initial Deployment** (2 hours)
-- [ ] Choose hosting platform (GitHub Pages/Netlify/Vercel)
-- [ ] Configure build process if needed
-- [ ] Deploy to staging environment
-- [ ] Verify all assets load correctly
-- [ ] Test HTTPS and CORS
-- [ ] Configure custom domain (if applicable)
-
-**Deliverables:**
-- Staging environment live
-- URL accessible to team
-- SSL/HTTPS verified
-
-**Task 2.4: Integration Testing** (2 hours)
-- [ ] Test all three layers
-- [ ] Verify data loads from Google Sheets
-- [ ] Test auto-refresh mechanism
-- [ ] Verify offline mode with fallback data
-- [ ] Test all chart types render correctly
-- [ ] Cross-browser testing (Chrome, Firefox, Safari, Edge)
-
-**Deliverables:**
-- Integration test results
-- Browser compatibility matrix
-- Known issues list
-
-**Day 2 Checkpoint:**
-- ✅ Staging environment operational
-- ✅ Dashboard loads in <5 seconds
-- ✅ All charts rendering correctly
-- ✅ Real data flowing from Google Sheets
-- ✅ Cross-browser compatibility confirmed
-
----
-
-## Phase 2: Integration & Refinement (Days 3-5)
-
-### Day 3: Data Validation & Security
-
-**Owner:** Technical Lead + QA Tester  
-**Duration:** 8 hours
-
-#### Morning (Hours 1-4)
-
-**Task 3.1: Data Quality Validation** (2 hours)
-- [ ] Verify all KPI calculations are correct
-- [ ] Cross-check project status with source data
-- [ ] Validate risk scoring algorithm
-- [ ] Test data transformation logic
-- [ ] Check for data anomalies or outliers
-- [ ] Document any discrepancies
-
-**Deliverables:**
-- Data validation report
-- Calculation verification matrix
-- Issues found and resolved
-
-**Task 3.2: Security Hardening** (2 hours)
-- [ ] Review Content Security Policy
-- [ ] Test XSS protection on all inputs
-- [ ] Verify rate limiting is active
-- [ ] Check audit logging functionality
-- [ ] Test data backup/restore
-- [ ] Run security scan (OWASP ZAP or similar)
-
-**Deliverables:**
-- Security test report
-- No critical vulnerabilities
-- Audit log sample
-
----
-
-#### Afternoon (Hours 5-8)
-
-**Task 3.3: Performance Optimization** (2 hours)
-- [ ] Measure page load time
-- [ ] Optimize image sizes (if any)
-- [ ] Enable compression on server
-- [ ] Test with slow network (3G simulation)
-- [ ] Verify caching works correctly
-- [ ] Profile JavaScript execution time
-
-**Deliverables:**
-- Performance report
-- Lighthouse score >90
-- Optimization recommendations
-
-**Task 3.4: Error Handling Testing** (2 hours)
-- [ ] Test offline mode
-- [ ] Simulate API failures
-- [ ] Test network timeout scenarios
-- [ ] Verify error messages are user-friendly
-- [ ] Test fallback data loading
-- [ ] Document error recovery procedures
-
-**Deliverables:**
-- Error handling test results
-- User-facing error messages reviewed
-- Recovery procedure documentation
-
-**Day 3 Checkpoint:**
-- ✅ Data accuracy verified
-- ✅ No security vulnerabilities
-- ✅ Performance targets met
-- ✅ Error handling robust
-
----
-
-### Day 4: User Acceptance Preparation
-
-**Owner:** Business Analyst + Frontend Developer  
-**Duration:** 8 hours
-
-#### Morning (Hours 1-4)
-
-**Task 4.1: User Documentation** (3 hours)
-- [ ] Finalize User Guide (docs/USER_GUIDE.md)
-- [ ] Create quick start guide (1-page PDF)
-- [ ] Record video walkthrough (10 minutes)
-- [ ] Create FAQ document
-- [ ] Prepare troubleshooting guide
-- [ ] Design user feedback form
-
-**Deliverables:**
-- Complete user documentation suite
-- Video tutorial
-- Feedback collection mechanism
-
-**Task 4.2: Admin Documentation** (1 hour)
-- [ ] Document Google Sheets update procedures
-- [ ] Create data entry templates
-- [ ] Document backup/restore process
-- [ ] Prepare incident response plan
-- [ ] Create support escalation matrix
-
-**Deliverables:**
-- Admin manual
-- Support procedures
-- Escalation contact list
-
----
-
-#### Afternoon (Hours 5-8)
-
-**Task 4.3: Training Material Creation** (2 hours)
-- [ ] Create PowerPoint presentation
-- [ ] Design hands-on exercises
-- [ ] Prepare sample scenarios
-- [ ] Create role-based training paths
-- [ ] Set up training environment
-- [ ] Schedule training sessions
-
-**Deliverables:**
-- Training presentation
-- Exercise workbook
-- Training schedule
-
-**Task 4.4: Pilot User Onboarding** (2 hours)
-- [ ] Select 5 pilot users (different roles)
-- [ ] Send pre-training materials
-- [ ] Conduct 1-on-1 walkthroughs
-- [ ] Collect initial feedback
-- [ ] Document pain points
-- [ ] Adjust based on feedback
-
-**Deliverables:**
-- Pilot feedback summary
-- Usability improvements list
-- Training materials updated
-
-**Day 4 Checkpoint:**
-- ✅ Documentation complete
-- ✅ Training materials ready
-- ✅ Pilot users onboarded
-- ✅ Feedback incorporated
-
----
-
-### Day 5: Refinement & Polish
-
-**Owner:** Frontend Developer + Business Analyst  
-**Duration:** 8 hours
-
-#### Morning (Hours 1-4)
-
-**Task 5.1: UI/UX Refinements** (2 hours)
-- [ ] Implement pilot user feedback
-- [ ] Improve tooltip text
-- [ ] Enhance loading indicators
-- [ ] Refine chart legends
-- [ ] Improve mobile experience
-- [ ] Add helpful hints/tips
-
-**Deliverables:**
-- Improved user interface
-- Enhanced user experience
-- Changelog of updates
-
-**Task 5.2: Accessibility Improvements** (2 hours)
-- [ ] Add ARIA labels where missing
-- [ ] Improve keyboard navigation
-- [ ] Test with screen reader
-- [ ] Increase color contrast where needed
-- [ ] Add focus indicators
-- [ ] Test with accessibility tools
-
-**Deliverables:**
-- Accessibility audit results
-- WCAG 2.1 AA compliance level
-- Accessibility statement
-
----
-
-#### Afternoon (Hours 5-8)
-
-**Task 5.3: Final Data Sync** (2 hours)
-- [ ] Update Google Sheets with latest data
-- [ ] Verify all calculations
-- [ ] Test auto-refresh with live data
-- [ ] Clear test data
-- [ ] Set up production data sources
-- [ ] Verify data update timestamps
-
-**Deliverables:**
-- Production data loaded
-- Data accuracy verified
-- Auto-refresh confirmed
-
-**Task 5.4: Pre-Launch Checklist** (2 hours)
-- [ ] Complete comprehensive test plan
-- [ ] Verify all links work
-- [ ] Check all charts display correctly
-- [ ] Test all navigation flows
-- [ ] Verify notifications work
-- [ ] Test export functionality (if enabled)
-- [ ] Sign-off from stakeholders
-
-**Deliverables:**
-- Pre-launch checklist (100% complete)
-- Stakeholder sign-off
-- Go/No-Go decision
-
-**Day 5 Checkpoint:**
-- ✅ All pilot feedback addressed
-- ✅ Accessibility standards met
-- ✅ Production data live
-- ✅ Ready for launch
-
----
-
-## Phase 3: Testing & Validation (Days 6-7)
-
-### Day 6: Comprehensive Testing
-
-**Owner:** QA Tester + Technical Lead  
-**Duration:** 8 hours
-
-#### Morning (Hours 1-4)
-
-**Task 6.1: Functional Testing** (2 hours)
-- [ ] Test all Layer 1 features
-- [ ] Test all Layer 2 features
-- [ ] Test all Layer 3 features and tabs
-- [ ] Test layer navigation
-- [ ] Test data refresh
-- [ ] Test search/filter functionality
-
-**Test Cases:**
+**功能需求:**
 ```
-TC001: Verify health score displays correctly
-TC002: Verify KPI cards show accurate data
-TC003: Verify radar chart renders
-TC004: Verify risk heat map interactive
-TC005: Verify project table sortable
-TC006: Verify auto-refresh works (5 min)
-TC007: Verify manual refresh button
-TC008: Verify offline mode
-... (50+ test cases total)
+┌──────────────────────────────────────┐
+│  ⚡ 快速更新                          │
+├──────────────────────────────────────┤
+│  📊 今日重點更新                      │
+│                                      │
+│  專案進度                             │
+│  ┌────────────────────────────────┐ │
+│  │ 專案 A: [75%] → [___%]  [更新] │ │
+│  │ 專案 B: [60%] → [___%]  [更新] │ │
+│  └────────────────────────────────┘ │
+│                                      │
+│  KPI 數據                             │
+│  ┌────────────────────────────────┐ │
+│  │ ROI: [145%] → [___%]   [更新] │ │
+│  │ 參與度: [68%] → [___%] [更新] │ │
+│  └────────────────────────────────┘ │
+│                                      │
+│  [批量儲存]  [取消]                   │
+└──────────────────────────────────────┘
 ```
 
-**Deliverables:**
-- Test execution report
-- Pass/fail results
-- Bug tracking log
+**技術實作:**
+- 建立 `QuickUpdateManager` 類別
+- 整合 `StateManager` 進行狀態同步
+- 使用 `InputValidator` 驗證輸入
+- 透過 `DashboardAPI` 批量更新資料
 
-**Task 6.2: Integration Testing** (2 hours)
-- [ ] Test end-to-end data flow
-- [ ] Test concurrent user sessions
-- [ ] Test Google Sheets updates reflect immediately
-- [ ] Test API rate limiting
-- [ ] Test security features
-- [ ] Test audit logging
+**驗收標準:**
+- [ ] 可在首頁快速開啟快速更新面板
+- [ ] 自動載入最常更新的資料項目
+- [ ] 支援批量儲存（一次更新多個項目）
+- [ ] 顯示更新前後的值比較
+- [ ] 更新後立即反映在儀表板上
 
-**Deliverables:**
-- Integration test results
-- Performance under load
-- API response time metrics
+##### 1.2 內嵌編輯功能 (2 天)
+**負責模組:** `js/ui/inlineEdit.js` (新增)
 
----
+**功能需求:**
+- 點擊表格儲存格直接編輯
+- 點擊 KPI 卡片值直接編輯
+- 自動儲存或提示確認
+- 支援鍵盤快捷鍵 (Enter 儲存, Esc 取消)
 
-#### Afternoon (Hours 5-8)
+**實作範例:**
+```javascript
+/**
+ * 內嵌編輯管理器
+ * 負責處理表格和卡片的內嵌編輯功能
+ */
+class InlineEditManager {
+  /**
+   * @param {DashboardAPI} api - API 實例
+   * @param {InputValidator} validator - 驗證器實例
+   */
+  constructor(api, validator) {
+    this.api = api;
+    this.validator = validator;
+  }
+  
+  /**
+   * 為指定元素啟用內嵌編輯
+   * @param {string} selector - CSS 選擇器
+   */
+  enableInlineEdit(selector) {
+    document.querySelectorAll(selector).forEach(cell => {
+      cell.addEventListener('dblclick', (e) => {
+        this.startEdit(cell);
+      });
+    });
+  }
+  
+  /**
+   * 開始編輯元素
+   * @param {HTMLElement} element - 要編輯的元素
+   */
+  startEdit(element) {
+    const originalValue = element.textContent;
+    const input = document.createElement('input');
+    input.value = originalValue;
+    // ... 處理編輯邏輯
+  }
+  
+  /**
+   * 儲存編輯內容
+   * @param {HTMLElement} element - 編輯的元素
+   * @param {string} newValue - 新值
+   */
+  async saveEdit(element, newValue) {
+    if (this.validator.validate(newValue)) {
+      await this.api.updateData(/* ... */);
+      element.textContent = newValue;
+    }
+  }
+}
+```
 
-**Task 6.3: Cross-Platform Testing** (2 hours)
-- [ ] Test on Windows 10/11
-- [ ] Test on macOS
-- [ ] Test on Linux
-- [ ] Test on iOS (Safari, Chrome)
-- [ ] Test on Android (Chrome, Firefox)
-- [ ] Test on various screen sizes
+**驗收標準:**
+- [ ] 雙擊表格儲存格可編輯
+- [ ] 雙擊 KPI 值可編輯
+- [ ] Enter 儲存, Esc 取消
+- [ ] 顯示載入狀態
+- [ ] 錯誤處理與提示
 
-**Deliverables:**
-- Cross-platform compatibility matrix
-- Known issues by platform
-- Workarounds documented
+##### 1.3 報表匯出功能 (3 天)
+**負責模組:** `js/features/reportGenerator.js` (新增)
 
-**Task 6.4: Load & Stress Testing** (2 hours)
-- [ ] Simulate 10 concurrent users
-- [ ] Test with large datasets (1000+ projects)
-- [ ] Test API performance under load
-- [ ] Monitor memory usage
-- [ ] Test long-running sessions
-- [ ] Verify no memory leaks
+**功能需求:**
+1. **PDF 匯出** - 高階主管摘要報告
+2. **Excel 匯出** - 詳細資料表格
+3. **PowerPoint 匯出** - 簡報格式（選配）
 
-**Deliverables:**
-- Load test results
-- Performance benchmarks
-- Scalability assessment
+**UI 設計:**
+```
+┌──────────────────────────────────────┐
+│  📄 匯出報表                          │
+├──────────────────────────────────────┤
+│  選擇報表類型:                        │
+│  ( ) 高階主管摘要 (PDF)              │
+│  ( ) 營運週報 (PDF)                  │
+│  ( ) 專案詳細列表 (Excel)            │
+│  ( ) 完整資料匯出 (Excel)            │
+│                                      │
+│  日期範圍:                            │
+│  [2025-12-01] 至 [2025-12-09]       │
+│                                      │
+│  包含內容:                            │
+│  [✓] KPI 摘要                        │
+│  [✓] 專案進度                        │
+│  [✓] 風險分析                        │
+│  [✓] 圖表視覺化                      │
+│                                      │
+│  [預覽]  [下載]  [取消]              │
+└──────────────────────────────────────┘
+```
 
-**Day 6 Checkpoint:**
-- ✅ All functional tests pass
-- ✅ No critical bugs
-- ✅ Performance acceptable
-- ✅ Cross-platform validated
+**技術選型:**
+- **PDF:** jsPDF + html2canvas
+- **Excel:** SheetJS (xlsx.js) - 已安裝
+- **PowerPoint (選配):** PptxGenJS
 
----
+**報表模板:**
+```
+templates/reports/
+├── executive-summary.html    # 高階主管摘要
+├── weekly-report.html        # 週報
+├── monthly-report.html       # 月報
+└── project-details.html      # 專案詳細報告
+```
 
-### Day 7: User Acceptance Testing
+**驗收標準:**
+- [ ] 可匯出 PDF 格式報表
+- [ ] 可匯出 Excel 格式資料
+- [ ] 報表包含最新數據
+- [ ] 報表包含圖表視覺化
+- [ ] 自訂日期範圍
+- [ ] 自訂包含內容
+- [ ] 匯出前可預覽
 
-**Owner:** Business Analyst + Selected Users  
-**Duration:** 8 hours
+##### 1.4 首頁重新設計 (2 天)
+**負責模組:** 修改 `index.html` 和 `js/ui/ui.js`
 
-#### Morning (Hours 1-4)
+**新增首頁區塊:**
+```html
+<!-- 新增在 Layer 1 之前 -->
+<section class="dashboard-home" id="dashboard-home">
+  <!-- 快速狀態卡片 -->
+  <div class="status-cards">
+    <div class="status-card">
+      <div class="card-header">健康度總分</div>
+      <div class="card-value">76</div>
+      <div class="card-trend">📈 +3</div>
+    </div>
+    <div class="status-card alert">
+      <div class="card-header">需要關注</div>
+      <div class="card-value">3</div>
+      <div class="card-subtitle">項目</div>
+    </div>
+  </div>
+  
+  <!-- 今日待辦 -->
+  <div class="today-tasks">
+    <h3>📊 今日待辦</h3>
+    <ul id="today-tasks-list">
+      <!-- 動態載入 -->
+    </ul>
+  </div>
+  
+  <!-- 快速操作 -->
+  <div class="quick-actions">
+    <button class="action-btn" id="quick-update-btn">
+      ⚡ 快速更新
+    </button>
+    <button class="action-btn" id="add-risk-btn">
+      ⚠️ 新增風險
+    </button>
+    <button class="action-btn" id="export-report-btn">
+      📄 匯出報表
+    </button>
+    <button class="action-btn" id="view-trends-btn">
+      📈 查看趨勢
+    </button>
+  </div>
+  
+  <!-- 本週重點 -->
+  <div class="weekly-highlights">
+    <h3>📈 本週重點</h3>
+    <div id="weekly-highlights-list">
+      <!-- 動態載入 -->
+    </div>
+  </div>
+</section>
+```
 
-**Task 7.1: Executive UAT** (2 hours)
-- [ ] C-level executives test Layer 1
-- [ ] Verify KPIs match expectations
-- [ ] Test quick decision-making flow
-- [ ] Verify charts tell the right story
-- [ ] Collect executive feedback
-- [ ] Document requested changes
-
-**UAT Participants:**
-- CIO
-- CFO
-- Transformation Lead
-
-**Deliverables:**
-- Executive UAT feedback
-- Sign-off or change requests
-
-**Task 7.2: Operational UAT** (2 hours)
-- [ ] PMO team tests Layer 2
-- [ ] Project managers test Layer 3
-- [ ] Test daily operational workflows
-- [ ] Verify project tracking accuracy
-- [ ] Test resource management views
-- [ ] Collect operational feedback
-
-**UAT Participants:**
-- PMO Lead
-- 3-5 Project Managers
-- Operations Manager
-
-**Deliverables:**
-- Operational UAT feedback
-- Workflow validation
-
----
-
-#### Afternoon (Hours 5-8)
-
-**Task 7.3: Bug Fixing** (3 hours)
-- [ ] Review all UAT feedback
-- [ ] Prioritize bugs and issues
-- [ ] Fix critical issues
-- [ ] Fix high-priority issues
-- [ ] Document known minor issues
-- [ ] Retest fixed issues
-
-**Deliverables:**
-- Bug fix report
-- Updated application
-- Regression test results
-
-**Task 7.4: Final Sign-Off** (1 hour)
-- [ ] Present results to stakeholders
-- [ ] Review outstanding issues
-- [ ] Confirm launch readiness
-- [ ] Get formal sign-off
-- [ ] Schedule production deployment
-- [ ] Communicate launch plan
-
-**Deliverables:**
-- Formal sign-off document
-- Launch communication
-- Deployment schedule
-
-**Day 7 Checkpoint:**
-- ✅ UAT completed successfully
-- ✅ Critical bugs resolved
-- ✅ Stakeholder sign-off obtained
-- ✅ Launch approved
-
----
-
-## Phase 4: Launch & Adoption (Days 8-10)
-
-### Day 8: Production Deployment
-
-**Owner:** DevOps Engineer + Technical Lead  
-**Duration:** 8 hours
-
-#### Morning (Hours 1-4)
-
-**Task 8.1: Production Environment Setup** (2 hours)
-- [ ] Configure production hosting
-- [ ] Set up production domain/URL
-- [ ] Install SSL certificate
-- [ ] Configure CDN
-- [ ] Set up monitoring (uptime, errors)
-- [ ] Configure backups
-- [ ] Set up alerting
-
-**Deliverables:**
-- Production environment ready
-- Monitoring active
-- Alerts configured
-
-**Task 8.2: Production Deployment** (2 hours)
-- [ ] Deploy application to production
-- [ ] Verify all assets load correctly
-- [ ] Run smoke tests
-- [ ] Verify Google Sheets connection
-- [ ] Test from external network
-- [ ] Confirm HTTPS working
-- [ ] Update DNS (if needed)
-
-**Deliverables:**
-- Production application live
-- Smoke test results
-- Deployment log
-
----
-
-#### Afternoon (Hours 5-8)
-
-**Task 8.3: Monitoring Setup** (2 hours)
-- [ ] Configure uptime monitoring (e.g., Pingdom, UptimeRobot)
-- [ ] Set up error tracking (e.g., Sentry)
-- [ ] Configure Google Analytics
-- [ ] Set up usage dashboards
-- [ ] Test alert notifications
-- [ ] Document monitoring procedures
-
-**Deliverables:**
-- Monitoring dashboards
-- Alert rules configured
-- Monitoring documentation
-
-**Task 8.4: Initial User Communication** (2 hours)
-- [ ] Send launch announcement email
-- [ ] Share access instructions
-- [ ] Distribute user guide
-- [ ] Share video tutorial link
-- [ ] Announce training schedule
-- [ ] Open support channel (Slack/Teams)
-
-**Deliverables:**
-- Launch announcement sent
-- User onboarding materials distributed
-- Support channel active
-
-**Day 8 Checkpoint:**
-- ✅ Production live and stable
-- ✅ Monitoring operational
-- ✅ Users notified
-- ✅ Support ready
+**驗收標準:**
+- [ ] 首頁顯示關鍵資訊摘要
+- [ ] 今日待辦清單自動生成
+- [ ] 快速操作按鈕正常運作
+- [ ] 本週重點自動更新
 
 ---
 
-### Day 9: Training & Onboarding
+### Phase 2: 進階資料管理 📊
+**時間:** 2025-12-21 ~ 2026-01-05 (15 天)  
+**優先級:** P1
 
-**Owner:** Business Analyst + Technical Lead  
-**Duration:** 8 hours
+#### 目標
+強化資料管理能力，支援更複雜的使用情境
 
-#### Morning (Hours 1-4)
+#### 具體任務
 
-**Task 9.1: Executive Training** (2 hours)
-- [ ] 30-minute live demo for executives
-- [ ] Focus on Layer 1 (Executive Summary)
-- [ ] Show decision-making workflows
-- [ ] Answer questions
-- [ ] Share quick reference guide
-- [ ] Schedule follow-up
+##### 2.1 資料版本控制 (4 天)
+**負責模組:** 擴充 `js/security/dataProtection.js`
 
-**Participants:** 5-10 executives
+**功能需求:**
+- 記錄所有資料變更
+- 顯示修改歷史
+- 比較不同版本
+- 還原到特定版本
 
-**Deliverables:**
-- Executive training complete
-- Feedback collected
-- Quick wins identified
+**UI 設計:**
+```
+┌──────────────────────────────────────┐
+│  📜 專案 A - 修改歷史                 │
+├──────────────────────────────────────┤
+│  2025-12-09 14:30  張三               │
+│  進度: 75% → 80%                     │
+│  [查看詳情] [還原]                    │
+│  ─────────────────────────────────── │
+│  2025-12-08 09:15  李四               │
+│  風險等級: 中 → 高                   │
+│  [查看詳情] [還原]                    │
+│  ─────────────────────────────────── │
+│  2025-12-07 16:45  王五               │
+│  預算: $100K → $120K                 │
+│  [查看詳情] [還原]                    │
+└──────────────────────────────────────┘
+```
 
-**Task 9.2: Power User Training** (2 hours)
-- [ ] 1-hour comprehensive training
-- [ ] Cover all three layers
-- [ ] Hands-on exercises
-- [ ] Admin functions (data updates)
-- [ ] Troubleshooting basics
-- [ ] Q&A session
+**驗收標準:**
+- [ ] 自動記錄所有修改
+- [ ] 顯示修改者和時間
+- [ ] 可查看完整修改詳情
+- [ ] 可還原到任意版本
+- [ ] 還原前需確認
 
-**Participants:** 10-15 power users (PMO, project managers)
+##### 2.2 批量更新功能 (3 天)
+**負責模組:** 擴充 `js/data/fileImport.js`
 
-**Deliverables:**
-- Power users trained
-- Training materials distributed
-- Support champions identified
+**功能需求:**
+- 支援 Excel/CSV 批量匯入
+- 欄位自動映射
+- 資料預覽與修正
+- 增量更新 vs 完全替換
 
----
+**欄位映射介面:**
+```
+┌──────────────────────────────────────┐
+│  🔄 欄位映射                          │
+├──────────────────────────────────────┤
+│  Excel 欄位    →    系統欄位          │
+│  ────────────────────────────────── │
+│  Project Name  →  [專案名稱 ▼]       │
+│  Progress      →  [進度     ▼]       │
+│  Status        →  [狀態     ▼]       │
+│  Budget        →  [預算     ▼]       │
+│                                      │
+│  [自動映射]  [繼續]  [取消]          │
+└──────────────────────────────────────┘
+```
 
-#### Afternoon (Hours 5-8)
+**驗收標準:**
+- [ ] 自動偵測 Excel/CSV 欄位
+- [ ] 智能映射到系統欄位
+- [ ] 顯示資料預覽
+- [ ] 支援手動調整映射
+- [ ] 選擇更新模式（增量/替換）
+- [ ] 顯示匯入結果摘要
 
-**Task 9.3: End User Training** (3 hours)
-- [ ] Multiple 30-minute sessions
-- [ ] Basic navigation
-- [ ] Finding relevant information
-- [ ] Interpreting charts
-- [ ] Self-service analytics
-- [ ] Getting help
+##### 2.3 通知與提醒系統 (4 天)
+**負責模組:** `js/features/notification.js` (新增)
 
-**Participants:** 20-30 general users
+**功能需求:**
+1. **瀏覽器通知** - 重要事件推播
+2. **應用內通知** - Toast 訊息
+3. **提醒設定** - 自訂提醒規則
 
-**Deliverables:**
-- End user training complete
-- Attendance tracked
-- Feedback forms collected
+**提醒規則範例:**
+- 專案進度低於目標 5% → 警告通知
+- 風險等級升高 → 立即通知
+- 里程碑到期前 3 天 → 提醒通知
+- 資料超過 7 天未更新 → 提醒更新
 
-**Task 9.4: Documentation Finalization** (1 hour)
-- [ ] Update documentation based on training feedback
-- [ ] Create FAQ from common questions
-- [ ] Publish knowledge base
-- [ ] Update video tutorials if needed
-- [ ] Share resources via intranet
+**UI 設計:**
+```
+┌──────────────────────────────────────┐
+│  🔔 通知中心                          │
+├──────────────────────────────────────┤
+│  ⚠️ 專案 B 進度落後目標 8%           │
+│     2 小時前                         │
+│  ─────────────────────────────────── │
+│  📅 專案 C 里程碑將於 2 天後到期     │
+│     4 小時前                         │
+│  ─────────────────────────────────── │
+│  🔴 風險 D 等級升高至「高」          │
+│     1 天前                           │
+│  ─────────────────────────────────── │
+│  [全部標記為已讀]  [設定]            │
+└──────────────────────────────────────┘
+```
 
-**Deliverables:**
-- Updated documentation
-- FAQ published
-- Knowledge base live
+**驗收標準:**
+- [ ] 支援瀏覽器推播通知
+- [ ] 應用內 Toast 訊息
+- [ ] 通知中心顯示歷史通知
+- [ ] 可自訂提醒規則
+- [ ] 可暫停/啟用通知
+- [ ] 不同優先級通知樣式區分
 
-**Day 9 Checkpoint:**
-- ✅ 30+ users trained
-- ✅ Documentation complete
-- ✅ Support resources available
-- ✅ Positive user feedback
+##### 2.4 進階圖表 - 甘特圖 (4 天)
+**負責模組:** 擴充 `js/ui/charts.js`
 
----
+**引入函式庫:** Frappe Gantt (~30KB)
 
-### Day 10: Optimization & Handoff
+**功能需求:**
+- 顯示所有專案時程
+- 拖放調整時程
+- 顯示依賴關係
+- 標記里程碑
 
-**Owner:** Technical Lead + Business Analyst  
-**Duration:** 8 hours
+**實作範例:**
+```javascript
+class ChartManager {
+  // 新增方法
+  initGanttChart(containerId, projects) {
+    const tasks = projects.map(p => ({
+      id: p.id,
+      name: p.name,
+      start: p.startDate,
+      end: p.endDate,
+      progress: p.progress,
+      dependencies: p.dependencies
+    }));
+    
+    const gantt = new Gantt(`#${containerId}`, tasks, {
+      view_mode: 'Month',
+      language: 'zh-TW',
+      on_date_change: (task, start, end) => {
+        this.handleGanttUpdate(task, start, end);
+      }
+    });
+    
+    this.charts.set(containerId, gantt);
+  }
+}
+```
 
-#### Morning (Hours 1-4)
-
-**Task 10.1: Usage Analysis** (2 hours)
-- [ ] Review first 48 hours of usage data
-- [ ] Identify most-used features
-- [ ] Identify unused features
-- [ ] Analyze performance metrics
-- [ ] Review error logs
-- [ ] Document user patterns
-
-**Deliverables:**
-- Usage analytics report
-- Performance baseline established
-- Optimization opportunities identified
-
-**Task 10.2: Quick Optimizations** (2 hours)
-- [ ] Address any performance issues
-- [ ] Fix minor bugs discovered
-- [ ] Improve frequently-used workflows
-- [ ] Enhance popular features
-- [ ] Update based on user feedback
-
-**Deliverables:**
-- Optimized application
-- Bug fixes deployed
-- Performance improvements
-
----
-
-#### Afternoon (Hours 5-8)
-
-**Task 10.3: Support Handoff** (2 hours)
-- [ ] Train support team
-- [ ] Transfer knowledge documentation
-- [ ] Review escalation procedures
-- [ ] Set up support ticketing
-- [ ] Define SLAs
-- [ ] Schedule ongoing support meetings
-
-**Deliverables:**
-- Support team ready
-- SLAs defined
-- Ticketing system active
-
-**Task 10.4: Project Closure** (2 hours)
-- [ ] Conduct project retrospective
-- [ ] Document lessons learned
-- [ ] Create maintenance schedule
-- [ ] Plan Phase 2 enhancements
-- [ ] Archive project artifacts
-- [ ] Celebrate success! 🎉
-
-**Deliverables:**
-- Project closure report
-- Retrospective summary
-- Maintenance plan
-- Enhancement roadmap
-
-**Day 10 Checkpoint:**
-- ✅ Optimizations deployed
-- ✅ Support team operational
-- ✅ Project successfully closed
-- ✅ Roadmap for future established
-
----
-
-## 📊 Resource Allocation
-
-### Team Structure
-
-**Technical Lead** (10 days)
-- Overall implementation coordination
-- Technical decision making
-- Architecture guidance
-- Code reviews
-- Deployment oversight
-
-**Frontend Developer** (5 days)
-- UI customization
-- Bug fixing
-- Performance optimization
-- Browser compatibility
-- Documentation
-
-**DevOps Engineer** (3 days)
-- Environment setup
-- Deployment automation
-- Monitoring configuration
-- Security hardening
-- Infrastructure management
-
-**Business Analyst** (5 days)
-- Requirements validation
-- Data migration
-- User training
-- Documentation
-- User feedback collection
-
-**QA Tester** (3 days)
-- Test planning
-- Test execution
-- Bug tracking
-- UAT coordination
-- Quality validation
-
-### Budget Breakdown
-
-| Resource | Days | Rate | Cost |
-|----------|------|------|------|
-| Technical Lead | 10 | $1,200/day | $12,000 |
-| Frontend Developer | 5 | $1,000/day | $5,000 |
-| DevOps Engineer | 3 | $1,100/day | $3,300 |
-| Business Analyst | 5 | $900/day | $4,500 |
-| QA Tester | 3 | $800/day | $2,400 |
-| **Subtotal** | **26** | - | **$27,200** |
-| Contingency (15%) | - | - | $4,080 |
-| **Total Budget** | - | - | **$31,280** |
-
-**Note:** Costs assume external contractors. Internal resources will significantly reduce costs.
+**驗收標準:**
+- [ ] 顯示所有專案的甘特圖
+- [ ] 可切換檢視模式（日/週/月）
+- [ ] 可拖放調整專案時程
+- [ ] 顯示專案依賴關係
+- [ ] 標記重要里程碑
+- [ ] 更新後同步到資料庫
 
 ---
 
-## ⚠️ Risk Management
+### Phase 3: 即時協作與同步 🔄
+**時間:** 2026-01-06 ~ 2026-01-25 (20 天)  
+**優先級:** P1
 
-### Implementation Risks
+#### 目標
+支援團隊協作，避免資料衝突
 
-| Risk | Probability | Impact | Mitigation | Owner |
-|------|-------------|--------|------------|-------|
-| **Google Sheets API limits exceeded** | Medium | High | Implement caching, rate limiting; upgrade to paid tier if needed | Technical Lead |
-| **Data migration errors** | Medium | High | Extensive validation, backup data, parallel run with old system | Business Analyst |
-| **User adoption resistance** | Low | Medium | Comprehensive training, executive sponsorship, early wins | Business Analyst |
-| **Browser compatibility issues** | Low | Medium | Extensive cross-browser testing, polyfills if needed | Frontend Dev |
-| **Performance degradation** | Low | Medium | Load testing, optimization, monitoring | DevOps |
-| **Security vulnerabilities** | Very Low | Critical | Security scan, code review, penetration testing | Technical Lead |
-| **Training time insufficient** | Medium | Low | Pre-recorded videos, documentation, ongoing support | Business Analyst |
-| **Deployment delays** | Low | Medium | Buffer time in schedule, automated deployment | DevOps |
+#### 具體任務
 
-### Contingency Plans
+##### 3.1 即時同步機制 (7 天)
+**負責模組:** `js/api/sync.js` (新增)
 
-**If Google Sheets API limits hit:**
-- Upgrade to Google Workspace Enterprise (unlimited API calls)
-- Implement aggressive caching (extend TTL to 5 minutes)
-- Consider database migration for Phase 2
+**技術選型:**
+- **方案 A:** WebSocket (雙向即時通訊)
+- **方案 B:** Server-Sent Events (單向推送)
+- **方案 C:** 輪詢 + 版本號比對 (最簡單)
 
-**If user adoption is slow:**
-- Executive mandate for usage
-- Gamification (usage leaderboard)
-- Showcase success stories
-- One-on-one support sessions
+**建議:** 先實作方案 C，未來升級到方案 B 或 A
 
-**If critical bugs found post-launch:**
-- Immediate hotfix deployment
-- Rollback procedure ready
-- Communicate transparently with users
-- Accelerated fix timeline
+**實作方式:**
+```javascript
+class SyncManager {
+  constructor(api, state) {
+    this.api = api;
+    this.state = state;
+    this.syncInterval = 30000; // 30 秒
+    this.lastSyncVersion = 0;
+  }
+  
+  startSync() {
+    this.syncTimer = setInterval(() => {
+      this.checkForUpdates();
+    }, this.syncInterval);
+  }
+  
+  async checkForUpdates() {
+    const serverVersion = await this.api.getDataVersion();
+    if (serverVersion > this.lastSyncVersion) {
+      const updates = await this.api.getUpdates(this.lastSyncVersion);
+      this.handleUpdates(updates);
+      this.lastSyncVersion = serverVersion;
+    }
+  }
+  
+  handleUpdates(updates) {
+    // 處理遠端更新
+    // 檢查是否有衝突
+    // 更新本地狀態
+    this.state.mergeUpdates(updates);
+  }
+}
+```
 
----
+**驗收標準:**
+- [ ] 自動檢測遠端資料更新
+- [ ] 有更新時通知使用者
+- [ ] 可自動/手動同步
+- [ ] 顯示同步狀態
+- [ ] 記錄同步歷史
 
-## ✅ Success Metrics
+##### 3.2 衝突解決介面 (5 天)
+**負責模組:** `js/api/conflictResolver.js` (新增)
 
-### Week 1 Targets
+**衝突情境:**
+- 使用者 A 和 B 同時編輯同一個專案
+- 使用者 A 先儲存
+- 使用者 B 後儲存時發現衝突
 
-**Adoption Metrics:**
-- [ ] 20+ unique users
-- [ ] 100+ page views
-- [ ] 50+ dashboard refreshes
-- [ ] 10+ daily active users
+**UI 設計:**
+```
+┌──────────────────────────────────────┐
+│  ⚠️ 資料衝突                         │
+├──────────────────────────────────────┤
+│  專案 A 的資料已被其他使用者修改      │
+│                                      │
+│  你的版本        伺服器版本           │
+│  ────────────    ────────────        │
+│  進度: 80%       進度: 75%            │
+│  狀態: 進行中    狀態: 進行中         │
+│  預算: $120K     預算: $110K         │
+│                                      │
+│  選擇處理方式:                        │
+│  ( ) 使用我的版本                    │
+│  ( ) 使用伺服器版本                  │
+│  ( ) 手動合併                        │
+│                                      │
+│  [確定]  [取消]                      │
+└──────────────────────────────────────┘
+```
 
-**Engagement Metrics:**
-- [ ] Average session duration: >5 minutes
-- [ ] Layer 2 views: 30% of total
-- [ ] Layer 3 views: 20% of total
-- [ ] Return user rate: >60%
+**驗收標準:**
+- [ ] 偵測資料衝突
+- [ ] 顯示衝突詳情
+- [ ] 提供三種解決方案
+- [ ] 手動合併介面
+- [ ] 記錄衝突解決歷史
 
-**Technical Metrics:**
-- [ ] Uptime: >99%
-- [ ] Average load time: <3 seconds
-- [ ] Error rate: <1%
-- [ ] API success rate: >95%
+##### 3.3 多使用者指示器 (4 天)
+**負責模組:** 擴充 `js/ui/ui.js`
 
-**Business Metrics:**
-- [ ] Reduction in manual reporting time: >30%
-- [ ] Executive satisfaction: >80%
-- [ ] Support tickets: <10
-- [ ] Critical bugs: 0
+**功能需求:**
+- 顯示誰正在檢視/編輯
+- 即時游標位置（選配）
+- 編輯鎖定機制
 
-### Month 1 Targets
+**UI 設計:**
+```
+┌──────────────────────────────────────┐
+│  專案 A                               │
+│  👤 張三正在編輯  ⏰ 2 分鐘前         │
+├──────────────────────────────────────┤
+│  進度: 75%  [已鎖定]                 │
+│  狀態: 進行中                         │
+│  ...                                 │
+└──────────────────────────────────────┘
+```
 
-**Adoption:**
-- 80% of target users active
-- 50% daily active user rate
-- 5+ user testimonials
+**驗收標準:**
+- [ ] 顯示線上使用者
+- [ ] 顯示正在編輯的項目
+- [ ] 編輯鎖定（選配）
+- [ ] 編輯完成後自動解鎖
 
-**Impact:**
-- 50% reduction in reporting time
-- 3x faster decision-making
-- 100% transformation visibility
-- ROI tracking established
+##### 3.4 離線編輯支援 (4 天)
+**負責模組:** 擴充 `js/api/api.js` 和 `js/core/state.js`
 
----
+**功能需求:**
+- 離線時可繼續編輯
+- 離線編輯儲存到 localStorage
+- 重新上線時自動同步
+- 衝突處理
 
-## 🎯 Post-Launch Plan
-
-### Week 2-4: Stabilization
-
-**Activities:**
-- Daily monitoring of usage and errors
-- Weekly user feedback sessions
-- Bi-weekly optimization deployments
-- Monthly executive review
-
-**Focus Areas:**
-- Bug fixing
-- Performance tuning
-- User experience improvements
-- Documentation updates
-
-### Month 2-3: Enhancement
-
-**Phase 2 Features:**
-- PDF export functionality
-- Advanced filtering
-- Custom dashboard views
-- Email alerts
-- Mobile app (PWA)
-
-**Investment:** Additional 15-20 days
-**Timeline:** 6-8 weeks
-
-### Month 4+: Evolution
-
-**Advanced Features:**
-- AI-powered insights
-- Predictive analytics
-- Real-time collaboration
-- Advanced security (SSO)
-- Custom integrations
-
-**Investment:** 30-40 days
-**Timeline:** 3-4 months
-
----
-
-## 📞 Project Governance
-
-### Steering Committee
-
-**Members:**
-- CIO (Executive Sponsor)
-- CFO (Budget Authority)
-- Transformation Lead (Business Owner)
-- IT Director (Technical Authority)
-- PMO Lead (User Representative)
-
-**Meeting Cadence:**
-- Daily stand-up during implementation (15 min)
-- Weekly steering meeting (30 min)
-- Post-launch: Monthly review
-
-### Decision Authority
-
-**Technical Decisions:** Technical Lead
-**Business Decisions:** Transformation Lead
-**Budget Decisions:** CFO
-**Go/No-Go Decisions:** Steering Committee
+**驗收標準:**
+- [ ] 離線時可編輯資料
+- [ ] 離線編輯暫存在本地
+- [ ] 上線後自動同步
+- [ ] 同步失敗時重試
+- [ ] 顯示離線/上線狀態
 
 ---
 
-## 📋 Checklist Summary
+### Phase 4: 使用者體驗優化 🎨
+**時間:** 2026-01-26 ~ 2026-02-10 (15 天)  
+**優先級:** P2
 
-### Pre-Implementation (Day 0)
-- [ ] Budget approved
-- [ ] Team assembled
-- [ ] Google Workspace access granted
-- [ ] Hosting environment selected
-- [ ] Stakeholders briefed
+#### 目標
+提升整體使用體驗，讓操作更流暢
 
-### Implementation (Days 1-10)
-- [ ] All daily tasks completed
-- [ ] All phase checkpoints met
-- [ ] All deliverables produced
-- [ ] All tests passed
-- [ ] All training completed
+#### 具體任務
 
-### Post-Launch (Day 11+)
-- [ ] Monitoring operational
-- [ ] Support process active
-- [ ] Usage metrics tracked
-- [ ] Enhancement plan approved
-- [ ] Retrospective completed
+##### 4.1 儀表板自訂功能 (5 天)
+**負責模組:** `js/ui/dashboardEditor.js` (新增)
+
+**引入函式庫:** GridStack.js (~80KB)
+
+**功能需求:**
+- 拖放調整佈局
+- 新增/移除小工具
+- 儲存個人化設定
+- 預設多種模板
+
+**驗收標準:**
+- [ ] 可拖放調整小工具位置
+- [ ] 可調整小工具大小
+- [ ] 可新增/移除小工具
+- [ ] 設定自動儲存
+- [ ] 提供預設模板
+
+##### 4.2 深色模式 (3 天)
+**負責模組:** 新增 `css/themes/dark.css`
+
+**實作方式:**
+```css
+/* css/themes/dark.css */
+[data-theme="dark"] {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #ffffff;
+  --text-secondary: #cccccc;
+  /* ... */
+}
+```
+
+**驗收標準:**
+- [ ] 完整的深色配色方案
+- [ ] 可切換淺色/深色模式
+- [ ] 記住使用者偏好
+- [ ] 圖表配色自動調整
+
+##### 4.3 鍵盤快捷鍵 (2 天)
+**負責模組:** `js/utils/shortcuts.js` (新增)
+
+**快捷鍵設計:**
+- `Ctrl+K` - 開啟快速更新
+- `Ctrl+E` - 匯出報表
+- `Ctrl+F` - 搜尋
+- `Ctrl+R` - 重新整理資料
+- `Ctrl+/` - 顯示快捷鍵說明
+
+**驗收標準:**
+- [ ] 實作所有快捷鍵
+- [ ] 顯示快捷鍵說明
+- [ ] 避免與瀏覽器快捷鍵衝突
+- [ ] Mac 支援 Cmd 鍵
+
+##### 4.4 進階搜尋與篩選 (5 天)
+**負責模組:** `js/features/search.js` (新增)
+
+**功能需求:**
+- 全域搜尋
+- 多條件篩選
+- 儲存常用篩選
+- 搜尋歷史
+
+**UI 設計:**
+```
+┌──────────────────────────────────────┐
+│  🔍 搜尋                              │
+├──────────────────────────────────────┤
+│  [_________________]  [搜尋]          │
+│                                      │
+│  進階篩選:                            │
+│  部門: [全部 ▼]                       │
+│  狀態: [全部 ▼]                       │
+│  風險: [全部 ▼]                       │
+│  日期: [____] 至 [____]              │
+│                                      │
+│  [套用]  [清除]  [儲存篩選]          │
+│                                      │
+│  常用篩選:                            │
+│  • 高風險專案                         │
+│  • 逾期專案                          │
+│  • 本週到期                          │
+└──────────────────────────────────────┘
+```
+
+**驗收標準:**
+- [ ] 全域搜尋功能
+- [ ] 多欄位篩選
+- [ ] 儲存常用篩選
+- [ ] 搜尋結果高亮
+- [ ] 搜尋建議
 
 ---
 
-## 🎉 Launch Readiness Checklist
+### Phase 5: 行動裝置與 PWA 📱
+**時間:** 2026-02-11 ~ 2026-02-25 (15 天)  
+**優先級:** P2
 
-**48 Hours Before Launch:**
-- [ ] Production environment tested
-- [ ] All stakeholders notified
-- [ ] Support team briefed
-- [ ] Rollback plan ready
-- [ ] Communication prepared
+#### 目標
+支援行動裝置，提供 App 般的體驗
 
-**24 Hours Before Launch:**
-- [ ] Final smoke tests passed
-- [ ] Data verified current
-- [ ] Monitoring alerts tested
-- [ ] Launch announcement drafted
-- [ ] Support on standby
+#### 具體任務
 
-**Launch Day:**
-- [ ] Deployment executed
-- [ ] Smoke tests passed
-- [ ] Users notified
-- [ ] Monitoring active
-- [ ] Support available
+##### 5.1 PWA 基礎建設 (5 天)
+**新增檔案:**
+- `manifest.json` - PWA 設定
+- `service-worker.js` - Service Worker
+- `icons/` - 各尺寸圖示
 
-**24 Hours After Launch:**
-- [ ] Usage reviewed
-- [ ] No critical issues
-- [ ] User feedback collected
-- [ ] Performance acceptable
-- [ ] Success communicated
+**manifest.json 範例:**
+```json
+{
+  "name": "數位轉型儀表板",
+  "short_name": "DTD",
+  "description": "企業數位轉型專案管理儀表板",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "theme_color": "#667eea",
+  "background_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
+```
 
----
+**驗收標準:**
+- [ ] 可安裝到桌面/主畫面
+- [ ] 離線時可運作
+- [ ] 快取策略正確
+- [ ] 更新機制正常
 
-## 🏆 Definition of Done
+##### 5.2 行動裝置 UI 優化 (7 天)
+**負責模組:** 修改 `css/styles.css`
 
-**The implementation is complete when:**
+**優化重點:**
+- 觸控友好的按鈕大小 (最小 44x44px)
+- 簡化導航
+- 手勢操作支援
+- 底部導航列
 
-1. ✅ Dashboard is live in production
-2. ✅ All three layers functional with real data
-3. ✅ Google Sheets integration working
-4. ✅ 20+ users trained and active
-5. ✅ Documentation complete and published
-6. ✅ Monitoring and support operational
-7. ✅ All critical bugs resolved
-8. ✅ Stakeholder sign-off obtained
-9. ✅ Success metrics baseline established
-10. ✅ Handoff to support team complete
+**驗收標準:**
+- [ ] 在各尺寸手機正常顯示
+- [ ] 觸控操作流暢
+- [ ] 重要功能易於觸及
+- [ ] 橫向/直向皆支援
 
----
+##### 5.3 推播通知 (3 天)
+**負責模組:** 擴充 `js/features/notification.js`
 
-## 📞 Contact & Support
+**功能需求:**
+- 支援 Web Push Notification
+- 重要事件推播
+- 通知權限管理
 
-**Project Team:**
-- **Technical Lead:** tech-lead@company.com
-- **Business Analyst:** ba@company.com
-- **DevOps Engineer:** devops@company.com
-- **Project Manager:** pm@company.com
-
-**Support Channels:**
-- Email: dashboard-support@company.com
-- Slack: #digital-dashboard-support
-- Phone: Extension 5555 (business hours)
-
-**Escalation:**
-- L1: Support Team (4 hour response)
-- L2: Technical Lead (2 hour response)
-- L3: Architecture Team (1 hour response)
-- Critical: Page on-call (immediate)
-
----
-
-**Document Version:** 1.0  
-**Last Updated:** December 9, 2025  
-**Next Review:** Day 5 (mid-implementation)  
-**Prepared By:** Digital Transformation PMO  
-**Approved By:** Steering Committee
-
-*This roadmap is a living document. Update daily during implementation to reflect actual progress, issues, and adjustments.*
+**驗收標準:**
+- [ ] 可推送通知到行動裝置
+- [ ] 點擊通知可開啟相關頁面
+- [ ] 可管理通知權限
+- [ ] 避免通知轟炸
 
 ---
 
-**Ready to begin? Let's transform the way we track digital transformation! 🚀**
+### Phase 6: 進階分析與 AI 🤖
+**時間:** 2026-02-26 ~ 2026-03-31 (35 天)  
+**優先級:** P3 (長期)
+
+#### 目標
+提供智能分析與預測
+
+#### 具體任務
+
+##### 6.1 趨勢分析 (7 天)
+**負責模組:** `js/features/analytics.js` (新增)
+
+**功能需求:**
+- 自動偵測趨勢
+- 異常值警報
+- 預測未來走勢
+
+**驗收標準:**
+- [ ] 顯示歷史趨勢圖
+- [ ] 標記異常點
+- [ ] 簡單線性預測
+- [ ] 趨勢報告生成
+
+##### 6.2 智能建議 (10 天)
+**負責模組:** 擴充 `js/features/aiConnector.js`
+
+**功能需求:**
+- 根據歷史資料提供建議
+- 風險預警
+- 資源優化建議
+
+**驗收標準:**
+- [ ] 顯示智能建議
+- [ ] 建議可採納/忽略
+- [ ] 記錄建議效果
+
+##### 6.3 自然語言查詢 (15 天)
+**負責模組:** 整合 LLM API
+
+**功能需求:**
+- 用自然語言查詢資料
+- 自動生成圖表
+- 對話式分析
+
+**UI 設計:**
+```
+┌──────────────────────────────────────┐
+│  💬 問我任何問題                      │
+├──────────────────────────────────────┤
+│  你: 顯示本週進度落後的專案           │
+│                                      │
+│  AI: 找到 3 個專案:                  │
+│      • 專案 B (進度 60%, 目標 75%)   │
+│      • 專案 D (進度 45%, 目標 60%)   │
+│      • 專案 F (進度 30%, 目標 50%)   │
+│                                      │
+│      [顯示圖表]  [匯出清單]          │
+│                                      │
+│  你: 給我改善建議                     │
+│  AI: ...                             │
+└──────────────────────────────────────┘
+```
+
+**驗收標準:**
+- [ ] 理解簡單查詢
+- [ ] 回答準確
+- [ ] 可生成圖表
+- [ ] 對話上下文
+
+##### 6.4 語音輸入 (選配, 3 天)
+**負責模組:** 擴充 `js/features/aiConnector.js`
+
+**技術選型:**
+- Web Speech API (瀏覽器原生)
+- 或整合 Whisper API
+
+**驗收標準:**
+- [ ] 可語音輸入查詢
+- [ ] 語音轉文字正確率高
+- [ ] 支援中文
+
+---
+
+## 📊 進度追蹤
+
+### 整體進度儀表板
+
+**注意:** 以下進度條需手動更新，建議每週更新一次
+
+```
+Phase 1: 核心功能優化        ░░░░░░░░░░  0%  (0/10 天)
+Phase 2: 進階資料管理        ░░░░░░░░░░  0%  (0/15 天)
+Phase 3: 即時協作與同步      ░░░░░░░░░░  0%  (0/20 天)
+Phase 4: 使用者體驗優化      ░░░░░░░░░░  0%  (0/15 天)
+Phase 5: 行動裝置與 PWA     ░░░░░░░░░░  0%  (0/15 天)
+Phase 6: 進階分析與 AI       ░░░░░░░░░░  0%  (0/35 天)
+
+總進度: ░░░░░░░░░░░░░░░░░░░░ 0%
+
+更新方式: 每完成 10% 增加一個 █ 符號
+```
+
+### 里程碑
+
+| 里程碑 | 日期 | 狀態 |
+|--------|------|------|
+| 🎯 架構評估完成 | 2025-12-09 | ✅ 已完成 |
+| 🚀 核心功能上線 | 2025-12-20 | 🔄 進行中 |
+| 📊 資料管理強化 | 2026-01-05 | ⏳ 待開始 |
+| 🔄 協作功能上線 | 2026-01-25 | ⏳ 待開始 |
+| 🎨 UX 優化完成 | 2026-02-10 | ⏳ 待開始 |
+| 📱 行動版發布 | 2026-02-25 | ⏳ 待開始 |
+| 🤖 AI 功能上線 | 2026-03-31 | ⏳ 待開始 |
+
+---
+
+## 🎯 成功指標 (KPI)
+
+### 開發 KPI
+- [ ] 程式碼覆蓋率 > 80%
+- [ ] 效能評分 > 90 (Lighthouse)
+- [ ] 安全掃描 0 漏洞
+- [ ] 無障礙評分 > 90
+
+### 使用者 KPI
+- [ ] 資料更新時間減少 90%
+- [ ] 報表生成時間 < 5 秒
+- [ ] 使用者滿意度 > 4.5/5
+- [ ] 系統可用性 > 99.5%
+
+### 業務 KPI
+- [ ] 主管報告準備時間減少 80%
+- [ ] 專案追蹤準確度 > 95%
+- [ ] 風險及早發現率 > 90%
+- [ ] 決策效率提升 > 50%
+
+---
+
+## 🛠️ 開發準則
+
+### 程式碼風格
+- 遵循 ESLint 規範
+- 使用 Prettier 格式化
+- 註解要清晰完整
+- 函式保持簡潔（< 50 行）
+
+### 測試要求
+- 所有新功能需有單元測試
+- 關鍵流程需有整合測試
+- UI 變更需有視覺測試
+- 效能測試（大資料集）
+
+### 文件要求
+- 每個新模組需有 JSDoc 註解
+- API 變更需更新 API_REFERENCE.md
+- 使用者功能需更新 USER_GUIDE.md
+- 重大變更需更新 CHANGELOG.md
+
+### 安全要求
+- 所有輸入需驗證
+- 使用 XSS 防護
+- 定期安全掃描
+- 審計日誌完整
+
+---
+
+## 📞 協作與溝通
+
+### 週會安排
+- **每週一:** 進度回顧與本週目標
+- **每週三:** 技術討論與問題解決
+- **每週五:** Demo 與反饋
+
+### 文件同步
+- 進度更新到 `IMPLEMENTATION_ROADMAP.md`
+- 技術決策記錄到 `docs/DECISIONS.md`
+- 問題追蹤到 GitHub Issues
+
+### 程式碼審查
+- 所有變更需 PR
+- 至少一人審查
+- 通過測試才能合併
+- 遵循 Conventional Commits
+
+---
+
+## 🎓 學習資源
+
+### 推薦閱讀
+- [Chart.js 文件](https://www.chartjs.org/docs/)
+- [PWA 開發指南](https://web.dev/progressive-web-apps/)
+- [Web Performance](https://web.dev/performance/)
+- [Accessibility Guide](https://web.dev/accessibility/)
+
+### 範例專案
+- [Dashboard Templates](https://github.com/topics/dashboard)
+- [PWA Examples](https://github.com/hemanth/awesome-pwa)
+- [Gantt Examples](https://frappe.io/gantt)
+
+---
+
+## 📋 檢查清單
+
+### 每個 Phase 完成前
+- [ ] 所有功能通過測試
+- [ ] 程式碼已審查
+- [ ] 文件已更新
+- [ ] 安全掃描通過
+- [ ] 效能測試通過
+- [ ] Demo 給使用者
+- [ ] 收集反饋
+
+### 正式發布前
+- [ ] 完整測試（各瀏覽器/裝置）
+- [ ] 效能優化
+- [ ] 安全加固
+- [ ] 備份機制
+- [ ] 回滾計畫
+- [ ] 使用者訓練
+- [ ] 監控設定
+
+---
+
+## 🚀 下一步行動
+
+### 立即開始 (本週)
+1. ✅ 建立快速更新面板 HTML 結構
+2. ✅ 實作 `QuickUpdateManager` 類別
+3. ✅ 整合到主程式
+4. ✅ 基本測試
+
+### 下週計畫
+1. ⏳ 完成內嵌編輯功能
+2. ⏳ 開始報表匯出功能
+3. ⏳ 重新設計首頁
+
+---
+
+**維護者:** Digital Transformation Team  
+**最後更新:** 2025-12-09  
+**文件版本:** 1.0

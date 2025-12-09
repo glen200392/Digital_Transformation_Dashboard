@@ -1,1664 +1,788 @@
-# Digital Transformation Dashboard - User Guide
+# 數位轉型儀表板 - 資料管理最佳實踐指南
 
-**Version:** 2.1.0  
-**Last Updated:** December 9, 2025  
-**For:** All Dashboard Users  
-**Reading Time:** 15 minutes
-
----
-
-## 📚 Table of Contents
-
-1. [Welcome & Getting Started](#welcome--getting-started)
-2. [Accessing the Dashboard](#accessing-the-dashboard)
-3. [Dashboard Overview](#dashboard-overview)
-4. [Layer 1: Executive Summary](#layer-1-executive-summary)
-5. [Layer 2: Operational Dashboard](#layer-2-operational-dashboard)
-6. [Layer 3: Detailed Analysis](#layer-3-detailed-analysis)
-7. [Common Tasks](#common-tasks)
-8. [Tips & Tricks](#tips--tricks)
-9. [Troubleshooting](#troubleshooting)
-10. [Frequently Asked Questions](#frequently-asked-questions)
-11. [Getting Help](#getting-help)
+**版本:** 1.0  
+**發布日期:** 2025-12-09  
+**適用對象:** 專案管理者、資料管理員、團隊領導
 
 ---
 
-## 🎯 Welcome & Getting Started
+## 📋 目錄
 
-### What is the Digital Transformation Dashboard?
-
-The Digital Transformation Dashboard is your **single source of truth** for monitoring and managing the organization's digital transformation initiatives. It provides real-time visibility into:
-
-- 📊 **Overall transformation health** and progress
-- 💰 **Return on investment (ROI)** metrics
-- 🎯 **Project status** and milestones
-- ⚠️ **Risks and issues** requiring attention
-- 👥 **Team engagement** and capacity
-- 📈 **Key performance indicators** across all initiatives
-
-### Who Should Use This Dashboard?
-
-**Executives & Senior Leadership**
-- Quick overview of transformation health
-- ROI and business impact metrics
-- Strategic decision support
-
-**Project Managers & PMO**
-- Project portfolio tracking
-- Resource allocation visibility
-- Risk and issue management
-
-**Team Members & Contributors**
-- Project status updates
-- Milestone tracking
-- Capability development progress
-
-### What You'll Need
-
-✅ **Web Browser:** Chrome, Firefox, Safari, or Edge (latest version)  
-✅ **Internet Connection:** For real-time data (offline mode available)  
-✅ **Screen Resolution:** Minimum 1024×768 (responsive design)  
-✅ **Access Credentials:** Provided by your IT administrator
+1. [快速開始](#快速開始)
+2. [日常資料管理](#日常資料管理)
+3. [向主管報告](#向主管報告)
+4. [資料輸入方法](#資料輸入方法)
+5. [資料品質管理](#資料品質管理)
+6. [常見問題排除](#常見問題排除)
+7. [最佳實踐建議](#最佳實踐建議)
 
 ---
 
-## 🔐 Accessing the Dashboard
+## 🚀 快速開始
 
-### First Time Access
+### 第一次使用
 
-1. **Navigate to the Dashboard URL**
-   - Production: `https://your-company.com/dashboard`
-   - Bookmark this URL for easy access
-
-2. **Verify Your Connection**
-   - You should see a loading screen
-   - Status indicator shows "🔄 Connecting..."
-   - After 1-2 seconds, dashboard loads
-
-3. **Check Data Freshness**
-   - Look at the header: "🕒 Last Updated: HH:MM:SS"
-   - Data refreshes automatically every 5 minutes
-   - Click "🔄 Refresh" button for manual update
-
-### Logging In
-
-**Note:** This dashboard uses your existing Google Workspace credentials for data access. No separate login required.
-
-If you see "Connection Error":
-- Check your internet connection
-- Verify you have access to Google Sheets backend
-- Contact IT support if issue persists
-
----
-
-## 📋 Dashboard Overview
-
-### Interface Layout
-
+#### Step 1: 開啟儀表板
 ```
-┌─────────────────────────────────────────────────────────┐
-│  🚀 Digital Transformation Dashboard     [Status] [Refresh]│
-├─────────────────────────────────────────────────────────┤
-│  [Layer 1: Executive Summary] [Layer 2: Operations] [Layer 3: Details] │
-├─────────────────────────────────────────────────────────┤
-│                                                         │
-│                  MAIN CONTENT AREA                      │
-│               (Changes based on layer)                  │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+方法 1: 直接開啟 HTML 檔案
+- 雙擊 index.html
+
+方法 2: 使用本地伺服器 (推薦)
+- 在專案資料夾執行:
+  python3 -m http.server 8080
+- 開啟瀏覽器: http://localhost:8080
 ```
 
-### Header Elements
+#### Step 2: 檢查連線狀態
+- 查看右上角同步狀態指示器
+- ⏳ 連接中... → 📡 已連線 ✓
 
-**Left Side:**
-- 🚀 **Dashboard Title**
-- 📅 **Current Date**
-- 🕒 **Last Update Time**
-
-**Right Side:**
-- 👤 **Your Name/Team**
-- 📥 **Data Management** (if authorized)
-- 🔄 **Refresh Button**
-
-**Status Indicators:**
-- 🟢 **Connected** - Data is current
-- 🟡 **Syncing** - Refreshing data
-- 🔴 **Offline** - Using cached data
-- ⏳ **Connecting** - Initial connection
-
-### Navigation Tabs
-
-Switch between three information layers:
-
-1. **Layer 1: Executive Summary** - 30-second overview
-2. **Layer 2: Operational Dashboard** - 5-minute deep dive
-3. **Layer 3: Detailed Analysis** - 15-minute comprehensive review
-
-**How to Navigate:**
-- Click any layer tab
-- Use keyboard shortcuts: `1`, `2`, `3`
-- Current layer is highlighted in purple
-
----
-
-## 📊 Layer 1: Executive Summary
-
-**Purpose:** Quick snapshot for executives and leadership  
-**Time Required:** 30 seconds  
-**Best For:** Daily status checks, executive briefings
-
-### Key Components
-
-#### 1. Transformation Health Score
-
-**Location:** Top center, large circular meter
-
-**What It Shows:**
-- Overall transformation health (0-100 scale)
-- Color-coded status:
-  - 🟢 **Green (80-100):** Excellent progress
-  - 🟡 **Yellow (60-79):** Needs attention
-  - 🔴 **Red (0-59):** Critical issues
-
-**Trend Indicator:**
-- ⬆️ **Up Arrow:** Improving
-- ⬇️ **Down Arrow:** Declining
-- ➡️ **Right Arrow:** Stable
-
-**Example Reading:**
+#### Step 3: 瞭解三層架構
 ```
-┌─────────────────┐
-│                 │
-│       76        │ ← Health Score
-│   🟡 Yellow     │ ← Status
-│       ⬆️        │ ← Trending up
-│                 │
-└─────────────────┘
-```
-
-**What To Do:**
-- **80+:** 👍 Keep momentum going
-- **60-79:** ⚠️ Review yellow/red projects in Layer 2
-- **<60:** 🚨 Immediate leadership attention required
-
----
-
-#### 2. KPI Cards (4 Key Metrics)
-
-**Location:** Below health score, in a 2×2 or 4-column grid
-
-##### **A. ROI Card**
-
-**What It Shows:** Return on investment percentage
-
-```
-┌─────────────────────┐
-│  💰 ROI             │
-│                     │
-│      145%           │ ← Current ROI
-│    🟢 Excellent     │ ← Status
-│                     │
-│ Target: >150%       │ ← Goal
-└─────────────────────┘
-```
-
-**Status Thresholds:**
-- 🟢 **Green:** ROI ≥ 150%
-- 🟡 **Yellow:** ROI 100-149%
-- 🔴 **Red:** ROI < 100%
-
-**What It Means:**
-- **145%:** For every $1 invested, getting $1.45 return
-- Tracks both cost savings and revenue gains
-- Based on completed and in-progress initiatives
-
----
-
-##### **B. Progress Card**
-
-**What It Shows:** Overall program completion percentage
-
-```
-┌─────────────────────┐
-│  📈 Progress        │
-│                     │
-│      73%            │ ← Completion
-│    🟡 On Track      │ ← Status
-│                     │
-│ Timeline: 78%       │ ← Time elapsed
-└─────────────────────┘
-```
-
-**Status Logic:**
-- 🟢 **Green:** Progress ≥ Timeline (ahead/on schedule)
-- 🟡 **Yellow:** Progress within 10% of timeline
-- 🔴 **Red:** Progress < Timeline - 10% (behind)
-
-**Example:**
-- If 78% of time has passed, expect 78% completion
-- At 73%, we're 5% behind → Yellow status
-- Acceptable variance, but watch closely
-
----
-
-##### **C. Engagement Card**
-
-**What It Shows:** Team participation and adoption rate
-
-```
-┌─────────────────────┐
-│  👥 Engagement      │
-│                     │
-│      68%            │ ← Participation
-│    🟡 Good          │ ← Status
-│                     │
-│ Target: >70%        │ ← Goal
-└─────────────────────┘
-```
-
-**What It Measures:**
-- Active project participation
-- Training completion rates
-- Tool adoption metrics
-- Survey response rates
-
-**Status Thresholds:**
-- 🟢 **Green:** ≥ 70%
-- 🟡 **Yellow:** 50-69%
-- 🔴 **Red:** < 50%
-
----
-
-##### **D. High Risks Card**
-
-**What It Shows:** Count of critical risks requiring attention
-
-```
-┌─────────────────────┐
-│  ⚠️ High Risks      │
-│                     │
-│       2             │ ← Risk count
-│    🟡 Monitor       │ ← Status
-│                     │
-│ Trend: Decreasing   │ ← Direction
-└─────────────────────┘
-```
-
-**Status Logic:**
-- 🟢 **Green:** 0 high risks
-- 🟡 **Yellow:** 1-3 high risks
-- 🔴 **Red:** 4+ high risks
-
-**What To Do:**
-- Click card to jump to Layer 2 risk details
-- Review mitigation plans
-- Escalate to steering committee if needed
-
----
-
-#### 3. Quick Actions
-
-**Location:** Bottom of Layer 1
-
-```
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│ View Details │ │ Export PDF   │ │ Schedule     │
-│ →            │ │ 📄           │ │ Meeting 📅   │
-└──────────────┘ └──────────────┘ └──────────────┘
-```
-
-**Available Actions:**
-- **View Details:** Jump to Layer 2
-- **Export PDF:** Generate executive summary (if enabled)
-- **Schedule Meeting:** Quick link to calendar
-- **Send Report:** Email snapshot to team
-
----
-
-### Using Layer 1 Effectively
-
-**Daily Routine (2 minutes):**
-1. Check health score → Trend direction?
-2. Scan 4 KPI cards → Any red status?
-3. Note high risk count → Increasing?
-4. If all green/yellow → Keep going!
-5. If any red → Drill into Layer 2
-
-**Executive Briefing (5 minutes):**
-1. Start with health score narrative
-2. Highlight ROI achievement
-3. Explain progress vs. timeline
-4. Address any high risks
-5. Show trend direction (improving/stable/declining)
-
-**Best Practices:**
-- ✅ Check daily at same time
-- ✅ Focus on trends over absolute numbers
-- ✅ Investigate sudden changes
-- ✅ Celebrate green statuses
-- ✅ Address yellows before they turn red
-
----
-
-## 🎛️ Layer 2: Operational Dashboard
-
-**Purpose:** Operational overview for project managers and PMO  
-**Time Required:** 5 minutes  
-**Best For:** Weekly reviews, standups, operational planning
-
-### Key Components
-
-#### 1. Quick Wins Tracker
-
-**Location:** Top left section
-
-**What It Shows:**
-- Progress on 30-60-90 day quick win initiatives
-- Burndown chart showing completion over time
-- Milestones and deadlines
-
-```
-Quick Wins Progress
-┌─────────────────────────────────────┐
-│  ●●●●●●●○○○○○○○○                   │ ← Progress bar
-│  42% Complete (8 of 19)             │ ← Status
-│                                     │
-│  [Burndown Chart]                   │ ← Visual trend
-│   ╱                                 │
-│  ╱                                  │
-│ ─────────────────────                │
-│  Nov    Dec    Jan                  │
-│                                     │
-│  Next Milestone: Dec 15             │ ← Upcoming
-└─────────────────────────────────────┘
-```
-
-**How to Read:**
-- **Progress Bar:** Visual completion status
-- **Burndown Line:** Should slope down to zero
-- **Above Line:** Behind schedule
-- **Below Line:** Ahead of schedule
-
-**Quick Wins Categories:**
-- 🎯 **Process Optimization:** 5 wins
-- 💻 **Tool Adoption:** 7 wins
-- 📚 **Training Completion:** 4 wins
-- 🔄 **Workflow Automation:** 3 wins
-
-**Actions:**
-- Hover over bars for details
-- Click to see individual win status
-- Filter by category or status
-
----
-
-#### 2. Transformation Maturity Radar
-
-**Location:** Top right section
-
-**What It Shows:**
-- Organizational maturity across 6 dimensions
-- Scale: 1 (Basic) to 5 (Optimized)
-- Comparison to target state
-
-```
-       Strategy (4.2)
-            │
-    Culture │  Technology
-      (3.8)─┼─(4.5)
-           ╱│╲
-         ╱  │  ╲
-       ╱    │    ╲
- Process   │    Data
-  (4.0)────┼────(3.5)
-            │
-      People (4.1)
-```
-
-**6 Dimensions Explained:**
-
-**1. Strategy (Target: 4.5)**
-- Vision clarity
-- Roadmap definition
-- Stakeholder alignment
-- **Current:** 4.2 → Nearly there
-
-**2. Technology (Target: 4.0)**
-- Tool adoption
-- System integration
-- Technical capabilities
-- **Current:** 4.5 → Exceeding!
-
-**3. Data (Target: 4.0)**
-- Data quality
-- Analytics maturity
-- Data-driven decisions
-- **Current:** 3.5 → Needs work
-
-**4. People (Target: 4.5)**
-- Skills development
-- Change readiness
-- Team capacity
-- **Current:** 4.1 → On track
-
-**5. Process (Target: 4.0)**
-- Workflow optimization
-- Automation level
-- Efficiency gains
-- **Current:** 4.0 → Target met
-
-**6. Culture (Target: 4.5)**
-- Innovation mindset
-- Collaboration
-- Risk tolerance
-- **Current:** 3.8 → Lagging
-
-**Interpreting the Radar:**
-- **Larger coverage** = Higher maturity
-- **Balanced shape** = Consistent progress
-- **Spikes/dips** = Focus areas
-- **Gap to target** = Work remaining
-
-**What To Do:**
-- Focus on lowest scores (Data: 3.5, Culture: 3.8)
-- Maintain strengths (Technology: 4.5)
-- Balance across all dimensions
-
----
-
-#### 3. Risk Heat Map
-
-**Location:** Bottom section
-
-**What It Shows:**
-- All active risks plotted by impact vs. probability
-- 3×3 matrix (Low/Med/High on both axes)
-- Color-coded severity
-
-```
-Risk Heat Map
-         High │  2  │  4  │ 🔴6 │ ← Impact
-              ├─────┼─────┼─────┤
-          Med │  1  │ 🟡3 │  2  │
-              ├─────┼─────┼─────┤
-          Low │  0  │  1  │  0  │
-              └─────┴─────┴─────┘
-               Low   Med   High
-                Probability →
-```
-
-**Risk Zones:**
-- 🔴 **Red Zone (High Impact + High Probability):** 6 risks - URGENT
-- 🟡 **Yellow Zone (Medium combinations):** 5 risks - Monitor
-- 🟢 **Green Zone (Low combinations):** 2 risks - Track
-
-**Risk Categories:**
-- 💰 **Budget:** Cost overruns
-- ⏱️ **Schedule:** Timeline delays
-- 👥 **Resource:** Capacity issues
-- 🔧 **Technical:** Implementation challenges
-- 🏢 **Organizational:** Change resistance
-
-**Example Risk Card (click any box):**
-```
-┌───────────────────────────────────┐
-│ Risk #12: Cloud Migration Delay   │
-│                                   │
-│ Impact: High (🔴)                 │
-│ Probability: High (80%)           │
-│ Category: Technical               │
-│                                   │
-│ Mitigation:                       │
-│ • Add 2 cloud engineers           │
-│ • Extend timeline by 2 weeks      │
-│                                   │
-│ Owner: Jane Smith                 │
-│ Review Date: Dec 15, 2025         │
-└───────────────────────────────────┘
-```
-
-**Actions:**
-- Click any number to see risk list
-- Filter by category or owner
-- Export risk register
-- Update mitigation status
-
-**Risk Management Workflow:**
-1. Review red zone weekly
-2. Update mitigation plans
-3. Track trending (moving zones)
-4. Escalate persistent high risks
-5. Close resolved risks
-
----
-
-#### 4. Burndown Chart
-
-**Location:** Quick Wins section
-
-**What It Shows:**
-- Remaining work over time
-- Ideal vs. actual progress
-- Velocity trends
-
-```
-Tasks Remaining
-  20 │╲                     Ideal
-     │ ╲                    ▬ ▬ ▬
-  15 │  ╲                   Actual
-     │   ╲                  ─────
-  10 │    ╲╲_
-     │      ╲╲__
-   5 │         ╲╲___
-     │            ╲╲_____
-   0 └──────────────────────
-     Nov   Dec   Jan   Feb
-```
-
-**Reading the Chart:**
-- **Dashed line:** Ideal progress (straight line to zero)
-- **Solid line:** Actual progress
-- **Gap above ideal:** Behind schedule
-- **Gap below ideal:** Ahead of schedule
-
-**Velocity Indicators:**
-- **Slope steeper than ideal:** Fast progress
-- **Slope flatter than ideal:** Slow progress
-- **Flat line:** No progress (problem!)
-- **Upward slope:** Scope creep (adding tasks)
-
-**What To Do Based on Chart:**
-- **On track:** Maintain current pace
-- **Behind:** Identify blockers, add resources
-- **Ahead:** Consider pulling in future work
-- **Stalled:** Immediate intervention needed
-
----
-
-### Using Layer 2 Effectively
-
-**Weekly Review (10 minutes):**
-1. **Quick Wins:** Are we on track for next milestone?
-2. **Maturity Radar:** Which dimension needs focus?
-3. **Risk Heat Map:** Any new red zone risks?
-4. **Burndown:** Is velocity acceptable?
-5. **Action Items:** What needs immediate attention?
-
-**Monthly Operations Review (30 minutes):**
-1. Compare maturity radar to last month
-2. Review closed vs. new risks
-3. Analyze quick wins velocity trend
-4. Identify capability gaps
-5. Adjust resource allocation
-
-**Best Practices:**
-- ✅ Weekly reviews with project team
-- ✅ Track trends, not just current state
-- ✅ Proactive risk mitigation
-- ✅ Celebrate milestone achievements
-- ✅ Adjust plans based on data
-
----
-
-## 📊 Layer 3: Detailed Analysis
-
-**Purpose:** Deep dive into projects, resources, and metrics  
-**Time Required:** 15-30 minutes  
-**Best For:** Detailed planning, analysis, reporting
-
-### Navigation Tabs
-
-Click tabs to switch between views:
-- **Projects** - Portfolio overview
-- **Resources** - Capacity and allocation
-- **Capability** - Skills development
-- **Metrics** - KPI tracking
-
----
-
-### Tab 1: Projects
-
-**What It Shows:**
-- Complete project portfolio
-- Status, progress, budgets
-- Sortable and filterable table
-
-#### Project Table Columns
-
-```
-┌──────┬─────────────┬────────┬──────────┬────────┬────────┬─────────┐
-│ ID   │ Project     │ Status │ Progress │ Owner  │ Budget │ Actions │
-├──────┼─────────────┼────────┼──────────┼────────┼────────┼─────────┤
-│ P001 │ Cloud Mig.  │ 🟢    │ ██████░░ │ Smith  │ $250K  │ [View]  │
-│      │             │ Green  │   75%    │        │        │         │
-├──────┼─────────────┼────────┼──────────┼────────┼────────┼─────────┤
-│ P002 │ CRM Impl.   │ 🟡    │ ████░░░░ │ Jones  │ $180K  │ [View]  │
-│      │             │ Yellow │   50%    │        │        │         │
-├──────┼─────────────┼────────┼──────────┼────────┼────────┼─────────┤
-│ P003 │ API Integr. │ 🔴    │ ██░░░░░░ │ Chen   │ $120K  │ [View]  │
-│      │             │ Red    │   25%    │        │        │         │
-└──────┴─────────────┴────────┴──────────┴────────┴────────┴─────────┘
-```
-
-**Column Definitions:**
-
-**ID:** Unique project identifier
-**Project:** Project name (hover for description)
-**Status:**
-- 🟢 **Green:** On track, no issues
-- 🟡 **Yellow:** Minor issues, watch
-- 🔴 **Red:** Critical, needs intervention
-
-**Progress:**
-- Visual bar + percentage
-- Calculated from milestone completion
-
-**Owner:** Project manager name
-**Budget:** Total allocated budget
-**Actions:** View details, update status
-
-#### Filtering & Sorting
-
-**Filter Options:**
-```
-┌─────────────────────────────────────┐
-│ Status: [All ▼] [Green] [Yellow] [Red] │
-│ Owner:  [All ▼] [Smith] [Jones] [...] │
-│ Search: [___________________] 🔍      │
-└─────────────────────────────────────┘
-```
-
-**Sort Columns:**
-- Click column header to sort
-- Click again to reverse order
-- Multi-column sort: Shift+Click
-
-**Quick Filters:**
-- **My Projects:** Show only your projects
-- **At Risk:** Show yellow + red only
-- **High Budget:** Show projects >$200K
-- **Due This Month:** Show near-term deadlines
-
-#### Project Details (Click [View])
-
-```
-┌─────────────────────────────────────────────┐
-│ Project: Cloud Migration Initiative         │
-├─────────────────────────────────────────────┤
-│ ID: P001            Status: 🟢 Green       │
-│ Owner: Jane Smith   Progress: 75%          │
-│ Budget: $250,000    Spent: $187,500        │
-│ Start: Jan 1, 2025  End: Mar 31, 2025      │
-├─────────────────────────────────────────────┤
-│ Description:                                │
-│ Migrate on-premise infrastructure to        │
-│ AWS cloud platform. Includes 50 VMs...      │
-├─────────────────────────────────────────────┤
-│ Milestones:                                 │
-│ ✅ Planning Complete (Jan 15)               │
-│ ✅ Migration Tool Setup (Feb 1)             │
-│ 🔄 Pilot Migration (Feb 28) - In Progress  │
-│ ⏳ Full Migration (Mar 31) - Pending        │
-├─────────────────────────────────────────────┤
-│ Team: 8 members                             │
-│ Risk Level: Low                             │
-│ Last Updated: Dec 9, 2025                   │
-└─────────────────────────────────────────────┘
-```
-
-#### Project Summary Cards
-
-**Location:** Above table
-
-```
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│ Total        │ │ Green        │ │ Yellow       │
-│ Projects     │ │ Status       │ │ Status       │
-│     24       │ │     15       │ │      7       │
-└──────────────┘ └──────────────┘ └──────────────┘
-
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│ Red          │ │ Total        │ │ Avg          │
-│ Status       │ │ Budget       │ │ Progress     │
-│      2       │ │   $2.4M      │ │     68%      │
-└──────────────┘ └──────────────┘ └──────────────┘
+┌────────────────────────────────────┐
+│ Layer 1: Executive Summary         │  ← 給主管看的摘要
+│ - 健康度總分                        │
+│ - 關鍵 KPI                         │
+│ - 快速操作按鈕                      │
+└────────────────────────────────────┘
+
+┌────────────────────────────────────┐
+│ Layer 2: Operational Dashboard     │  ← 日常監控用
+│ - Quick Wins 追蹤                  │
+│ - 成熟度雷達圖                      │
+│ - 風險熱力圖                        │
+└────────────────────────────────────┘
+
+┌────────────────────────────────────┐
+│ Layer 3: Detailed Analysis         │  ← 深入分析用
+│ - 專案列表                         │
+│ - 資源配置                         │
+│ - 能力建設                         │
+│ - 關鍵指標                         │
+└────────────────────────────────────┘
 ```
 
 ---
 
-### Tab 2: Resources
+## 📊 日常資料管理
 
-**What It Shows:**
-- Team capacity overview
-- Resource allocation
-- Utilization rates
+### 每日例行工作 (5-10 分鐘)
 
-#### Resource Cards
+#### 情境 1: 更新專案進度
 
+**方法 A: 使用資料管理面板（建議）**
+
+1. 點擊右上角「📥 資料管理」按鈕
+2. 切換到「📝 表單輸入」Tab
+3. 點擊「📊 新增專案」或在專案列表中找到要更新的專案
+4. 更新以下欄位:
+   ```
+   專案名稱: [保持不變]
+   進度: 75% → 80% ✓
+   狀態: 進行中
+   風險等級: 低
+   預算使用: $120K / $150K
+   ```
+5. 點擊「儲存」
+6. 關閉面板，儀表板會自動更新
+
+**方法 B: 使用檔案導入（批量更新）**
+
+1. 點擊「📥 資料管理」→「📄 檔案導入」
+2. 點擊「下載範本」→「專案範本」
+3. 在 Excel 中更新專案資料
+4. 儲存檔案
+5. 拖放檔案到上傳區
+6. 確認資料預覽無誤
+7. 點擊「確認導入」
+
+**時間比較:**
+- 方法 A (單一專案): ~1 分鐘
+- 方法 B (10+ 專案): ~5 分鐘
+
+#### 情境 2: 新增風險項目
+
+1. 開啟「資料管理」面板
+2. 「📝 表單輸入」→「⚠️ 新增風險」
+3. 填寫風險資訊:
+   ```
+   風險名稱: 關鍵人員離職風險
+   影響程度: 高
+   發生機率: 中
+   所屬專案: 專案 A
+   緩解措施: 建立 SOP, 交接計畫
+   負責人: 張三
+   預計解決日: 2025-12-31
+   ```
+4. 儲存後會自動出現在「風險熱力圖」中
+
+#### 情境 3: 更新 KPI 數據
+
+**快速更新流程:**
 ```
-┌─────────────────────────────────────┐
-│ 👥 Total Team Members               │
-│                                     │
-│         42 People                   │
-│                                     │
-│ FTE: 38.5  |  Contractors: 3.5     │
-└─────────────────────────────────────┘
-
-┌─────────────────────────────────────┐
-│ 📊 Utilization Rate                 │
-│                                     │
-│         85%                         │
-│    🟡 High but sustainable          │
-│                                     │
-│ Target: 75-85%                      │
-└─────────────────────────────────────┘
-
-┌─────────────────────────────────────┐
-│ 🔧 By Role                          │
-│                                     │
-│ Developers:    18                   │
-│ Analysts:      10                   │
-│ Managers:       8                   │
-│ Architects:     6                   │
-└─────────────────────────────────────┘
-
-┌─────────────────────────────────────┐
-│ 📈 Capacity Trend                   │
-│                                     │
-│ +3 New hires this quarter           │
-│ -1 Attrition                        │
-│ Net: +2 capacity                    │
-└─────────────────────────────────────┘
-```
-
-#### Resource Allocation Chart
-
-```
-Resource Allocation by Project
-───────────────────────────────────
-Cloud Migration    ████████░░ 40%
-CRM Implementation ██████░░░░ 30%
-API Integration    ████░░░░░░ 20%
-Maintenance        ██░░░░░░░░ 10%
-                   ──────────────
-Available Capacity ████░░░░░░ 15% ← Buffer
-```
-
-**Interpreting Allocation:**
-- **>100%:** Over-allocated (problem!)
-- **85-100%:** Fully utilized (watch)
-- **75-85%:** Optimal (healthy)
-- **<75%:** Under-utilized (opportunity)
-
-#### Skill Matrix
-
-```
-┌──────────────────────────────────────┐
-│ Top Skills Available                 │
-├──────────────────────────────────────┤
-│ Cloud Architecture    ████████ 16    │
-│ Data Analytics        ██████ 12      │
-│ Project Management    ██████ 12      │
-│ Agile/Scrum           █████ 10       │
-│ Change Management     ████ 8         │
-└──────────────────────────────────────┘
-
-┌──────────────────────────────────────┐
-│ Skill Gaps                           │
-├──────────────────────────────────────┤
-│ ⚠️ AI/Machine Learning  (Need 3)     │
-│ ⚠️ Cybersecurity        (Need 2)     │
-│ ⚠️ Mobile Development   (Need 2)     │
-└──────────────────────────────────────┘
+1. 資料管理 → 表單輸入 → 更新 KPI
+2. 選擇要更新的 KPI:
+   - ROI (投資報酬率)
+   - 整體進度
+   - 員工參與度
+   - 高風險項目數
+3. 輸入新數值
+4. 系統自動計算健康度總分
+5. 儲存
 ```
 
----
+**建議頻率:**
+- ROI: 每月更新
+- 整體進度: 每週更新
+- 員工參與度: 每月更新
+- 高風險項目: 即時更新
 
-### Tab 3: Capability Building
+### 每週例行工作 (15-20 分鐘)
 
-**What It Shows:**
-- Training completion funnel
-- Skill development progress
-- Adoption curves
-
-#### Capability Funnel
-
+#### 週一: 準備本週目標
 ```
-Training & Adoption Funnel
-──────────────────────────────────
-
-Awareness         ████████████████ 100% (42/42)
-                  ↓ -14%
-Enrollment        ██████████████░░  86% (36/42)
-                  ↓ -19%
-Completion        ███████████░░░░░  67% (28/42)
-                  ↓ -12%
-Application       ██████████░░░░░░  55% (23/42)
-                  ↓ -15%
-Proficiency       ████████░░░░░░░░  40% (17/42)
+□ 檢視上週進度
+□ 更新本週 Quick Wins
+□ 標記需要關注的專案
+□ 設定本週重點任務
 ```
 
-**Stage Definitions:**
-
-**Awareness (100%):**
-- All team members informed
-- Training program communicated
-- Resources shared
-
-**Enrollment (86%):**
-- Signed up for training
-- Access to learning materials
-- **Gap:** 6 people not enrolled
-
-**Completion (67%):**
-- Finished training modules
-- Passed assessments
-- **Gap:** 8 didn't complete
-
-**Application (55%):**
-- Using skills on real projects
-- Demonstrating competency
-- **Gap:** 5 haven't applied yet
-
-**Proficiency (40%):**
-- Expert level
-- Can train others
-- **Gap:** 6 need more practice
-
-**Optimization Targets:**
-- Increase completion to 80%
-- Boost application to 70%
-- Grow proficiency to 50%
-
-#### Technology Adoption Curve
-
+#### 週五: 週報準備
 ```
-Tool Adoption Over Time
-────────────────────────────────
-
-100% │                    ╱────── 🎯 Target
-     │                  ╱
- 80% │                ╱
-     │              ╱
- 60% │            ╱
-     │          ╱           ■ Actual
- 40% │        ╱             ─────
-     │      ╱
- 20% │    ╱
-     │  ╱
-  0% ├──────────────────────────
-     Q1   Q2   Q3   Q4   Q1'26
+□ 更新所有專案進度
+□ 檢查風險項目狀態
+□ 準備週報資料
+□ 匯出報表給主管
 ```
 
-**Adoption Phases:**
-1. **Innovators (2.5%):** Early adopters, champions
-2. **Early Adopters (13.5%):** Quick learners
-3. **Early Majority (34%):** Pragmatic users ← Current
-4. **Late Majority (34%):** Need more support
-5. **Laggards (16%):** Resistant to change
-
-**Current Status:**
-- 45% adoption (Early Majority phase)
-- On track to reach 80% by Q4 2026
-- Momentum building
-
-#### Training Metrics
+### 每月例行工作 (30-60 分鐘)
 
 ```
-┌────────────────────────────────┐
-│ Completed This Month           │
-│                                │
-│ 12 courses                     │
-│ 156 total hours                │
-│ 18 certifications earned       │
-└────────────────────────────────┘
-
-┌────────────────────────────────┐
-│ Top Training Topics            │
-│                                │
-│ 1. Agile/Scrum        (8)      │
-│ 2. Cloud Tech         (7)      │
-│ 3. Data Analytics     (5)      │
-│ 4. Leadership         (4)      │
-└────────────────────────────────┘
+□ 全面檢視所有專案
+□ 更新預算使用情況
+□ 評估員工參與度
+□ 計算月度 ROI
+□ 準備月報
+□ 資料備份
 ```
 
 ---
 
-### Tab 4: Key Metrics
+## 📈 向主管報告
 
-**What It Shows:**
-- Custom KPI tracking
-- Trend charts
-- Goal progress
+### 情境 A: 臨時主管要求報告（5 分鐘內完成）
 
-#### KPI Dashboard
+**快速報告流程:**
 
+1. **開啟 Layer 1: Executive Summary**
+   ```
+   顯示內容:
+   ✅ 健康度總分: 76 (📈 +3)
+   ✅ ROI: 145% (優秀)
+   ✅ 整體進度: 73% (正常)
+   ✅ 高風險項目: 0 (優秀)
+   ```
+
+2. **一句話摘要**
+   ```
+   "目前轉型健康度 76 分，比上期提升 3 分，
+    ROI 達 145%，無高風險項目，整體進展良好。"
+   ```
+
+3. **如果主管追問細節**
+   ```
+   - 切換到 Layer 2 顯示風險熱力圖
+   - 切換到 Layer 3 顯示專案列表
+   - 點擊「查看風險詳情」或「本週重點項目」
+   ```
+
+### 情境 B: 準備正式週報（15-30 分鐘）
+
+**完整週報流程:**
+
+#### Step 1: 確認資料最新 (5 分鐘)
 ```
-┌─────────────────────────────────────────────┐
-│ Metric: Customer Satisfaction Score         │
-├─────────────────────────────────────────────┤
-│ Current: 8.4/10        Target: 8.5/10       │
-│ Status: 🟡 Near Goal   Trend: ⬆️ Improving  │
-│                                             │
-│ [Trend Chart]                               │
-│  9.0 │               ╱──                    │
-│  8.5 │             ╱    ← Target Line       │
-│  8.0 │       ──────                         │
-│  7.5 └──────────────────────                │
-│      Q1   Q2   Q3   Q4                      │
-└─────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────┐
-│ Metric: Process Efficiency                  │
-├─────────────────────────────────────────────┤
-│ Current: 78%           Target: 75%          │
-│ Status: 🟢 Exceeding   Trend: ⬆️ Rising     │
-│                                             │
-│ Baseline (Q1): 65%                          │
-│ Improvement:   +13 percentage points        │
-│ YoY Change:    +20%                         │
-└─────────────────────────────────────────────┘
-```
-
-#### Goal Progress Tracking
-
-```
-Annual Goals Progress
-─────────────────────────────────────────
-
-Digital Revenue Growth (30% target)
-████████████████████░░░░░ 78% → 23.4%
-
-Cost Reduction (20% target)
-████████████████░░░░░░░░░ 65% → 13%
-
-Time to Market (-30% target)
-███████████████████████░░ 92% → -27.6%
-
-Employee NPS (50 target)
-█████████████░░░░░░░░░░░░ 54% → 27 pts
+□ 更新所有專案進度
+□ 檢查風險狀態
+□ 驗證 KPI 數據
+□ 檢查圖表顯示
 ```
 
-**Goal Status:**
-- **Digital Revenue:** On track, exceeding
-- **Cost Reduction:** Behind, needs focus
-- **Time to Market:** Nearly there!
-- **Employee NPS:** Ahead of schedule
+#### Step 2: 匯出報表 (5 分鐘)
 
-#### Custom Metrics
+**注意:** 報表匯出功能目前正在開發中（預計 Phase 1 完成）
 
-**Add Your Own:**
-- Click "📊 Add Metric"
-- Select from predefined or custom
-- Set target and tracking frequency
-- Choose visualization type
+**現行方案 - 手動截圖:**
+```
+1. 使用截圖工具擷取畫面:
+   
+2. 截圖 Layer 1: Executive Summary
+   - Win: Windows + Shift + S
+   - Mac: Command + Shift + 4
+   
+3. 截圖 Layer 2: 關鍵圖表
+   - 風險熱力圖
+   - 成熟度雷達圖
+   
+4. 截圖 Layer 3: 專案列表
+```
 
-**Popular Custom Metrics:**
-- Deployment frequency
-- Mean time to recovery (MTTR)
-- Customer onboarding time
-- Feature adoption rate
-- Security incidents
-- System uptime
+#### Step 3: 準備說明文字 (10 分鐘)
+```
+週報範本:
 
----
+【數位轉型週報】2025-12-09
 
-## ✨ Common Tasks
+一、整體概況
+• 健康度總分: 76 分 (▲ 較上週 +3)
+• 投資報酬率: 145% (優秀)
+• 專案進度: 73% (正常)
+• 高風險項目: 0 個
 
-### Task 1: Daily Status Check (2 min)
+二、本週重點成果
+• 專案 A 完成里程碑 3
+• 專案 B 進度從 60% 提升至 75%
+• 成功降低風險 C 的等級
 
-**Steps:**
-1. Open dashboard
-2. Check Layer 1 health score
-3. Scan 4 KPI cards for red status
-4. Note any high risks
-5. Done!
+三、需要關注事項
+• 專案 D 進度略為落後，已安排額外資源
+• 員工參與度需要提升，計畫下週辦訓練
 
-**When to dig deeper:**
-- Health score dropped >5 points
-- Any KPI turned red
-- New high risks appeared
+四、下週計畫
+• 專案 A 進入下一階段
+• 完成能力建設培訓
+• 準備月度報告
+```
 
----
+#### Step 4: 組合成報告 (5-10 分鐘)
+```
+工具選擇:
+- PowerPoint: 適合正式簡報
+- Word: 適合文字為主的報告
+- Email: 適合快速更新
 
-### Task 2: Weekly Team Review (10 min)
+建議結構:
+1. 封面 (專案名稱、報告日期)
+2. 總覽 (Layer 1 截圖)
+3. 詳細分析 (Layer 2 圖表)
+4. 專案列表 (Layer 3 表格)
+5. 建議與下一步
+```
 
-**Steps:**
-1. Navigate to Layer 2
-2. Review quick wins progress
-3. Check maturity radar for focus areas
-4. Examine risk heat map
-5. Review burndown chart velocity
-6. Document action items
+### 情境 C: 月度正式報告（1-2 小時）
 
-**Discussion Points:**
-- What's blocking quick wins?
-- Which maturity dimension needs help?
-- Any risks moving to red zone?
-- Are we on track to meet milestones?
+**月報準備清單:**
 
----
+```
+資料準備 (30 分鐘)
+□ 收集整個月的資料
+□ 計算月度 KPI
+□ 分析趨勢變化
+□ 整理重大事件
 
-### Task 3: Monthly Executive Report (20 min)
+報表製作 (30 分鐘)
+□ 使用報表模板
+□ 匯入最新數據
+□ 產生所有圖表
+□ 檢查資料準確性
 
-**Steps:**
-1. **Layer 1:** Screenshot health score + KPIs
-2. **Layer 2:** Export maturity radar
-3. **Layer 3 - Projects:** Filter to your portfolio
-4. **Layer 3 - Metrics:** Capture goal progress
-5. Compile into presentation
-6. Add narrative and recommendations
-
-**Pro Tip:** Use "Export PDF" feature (if enabled)
-
----
-
-### Task 4: Project Status Update (5 min)
-
-**Steps:**
-1. Go to Layer 3 → Projects tab
-2. Find your project in table
-3. Click [View] or [Edit]
-4. Update progress %
-5. Change status if needed (green/yellow/red)
-6. Add milestone updates
-7. Save changes
-
-**Update Frequency:**
-- Weekly for active projects
-- Bi-weekly for stable projects
-- Daily for at-risk projects
+分析與建議 (30 分鐘)
+□ 撰寫執行摘要
+□ 分析成功與挑戰
+□ 提出改進建議
+□ 規劃下月重點
+```
 
 ---
 
-### Task 5: Risk Management (15 min)
+## 💾 資料輸入方法
 
-**Steps:**
-1. Navigate to Layer 2
-2. Review risk heat map
-3. Click red zone to see details
-4. For each high risk:
-   - Verify impact/probability
-   - Review mitigation plan
-   - Update status
-   - Assign owner if needed
-5. Escalate persistent high risks
+### 方法 1: 表單輸入（適合單筆資料）
 
-**Risk Review Cadence:**
-- Weekly: Red zone risks
-- Bi-weekly: Yellow zone risks
-- Monthly: All risks, close resolved
+**優點:**
+- ✅ 簡單直覺
+- ✅ 有欄位驗證
+- ✅ 立即看到結果
 
----
+**步驟:**
+1. 開啟「資料管理」面板
+2. 選擇「表單輸入」Tab
+3. 選擇資料類型（專案/風險/Quick Win/KPI）
+4. 填寫表單
+5. 點擊儲存
 
-### Task 6: Resource Planning (20 min)
+**適用情境:**
+- 新增單一專案
+- 更新單一 KPI
+- 記錄新風險
 
-**Steps:**
-1. Go to Layer 3 → Resources tab
-2. Check overall utilization
-3. Review allocation by project
-4. Identify over/under-allocated areas
-5. Check skill gaps
-6. Plan hiring or reallocation
+### 方法 2: Excel/CSV 導入（適合批量資料）
 
-**Red Flags:**
-- Utilization >95% (burnout risk)
-- Critical skills missing
-- Team members on too many projects
-- Contractors >20% of total
+**優點:**
+- ✅ 一次更新多筆
+- ✅ 可離線準備
+- ✅ 易於複製貼上
 
----
+**步驟:**
 
-### Task 7: Training Progress Review (10 min)
+#### 準備資料檔案
+```
+1. 下載對應範本:
+   - projects_template.csv  (專案)
+   - risks_template.csv     (風險)
+   - quickwins_template.csv (Quick Wins)
+   
+2. 在 Excel 中填寫資料:
+   欄位            範例值
+   ────────────────────────────────
+   Project Name    數位行銷平台升級
+   Department      行銷部
+   Status          進行中
+   Progress        75
+   Budget          150000
+   Start Date      2025-01-01
+   End Date        2025-06-30
+   Owner           張三
+```
 
-**Steps:**
-1. Go to Layer 3 → Capability tab
-2. Review training funnel
-3. Identify drop-off stages
-4. Check adoption curve trend
-5. Review completed courses
-6. Plan interventions for gaps
+#### 匯入資料
+```
+1. 開啟「資料管理」→「檔案導入」
+2. 選擇資料類型
+3. 拖放檔案或點擊選擇
+4. 確認資料預覽
+5. 點擊「確認導入」
+```
 
-**Actions to Close Gaps:**
-- Follow up with non-enrolled
-- Offer support for incomplete
-- Create application opportunities
-- Recognize proficiency achievers
+**注意事項:**
+- 📌 檔案大小限制: 5MB
+- 📌 最大行數: 1000 行
+- 📌 必填欄位不可空白
+- 📌 日期格式: YYYY-MM-DD
+- 📌 數字不要加千分位符號
 
----
+**適用情境:**
+- 初次匯入所有專案
+- 定期批量更新進度
+- 從其他系統匯入資料
 
-## 💡 Tips & Tricks
+### 方法 3: Google Sheets 同步（適合協作）
 
-### Keyboard Shortcuts
+**優點:**
+- ✅ 多人即時協作
+- ✅ 自動同步
+- ✅ 版本歷史
 
-| Key | Action |
-|-----|--------|
-| `1` | Switch to Layer 1 |
-| `2` | Switch to Layer 2 |
-| `3` | Switch to Layer 3 |
-| `R` | Refresh data manually |
-| `?` | Show keyboard shortcuts |
-| `Esc` | Close modal/popup |
+**設定步驟:**
 
-### Power User Features
+#### 1. 準備 Google Sheet
+```
+1. 複製範本 Sheet
+2. 按照欄位格式填寫
+3. 確認欄位名稱與範本一致
+```
 
-**1. Bookmarking Views**
-- Bookmark specific layer URLs
-- Direct link to filtered views
-- Share with team members
+#### 2. 設定 API 連接（已完成）
+```
+API URL 已在 config.js 設定:
+https://script.google.com/macros/s/.../exec
+```
 
-**2. Data Refresh**
-- Auto-refresh every 5 minutes
-- Manual refresh anytime
-- Last update timestamp visible
+#### 3. 測試同步
+```
+1. 在 Google Sheet 更新資料
+2. 儲存
+3. 回到儀表板點擊「重新整理」
+4. 確認資料已更新
+```
 
-**3. Offline Mode**
-- Dashboard works without internet
-- Uses last cached data
-- Shows "Offline" indicator
-- Auto-syncs when reconnected
-
-**4. Export & Share**
-- Screenshot specific layers
-- Export data tables to CSV
-- Generate PDF reports (if enabled)
-- Email dashboard snapshots
-
-**5. Filtering & Search**
-- Combine multiple filters
-- Save filter presets
-- Quick search across all data
-- Clear all filters button
-
-### Mobile Usage
-
-**Best Practices:**
-- Use landscape mode for charts
-- Layer 1 optimized for mobile
-- Layer 2-3 may require scrolling
-- Pinch to zoom on charts
-- Tap cards for details
-
-**Mobile Navigation:**
-- Swipe between layers
-- Tap to expand details
-- Long-press for options menu
-- Pull down to refresh
-
-### Browser Tips
-
-**Recommended Browsers:**
-- Chrome (best performance)
-- Firefox (good compatibility)
-- Safari (iOS optimized)
-- Edge (Windows optimized)
-
-**Browser Settings:**
-- Enable JavaScript
-- Allow cookies for persistence
-- Disable popup blockers
-- Use latest version
-
-**Performance Tips:**
-- Close unused tabs
-- Clear browser cache monthly
-- Disable heavy extensions
-- Use incognito for testing
+**適用情境:**
+- 團隊協作更新
+- 需要審核流程
+- 與其他系統整合
 
 ---
 
-## 🔧 Troubleshooting
+## ✅ 資料品質管理
 
-### Issue: Dashboard Won't Load
+### 資料驗證規則
 
-**Symptoms:**
-- Blank screen
-- Infinite loading spinner
-- Error message
+#### 專案資料
+```
+必填欄位:
+✓ 專案名稱 (2-100 字元)
+✓ 狀態 (規劃中/進行中/已完成/暫停)
+✓ 進度 (0-100)
 
-**Solutions:**
-1. **Check Internet Connection**
-   - Verify you're online
-   - Try opening another website
-   - Restart router if needed
+格式驗證:
+✓ 進度必須是數字
+✓ 預算必須是正數
+✓ 日期格式 YYYY-MM-DD
+✓ Email 格式正確
 
-2. **Clear Browser Cache**
-   - Chrome: Ctrl+Shift+Delete
-   - Select "Cached images and files"
-   - Clear and reload
+邏輯驗證:
+✓ 結束日期 >= 開始日期
+✓ 已使用預算 <= 總預算
+✓ 完成狀態時進度 = 100%
+```
 
-3. **Try Different Browser**
-   - Switch to Chrome/Firefox
-   - Update browser to latest version
+#### KPI 資料
+```
+數值範圍:
+✓ ROI: 0-1000%
+✓ 進度: 0-100%
+✓ 參與度: 0-100%
+✓ 風險數: 0-999
 
-4. **Check JavaScript**
-   - Ensure JS is enabled
-   - Disable conflicting extensions
+更新頻率:
+✓ ROI: 每月
+✓ 進度: 每週
+✓ 參與度: 每月
+✓ 風險數: 即時
+```
 
-**Still Not Working?**
-- Contact IT support
-- Check for system maintenance
-- Verify access permissions
+### 資料一致性檢查
 
----
+**每週檢查清單:**
+```
+□ 所有進行中專案都有最新進度
+□ 專案狀態與進度一致
+□ 預算使用在合理範圍
+□ 風險項目有緩解措施
+□ 負責人資訊完整
+□ 日期邏輯正確
+```
 
-### Issue: Data Not Updating
+**檢查方法:**
+```
+1. 進入 Layer 3: Detailed Analysis
+2. 瀏覽專案列表
+3. 找出以下異常:
+   - 進度 100% 但狀態非「已完成」
+   - 已逾期但無風險標記
+   - 預算超支但風險等級低
+   - 長期無更新的專案
+```
 
-**Symptoms:**
-- Stale timestamps
-- "Last Updated" not changing
-- Changes not reflected
+### 資料清理
 
-**Solutions:**
-1. **Manual Refresh**
-   - Click 🔄 Refresh button
-   - Wait 2-3 seconds
-   - Check timestamp updates
+**每月例行清理:**
+```
+□ 已完成專案歸檔
+□ 刪除測試資料
+□ 合併重複項目
+□ 更新過時資訊
+□ 清理無效風險
+```
 
-2. **Check Auto-Refresh**
-   - Should update every 5 minutes
-   - Look for sync indicator
-   - Reload page if stalled
+**資料備份:**
+```
+方式 1: 自動備份（系統內建）
+- 每次儲存自動備份到 localStorage
+- 保留最近 5 個版本
+- 可在資料管理中還原
 
-3. **Verify Backend Connection**
-   - Check Google Sheets is accessible
-   - Verify API permissions
-   - Confirm data was updated in source
-
-**Still Not Working?**
-- Clear cache and reload
-- Check network connectivity
-- Contact administrator
-
----
-
-### Issue: Charts Not Displaying
-
-**Symptoms:**
-- Empty chart areas
-- Missing visualizations
-- Console errors
-
-**Solutions:**
-1. **Reload Page**
-   - Hard refresh: Ctrl+Shift+R
-   - Clear cache and retry
-
-2. **Check Chart.js CDN**
-   - May be blocked by firewall
-   - Try different network
-   - Contact IT if CDN blocked
-
-3. **Browser Compatibility**
-   - Update to latest browser
-   - Check browser console for errors
-   - Try alternative browser
-
-**Workarounds:**
-- View data in table format
-- Export raw data
-- Use different device
+方式 2: 手動匯出
+- 定期匯出 Excel 檔案
+- 存放在安全位置
+- 建議每月備份一次
+```
 
 ---
 
-### Issue: Slow Performance
+## 🔧 常見問題排除
 
-**Symptoms:**
-- Long load times
-- Laggy interactions
-- Freezing browser
+### Q1: 資料沒有更新？
 
-**Solutions:**
-1. **Close Other Tabs**
-   - Free up memory
-   - Disable heavy extensions
-   - Restart browser
+**可能原因與解決方法:**
 
-2. **Check Network Speed**
-   - Run speed test
-   - Connect to faster WiFi
-   - Use wired connection
+```
+1. 網路連線問題
+   檢查: 右上角同步狀態
+   解決: 確認網路連線，點擊「重新整理」
 
-3. **Reduce Data Load**
-   - Filter to specific projects
-   - Use date ranges
-   - Clear browser cache
+2. Google Sheets API 問題
+   檢查: 開啟瀏覽器 Console (F12)
+   解決: 查看錯誤訊息，檢查 API URL
 
-**Optimization:**
-- Update browser
-- Increase browser cache
-- Use desktop instead of mobile
-- Close background apps
+3. 快取問題
+   檢查: 資料顯示舊的版本
+   解決: 按 Ctrl+Shift+R 強制重新整理
 
----
+4. 資料格式錯誤
+   檢查: 匯入後沒有顯示
+   解決: 檢查資料格式，參考範本
+```
 
-### Issue: Access Denied
+### Q2: 圖表顯示異常？
 
-**Symptoms:**
-- "Permission denied" error
-- Can't view certain data
-- Features disabled
+**解決步驟:**
+```
+1. 檢查 Chart.js 是否載入
+   - 開啟 Console (F12)
+   - 看是否有載入錯誤
 
-**Solutions:**
-1. **Verify Credentials**
-   - Ensure you're logged into Google
-   - Check correct organization account
-   - Refresh authentication
+2. 檢查資料完整性
+   - 確保 KPI 資料完整
+   - 數值格式正確
 
-2. **Check Permissions**
-   - Contact administrator
-   - Verify role assignment
-   - Request access if needed
+3. 重新整理頁面
+   - 按 F5 或點擊重新整理按鈕
 
-3. **Clear Sessions**
-   - Log out and log back in
-   - Clear cookies
-   - Use incognito mode to test
+4. 清除快取
+   - Ctrl+Shift+Delete
+   - 清除瀏覽器快取
+```
 
-**Escalation:**
-- Contact IT support
-- Provide screenshot of error
-- Include your email and role
+### Q3: 匯入檔案失敗？
 
----
+**檢查清單:**
+```
+□ 檔案格式正確 (.xlsx, .xls, .csv)
+□ 檔案大小 < 5MB
+□ 欄位名稱與範本一致
+□ 必填欄位沒有空白
+□ 日期格式正確
+□ 數字欄位沒有文字
+□ 沒有特殊字元或 emoji
+```
 
-### Issue: Export Not Working
+### Q4: 權限錯誤？
 
-**Symptoms:**
-- Export button disabled
-- PDF generation fails
-- CSV download incomplete
+**可能情境:**
+```
+情境 A: Google Sheets API 權限
+解決: 確認 API 已授權存取 Sheet
 
-**Solutions:**
-1. **Check Browser Permissions**
-   - Allow downloads
-   - Check download folder
-   - Disable popup blockers
+情境 B: 本地儲存權限
+解決: 檢查瀏覽器隱私設定，允許 localStorage
 
-2. **Verify Feature Enabled**
-   - Export may be disabled
-   - Check with administrator
-   - Use screenshot alternative
+情境 C: CORS 錯誤
+解決: 使用本地伺服器而非直接開啟檔案
+```
 
-3. **Try Different Format**
-   - PDF vs. CSV
-   - Screenshot instead
-   - Copy/paste data
+### Q5: 效能變慢？
 
-**Workaround:**
-- Use browser print to PDF
-- Screenshot and crop
-- Manually copy data
+**優化建議:**
+```
+1. 清理舊資料
+   - 歸檔已完成專案
+   - 刪除不需要的歷史記錄
 
----
+2. 清除瀏覽器快取
+   - 定期清理
 
-## ❓ Frequently Asked Questions
+3. 使用現代瀏覽器
+   - Chrome, Edge, Firefox 最新版
 
-### General Questions
-
-**Q: How often is data updated?**
-A: Automatically every 5 minutes. You can also manually refresh anytime by clicking the 🔄 button.
-
-**Q: Can I access this on my phone?**
-A: Yes! The dashboard is fully responsive. Layer 1 works great on mobile. Layers 2-3 are best on tablet or larger screens.
-
-**Q: Does this work offline?**
-A: Yes, limited functionality. The dashboard caches recent data and works offline. You'll see an "Offline" indicator. Data syncs when you reconnect.
-
-**Q: Who can see my projects?**
-A: Visibility depends on Google Sheets permissions. Typically, your team and leadership can see projects you own or contribute to.
-
-**Q: Can I customize the dashboard?**
-A: Some customization available (filters, views). Contact your administrator for organization-wide customization.
+4. 關閉不必要的 Tab
+   - 釋放記憶體
+```
 
 ---
 
-### Data & Metrics Questions
+## 🌟 最佳實踐建議
 
-**Q: How is the health score calculated?**
-A: Weighted average of: ROI (30%), Progress (25%), Engagement (25%), Risk Count (20%). Updated daily.
+### 資料管理原則
 
-**Q: What does "progress" mean?**
-A: Percentage of project milestones completed. Calculated from project plans and actual completion dates.
+#### 1. 保持資料新鮮
+```
+✅ 每週至少更新一次
+✅ 重大變化立即更新
+✅ 設定更新提醒
+✅ 定期檢查資料準確性
+```
 
-**Q: Why is my project showing "red" status?**
-A: Red indicates critical issues: >2 weeks behind schedule, budget overrun >10%, or high-severity risks. Review and update status.
+#### 2. 標準化命名
+```
+專案命名規範:
+✅ [部門代碼]-[專案類型]-[簡短描述]
+   例: MKT-Platform-電商升級
 
-**Q: How do I change a KPI threshold?**
-A: Contact your administrator. Thresholds are set at organization level and require configuration change.
+風險命名規範:
+✅ [所屬專案]-[風險類型]-[簡述]
+   例: 專案A-技術-API整合風險
+```
 
-**Q: Where does this data come from?**
-A: Primary source is Google Sheets. Data is entered by project managers, updated weekly/monthly, and aggregated automatically.
+#### 3. 完整記錄
+```
+每個專案應包含:
+✅ 清晰的專案名稱
+✅ 明確的負責人
+✅ 實際的時程
+✅ 準確的預算
+✅ 詳細的說明
+✅ 相關的風險
+```
 
----
+#### 4. 及時溝通
+```
+✅ 進度異常立即回報
+✅ 風險升級及時通知
+✅ 重大變更事先溝通
+✅ 定期分享進展
+```
 
-### Feature Questions
+### 報告製作技巧
 
-**Q: Can I export data?**
-A: Export features may be enabled (check with admin). Otherwise, use browser print-to-PDF or screenshots.
+#### 1. 了解受眾
+```
+高階主管:
+✅ 看 Layer 1 就夠
+✅ 重點是結論和建議
+✅ 用視覺化圖表
+✅ 控制在 3-5 頁
 
-**Q: Can I create custom reports?**
-A: Layer 3 Metrics tab allows some customization. For advanced custom reports, work with your BI team.
+中階經理:
+✅ 需要 Layer 2 的細節
+✅ 關注趨勢和異常
+✅ 需要行動方案
+✅ 可以 5-10 頁
 
-**Q: Can multiple users access simultaneously?**
-A: Yes! The dashboard supports unlimited concurrent users. Each sees the same data (no per-user personalization currently).
+專案經理:
+✅ 需要 Layer 3 的完整資訊
+✅ 詳細的專案列表
+✅ 資源配置細節
+✅ 可以 10+ 頁
+```
 
-**Q: Are there email alerts?**
-A: Email alert feature is planned but not yet available. Check dashboard daily or bookmark for quick access.
+#### 2. 講故事而非列數據
+```
+❌ 不好的報告:
+「ROI 是 145%，進度 73%，參與度 68%」
 
-**Q: Can I integrate with other tools?**
-A: Currently integrates with Google Sheets. Additional integrations (Jira, Slack, etc.) are on the roadmap.
+✅ 好的報告:
+「本季轉型成效顯著，ROI 達 145% 超越目標 45%，
+ 雖然整體進度 73% 略低於預期，但考量品質優先策略，
+ 實際成果優於進度數字。下階段重點將放在提升
+ 員工參與度（目標從 68% 提升至 75%）。」
+```
 
----
+#### 3. 突出重點
+```
+✅ 使用顏色標記
+   - 🟢 綠色: 優秀/正常
+   - 🟡 黃色: 需關注
+   - 🔴 紅色: 緊急/風險
 
-### Technical Questions
+✅ 使用圖示
+   - ⬆️ 上升趨勢
+   - ⬇️ 下降趨勢
+   - ⚠️ 警告
+   - ✅ 完成
 
-**Q: Which browser is best?**
-A: Chrome or Firefox (latest versions) for best performance. Safari and Edge also supported.
+✅ 使用對比
+   - 目標 vs 實際
+   - 本期 vs 上期
+   - 計畫 vs 執行
+```
 
-**Q: Why can't I see Chart.js charts?**
-A: Chart.js loads from CDN. Check if CDN access is blocked by firewall. Contact IT to allowlist `cdn.jsdelivr.net`.
+### 團隊協作建議
 
-**Q: Is my data secure?**
-A: Yes. Dashboard uses HTTPS, Content Security Policy, XSS protection, rate limiting, and audit logging. Data stays in your Google Workspace.
+#### 1. 明確分工
+```
+角色              職責
+────────────────────────────────────
+專案經理          負責專案資料完整性
+資料管理員        負責資料品質與備份
+部門主管          負責部門資料準確性
+團隊成員          負責及時更新進度
+```
 
-**Q: What if I find a bug?**
-A: Report via support channel (see Getting Help section). Include screenshot, browser info, and steps to reproduce.
+#### 2. 定期同步
+```
+每日:
+  - 團隊成員更新進度
 
-**Q: Can I run this locally?**
-A: Yes, for testing. Clone the repository, update configuration, and open `index.html` in browser. Production deployment requires server.
+每週:
+  - 專案經理檢查資料
+  - 準備週報
 
----
+每月:
+  - 全面資料檢視
+  - 準備月報
+  - 資料備份
+```
 
-### Training & Support Questions
+#### 3. 建立流程
+```
+資料更新流程:
+1. 收集資訊
+2. 驗證準確性
+3. 輸入系統
+4. 檢查顯示
+5. 通知相關人員
 
-**Q: Is there training available?**
-A: Yes! Video tutorials, this user guide, and live training sessions. Check with your administrator for schedule.
-
-**Q: How long to learn the dashboard?**
-A: Layer 1: 5 minutes. All layers: 30-60 minutes. Power user proficiency: 2-4 hours of practice.
-
-**Q: Where can I get help?**
-A: See "Getting Help" section below. Support channels include email, Slack, and help desk.
-
-**Q: Can I share this guide?**
-A: Yes! Share freely with your team. Latest version always available at [docs/USER_GUIDE.md].
-
-**Q: Are there video tutorials?**
-A: Yes, 10-minute walkthrough video available. Ask your administrator for link.
-
----
-
-## 📞 Getting Help
-
-### Support Channels
-
-**Level 1: Self-Service**
-- 📖 This user guide
-- 🎥 Video tutorials
-- 💬 FAQ section above
-- 🔍 Knowledge base
-
-**Level 2: Team Support**
-- 👥 Ask your colleagues
-- 💬 Team Slack/Teams channel
-- 📧 Dashboard champions
-
-**Level 3: IT Support**
-- 📧 Email: dashboard-support@company.com
-- 💬 Slack: #digital-dashboard-support
-- 📞 Phone: Extension 5555
-- 🎫 Help desk ticket
-
-### Response Times
-
-| Priority | Response Time | Examples |
-|----------|---------------|----------|
-| **Critical** | 1 hour | Dashboard down, data breach |
-| **High** | 4 hours | Key features broken, incorrect data |
-| **Medium** | 1 business day | Minor bugs, UI issues |
-| **Low** | 3 business days | Feature requests, questions |
-
-### Before Contacting Support
-
-**Checklist:**
-- [ ] Have you tried refreshing?
-- [ ] Checked browser console for errors?
-- [ ] Cleared cache and cookies?
-- [ ] Tried different browser?
-- [ ] Checked FAQ section?
-
-**Information to Provide:**
-1. What were you trying to do?
-2. What happened instead?
-3. Screenshot of error (if any)
-4. Your browser and version
-5. Steps to reproduce
-
-### Escalation Path
-
-1. **Tier 1:** General support (common issues)
-2. **Tier 2:** Technical lead (complex issues)
-3. **Tier 3:** Architecture team (system-level)
-4. **Tier 4:** Vendor/development team (code bugs)
-
----
-
-## 📚 Additional Resources
-
-### Documentation
-
-- **[README.md](../README.md)** - Technical overview
-- **[Architecture Review](../ARCHITECTURE_REVIEW.md)** - System design
-- **[Quick Decision Card](../QUICK_DECISION_CARD.md)** - Executive summary
-- **[Implementation Roadmap](../IMPLEMENTATION_ROADMAP.md)** - Deployment plan
-- **[Expert Recommendations](../EXPERT_RECOMMENDATIONS.md)** - Best practices
-
-### Training Materials
-
-- **Video Tutorial:** 10-minute dashboard walkthrough
-- **Quick Start Guide:** 1-page PDF for new users
-- **Admin Guide:** For dashboard administrators
-- **Data Entry Guide:** For project managers
-
-### External Links
-
-- [Google Sheets Documentation](https://support.google.com/docs/topic/9054603)
-- [Chart.js Documentation](https://www.chartjs.org/docs/latest/)
-- [Digital Transformation Best Practices](#)
+風險管理流程:
+1. 識別風險
+2. 評估影響
+3. 記錄系統
+4. 制定對策
+5. 追蹤進度
+```
 
 ---
 
-## 🎓 Learning Path
+## 📞 取得協助
 
-### Beginner (Week 1)
+### 文件資源
+```
+📖 README.md              - 技術文件
+📖 ARCHITECTURE_REVIEW.md - 架構審查
+📖 IMPLEMENTATION_ROADMAP.md - 實施計畫
+📖 MAINTENANCE.md         - 維護指南
+📖 DATA_SCHEMA.md         - 資料結構
+📖 SECURITY.md            - 安全性文件
+```
 
-**Goals:**
-- Access dashboard successfully
-- Navigate three layers
-- Understand health score
-- Read basic KPIs
+### 常見資源
+```
+🔗 GitHub Issues - 問題回報
+🔗 範本下載 - templates/
+🔗 API 文件 - docs/API_REFERENCE.md (未來)
+```
 
-**Activities:**
-- Watch video tutorial
-- Read this guide
-- Daily Layer 1 check
-- Attend live training
-
----
-
-### Intermediate (Weeks 2-4)
-
-**Goals:**
-- Use Layer 2 for weekly reviews
-- Update project status
-- Interpret charts
-- Export data
-
-**Activities:**
-- Lead weekly team review
-- Update your projects
-- Practice filtering/sorting
-- Create custom views
+### 技術支援
+```
+📧 Email: (待補充)
+💬 Teams/Slack: (待補充)
+🐛 Bug Report: GitHub Issues
+💡 功能建議: GitHub Discussions
+```
 
 ---
 
-### Advanced (Month 2+)
+## ✨ 進階技巧
 
-**Goals:**
-- Comprehensive analysis
-- Trend identification
-- Strategic insights
-- Train others
+### 快捷鍵（未來功能）
+```
+Ctrl+K        快速更新
+Ctrl+E        匯出報表
+Ctrl+F        搜尋
+Ctrl+R        重新整理
+Ctrl+/        顯示說明
+```
 
-**Activities:**
-- Monthly executive reports
-- Risk analysis and mitigation
-- Resource optimization
-- Become dashboard champion
+### 自訂視圖（未來功能）
+```
+儲存常用篩選:
+1. 設定篩選條件
+2. 點擊「儲存篩選」
+3. 命名（例: 高風險專案）
+4. 下次可快速套用
+```
 
----
-
-## ✅ Quick Reference Card
-
-**Bookmark This!**
-
-### Daily Checklist (2 min)
-- [ ] Check health score
-- [ ] Scan KPI cards
-- [ ] Note high risks
-- [ ] Any red status?
-
-### Weekly Review (10 min)
-- [ ] Quick wins progress
-- [ ] Maturity radar focus
-- [ ] Risk heat map
-- [ ] Burndown velocity
-
-### Monthly Report (20 min)
-- [ ] Screenshot Layer 1
-- [ ] Export charts
-- [ ] Project status
-- [ ] Goal progress
-
-### Key Shortcuts
-- `1` Layer 1
-- `2` Layer 2
-- `3` Layer 3
-- `R` Refresh
-
-### Status Colors
-- 🟢 Green = Good
-- 🟡 Yellow = Watch
-- 🔴 Red = Action
+### 資料匯出選項（未來功能）
+```
+PDF:  高階主管報告
+Excel: 詳細資料分析
+CSV:  資料備份
+JSON: 系統整合
+```
 
 ---
 
-**Document Version:** 1.0  
-**Last Updated:** December 9, 2025  
-**Feedback:** dashboard-feedback@company.com
+**版本歷史:**
+- v1.0 (2025-12-09) - 初版發布
 
----
-
-**🎉 Congratulations! You're now ready to use the Digital Transformation Dashboard effectively. Happy analyzing! 🚀**
+**維護者:** Digital Transformation Team
