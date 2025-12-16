@@ -20,6 +20,32 @@
 - Wrap API interactions in try/catch blocks and implement one automatic retry with exponential backoff.
 - If the second attempt fails, fall back to the last successful snapshot of data.
 - Display the timestamp of the last successful data refresh to users when serving stale data.
+## PM Weekly Operation – 5-Minute Workflow
+
+This dashboard is designed so that PMs only need to perform a lightweight weekly update.
+
+### Weekly PM Actions (Once per week)
+1. Open the Dashboard UI
+2. Click **“Update Project Status”**
+3. Update the following fields only:
+   - Status (R / A / G)
+   - Progress (%)
+   - Top Risk (optional)
+   - Next Milestone (optional)
+   - Notes (optional)
+4. Submit and confirm preview
+5. Done
+
+⏱ Estimated time: 3–5 minutes per project
+
+### What PMs Do NOT Need to Do
+- Do not edit Google Sheets directly
+- Do not manage formulas or calculations
+- Do not refresh or deploy the system
+- Do not handle data backups
+
+All calculations, validation, logging, and visualization are handled by the system.
+
 
 ## Schema Validation
 
