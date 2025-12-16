@@ -2,7 +2,15 @@
 
 ## Roles and Permissions
 - PM: input weekly status via UI only; cannot directly modify sheets
-- Data Steward/Admin: manage sheet structure, mapping, and corrections; maintain data consistency.
+- 
+| Role | Data Input | Sheet Edit | Schema Change | Deployment | Audit / Log |
+|----|----|----|----|----|----|
+| PM | UI only | ❌ | ❌ | ❌ | View |
+| Admin | UI + Sheet | ✅ | Limited | ❌ | Review |
+| IT / Owner | ❌ | ✅ | ✅ | ✅ | Full |
+
+PMs interact with data **only through the UI**.  
+Direct Sheet editing is restricted to prevent data inconsistency and operational riData Steward/Admin: manage sheet structure, mapping, and corrections; maintain data consistency.
 - Viewer/Stakeholder: read-only access to dashboards.
 
 ## Sheet Structure
